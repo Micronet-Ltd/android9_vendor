@@ -72,3 +72,9 @@ qcom/proprietary/prebuilt_HY11/target/product/msm8953_32/vendor/lib/*.so filter=
 qcom/proprietary/prebuilt_HY11/target/product/msm8953_32/vendor/app/ConnectionSecurityService/ConnectionSecurityService.apk filter=lfs diff=lfs merge=lfs -text
 qcom/proprietary/prebuilt_HY11/target/product/msm8937_32/vendor/lib/*.so filter=lfs diff=lfs merge=lfs -text
 qcom/proprietary/prebuilt_HY11/target/product/msm8937_32/vendor/app/ConnectionSecurityService/ConnectionSecurityService.apk filter=lfs diff=lfs merge=lfs -text
+widevine/libwvdrmengine/level3/arm/libl3oemcrypto.cpp filter=lfs diff=lfs merge=lfs -text
+widevine/libwvdrmengine/level3/x86_64/libl3oemcrypto.cpp filter=lfs diff=lfs merge=lfs -text
+widevine/libwvdrmengine/level3/x86/libl3oemcrypto.cpp filter=lfs diff=lfs merge=lfs -text
+widevine/libwvdrmengine/level3/mips64/libl3oemcrypto.cpp filter=lfs diff=lfs merge=lfs -text
+widevine/libwvdrmengine/level3/mips/libl3oemcrypto.cpp filter=lfs diff=lfs merge=lfs -text
+widevine/libwvdrmengine/level3/arm64/libl3oemcrypto.cpp filter=lfs diff=lfs merge=lfs -text
