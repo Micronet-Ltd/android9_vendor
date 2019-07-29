@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2018 Qualcomm Technologies, Inc.
+     All Rights Reserved.
+     Confidential and Proprietary - Qualcomm Technologies, Inc.
+-->
+<switchItems>
+
+    <overlay>
+        <packageName>com.android.systemui.overlay.cmcc</packageName>
+        <needReboot>false</needReboot>
+        <needFactoryReset>false</needFactoryReset>
+        <needSecondReboot>false</needSecondReboot>
+        <mode>CMCC</mode>
+        <carrierId>1</carrierId>
+    </overlay>
+
+    <overlay>
+        <packageName>com.android.mms.overlay.cmcc</packageName>
+        <needReboot>false</needReboot>
+        <needFactoryReset>false</needFactoryReset>
+        <needSecondReboot>false</needSecondReboot>
+        <mode>CMCC</mode>
+        <carrierId>1</carrierId>
+    </overlay>
+
+    <overlay>
+        <packageName>android.telephony.overlay.cmcc</packageName>
+        <needReboot>false</needReboot>
+        <needFactoryReset>false</needFactoryReset>
+        <needSecondReboot>false</needSecondReboot>
+        <mode>CMCC</mode>
+        <carrierId>1</carrierId>
+    </overlay>
+
+    <overlay>
+        <packageName>com.android.settings.overlay.cmcc</packageName>
+        <needReboot>false</needReboot>
+        <needFactoryReset>false</needFactoryReset>
+        <needSecondReboot>false</needSecondReboot>
+        <mode>CMCC</mode>
+        <carrierId>1</carrierId>
+    </overlay>
+
+    <overlay>
+        <packageName>com.android.systemui.overlay.ct</packageName>
+        <needReboot>false</needReboot>
+        <needFactoryReset>false</needFactoryReset>
+        <needSecondReboot>false</needSecondReboot>
+        <mode>CT</mode>
+        <carrierId>2</carrierId>
+    </overlay>
+
+    <overlay>
+        <packageName>com.android.networksettings.overlay.ct</packageName>
+        <needReboot>false</needReboot>
+        <needFactoryReset>false</needFactoryReset>
+        <needSecondReboot>false</needSecondReboot>
+        <mode>CT</mode>
+        <carrierId>2</carrierId>
+    </overlay>
+
+    <overlay>
+        <packageName>android.ui.overlay.ct</packageName>
+        <needReboot>false</needReboot>
+        <needFactoryReset>false</needFactoryReset>
+        <needSecondReboot>false</needSecondReboot>
+        <mode>CT</mode>
+        <carrierId>2</carrierId>
+    </overlay>
+</switchItems>

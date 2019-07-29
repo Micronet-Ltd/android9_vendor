@@ -1,0 +1,9 @@
+#
+# ADDITIONAL_FEATURE_PROPERTIES FOR CTA SPEC
+#
+persist.sys.strict_op_enable=true
+
+persist.radio.phone.matchnum=11
+
+# Property for default Time Zone
+persist.sys.timezone=Asia/Shanghai

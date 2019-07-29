@@ -1,0 +1,14 @@
+<!-- Copyright (c) 2018 Qualcomm Technologies, Inc.
+     All Rights Reserved.
+     Confidential and Proprietary - Qualcomm Technologies, Inc.
+-->
+<resources>
+    <string name="app_name">CarrierSwitch</string>
+
+    <string name="carrier_default">Default mode</string>
+    <string name="carrier_cmcc">China Mobile mode</string>
+    <string name="carrier_ct">China Telecom mode</string>
+
+    <string name="switch_success">Switch successfully</string>
+    <string name="switch_failed">Switch failed</string>
+</resources>

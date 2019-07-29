@@ -1,0 +1,21 @@
+/*
+ * Copyright (c) 2018 Qualcomm Technologies, Inc.
+ * All Rights Reserved.
+ * Confidential and Proprietary - Qualcomm Technologies, Inc.
+ */
+
+package vendor.qti.hardware.sidekickmetrics@1.0;
+
+typedef uint32_t MetricId;
+
+enum Status: uint32_t {
+    OK,
+    UNKNOWN_ERROR,
+    BAD_VALUE,  // Some parameter is invalid
+    UNSUPPORTED_OPERATION,  // A function is not supported in this HAL
+};
+
+
+
+
+

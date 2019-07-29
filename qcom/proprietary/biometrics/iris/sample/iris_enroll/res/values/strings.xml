@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright (c) 2016-2017 Qualcomm Technologies, Inc.
+ * All Rights Reserved.
+ * Confidential and Proprietary - Qualcomm Technologies, Inc.
+ */
+-->
+<resources>
+    <string name="app_name">Iris Enroll Demo</string>
+    <string name="enroll">+</string>
+    <string name="cancel_verification">Cancel</string>
+    <string name="Authenticate">Press to Verify</string>
+    <string name="iris_enroll_dialog_name_label">Current Iris</string>
+    <string name="iris_enroll_dialog_rename">Rename</string>
+    <string name="iris_enroll_dialog_delete">Delete</string>
+    <string name="iris_last_delete_confirm">YES, REMOVE</string>
+    <string name="cancel">Cancel</string>
+    <string name="iris_enrolled">Enrolled irises</string>
+</resources>

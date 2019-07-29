@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (c) 2015, Qualcomm Technologies, Inc. All Rights Reserved.
+     Qualcomm Technologies Proprietary and Confidential.
+-->
+
+<resources>
+
+    <string-array name="StorageLocation">
+        <item>@string/internal_path</item>
+        <item>@string/external_path</item>
+    </string-array>
+    <string-array name="StorageLocation_value">
+        <item>@string/storage_location_internal_value</item>
+        <item>@string/storage_location_external_value</item>
+    </string-array>
+
+    <string-array name="InternalStorageLocation">
+        <item>@string/internal_path</item>
+    </string-array>
+    <string-array name="InternalStorageLocation_value">
+        <item>@string/storage_location_internal_value</item>
+    </string-array>
+</resources>

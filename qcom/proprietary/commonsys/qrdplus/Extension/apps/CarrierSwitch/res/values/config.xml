@@ -1,0 +1,12 @@
+<!-- Copyright (c) 2018 Qualcomm Technologies, Inc.
+     All Rights Reserved.
+     Confidential and Proprietary - Qualcomm Technologies, Inc.
+-->
+<resources>
+    <integer name="config_initMode">0</integer>
+    <!-- Default mode which will impact default carrier mode:
+         0: default,
+         1: CMCC,
+         2: CT -->
+    <integer name="config_default_carrier_mode">0</integer>
+</resources>

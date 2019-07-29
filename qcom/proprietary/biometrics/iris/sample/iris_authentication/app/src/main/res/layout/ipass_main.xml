@@ -1,0 +1,131 @@
+<!--
+/*
+ * Copyright (c) 2016-2017 Qualcomm Technologies, Inc.
+ * All Rights Reserved.
+ * Confidential and Proprietary - Qualcomm Technologies, Inc.
+ */
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qualcomm.qti.iris.IrisAuthenticationDemo">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="0dp"
+        android:adjustViewBounds="true"
+        android:baselineAligned="false"
+        android:scaleType="centerCrop"
+        android:src="@drawable/demobg" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/surface_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <view
+                android:id="@+id/texture"
+                class="com.qualcomm.qti.iris.IrisManager$IrisSurfaceView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/timerbar"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView"
+        android:minHeight="0dip" />
+
+    <FrameLayout
+        android:id="@+id/list_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/timerbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:text="@string/iris_enrolled"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <ListView
+                android:id="@+id/enrolledList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scrollbars="none"
+                android:textAlignment="center" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/btnCancelAuth"
+            style="?android:buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="20dp"
+            android:src="@drawable/red_x" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btn_continuous_verify"
+                style="?android:buttonStyle"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:padding="20dp"
+                android:src="@drawable/eye_recog" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

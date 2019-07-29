@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2018 Qualcomm Technologies, Inc.
+     All Rights Reserved.
+     Confidential and Proprietary - Qualcomm Technologies, Inc.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.qualcomm.qti.carrierswitch"
+    android:sharedUserId="android.uid.system">
+
+    <uses-permission android:name="android.permission.REBOOT" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".CarrierSwitchDeamonService"
+            android:exported="true" />
+
+        <receiver
+            android:name=".BootupReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

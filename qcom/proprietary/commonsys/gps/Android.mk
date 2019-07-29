@@ -1,0 +1,19 @@
+ifneq ($(BUILD_TINY_ANDROID),true)
+ifneq ($(BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE),)
+ifneq ($(BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET),true)
+
+LOCAL_PATH := $(call my-dir)
+GPS_SHIP_PATH := $(LOCAL_PATH)/../../gps
+GPS_BUILD_DIR:=$(GPS_SHIP_PATH)/build
+include $(GPS_BUILD_DIR)/target_specific_features.mk
+
+ifneq ($(LW_FEATURE_SET),true)
+ifneq ($(LOC_UNSUPPORTED_TARGET),true)
+include $(LOCAL_PATH)/*/Android.mk
+endif # LW_FEATURE_SET
+endif # LOC_UNSUPPORTED_TARGET
+
+endif # BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET
+endif # BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE
+endif # BUILD_TINY_ANDROID
+

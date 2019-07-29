@@ -1,0 +1,212 @@
+{
+    "default": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+     "sdmshrike_au": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "kona": {
+        "SDCLANG": false,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "sm6150_au": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "sm6150_au_gvmq": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "sm6150": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "trinket": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "msmnile": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "msmnile_au": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "msmnile_gvmq": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "msm8998": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "apq8098_latv": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/3.9/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-Wno-vectorizer-no-neon",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon"
+    },
+    "msm8998_32": {
+        "SDCLANG": false,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/3.9/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-Wno-vectorizer-no-neon",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon"
+    },
+    "sdm845": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "sdm660_64": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "sdm660_32": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "sdm630_64": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/3.9/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-Wno-vectorizer-no-neon",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon"
+    },
+    "sdm630_32": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/3.9/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-Wno-vectorizer-no-neon",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon"
+    },
+    "sdm710": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "msm8996": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "msm8953_64": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "msm8953_64_c801": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "msm8953_32": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "msm8937_64": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "msm8937_32": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "msm8937_32go": {
+        "SDCLANG": false,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "msm8909": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "msm8909go": {
+        "SDCLANG": false,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "qssi": {
+        "SDCLANG": false,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    },
+    "qcs605": {
+        "SDCLANG": true,
+        "SDCLANG_PATH": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/6.0/bin",
+        "SDCLANG_PATH_2": "vendor/qcom/proprietary/llvm-arm-toolchain-ship/4.0/bin",
+        "SDCLANG_FLAGS": "-mdefault-to-arm -Wno-vectorizer-no-neon -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-unknown-warning-option",
+        "SDCLANG_FLAGS_2": "-Wno-vectorizer-no-neon -Wno-unknown-warning-option -Wno-error"
+    }
+}

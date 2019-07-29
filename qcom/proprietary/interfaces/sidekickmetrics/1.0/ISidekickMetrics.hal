@@ -1,0 +1,183 @@
+/*
+ * Copyright (c) 2018 Qualcomm Technologies, Inc.
+ * All Rights Reserved.
+ * Confidential and Proprietary - Qualcomm Technologies, Inc.
+ */
+
+package vendor.qti.hardware.sidekickmetrics@1.0;
+
+/***************************************************************************
+
+The ISidekickMetrics HAL exports functions that allows ambiactive
+fitness applications to define fitness and workout related metrics
+which are then displayed by the Sidekick chip while the AP is suspended
+(aka Sports Offload, Ambiactive Offload).
+
+The HAL allows applications to create new instances of metrics and to define
+a number format which is then used to display the metrics.
+
+The format is given with a formt spec. The format spec is a string
+template containing one or more placeholders enclosed in curly braces.
+
+The syntax is described below using a simplified form of EBNF.
+
+Placeholder = “{“ Number | Condition “}”
+Number = unit-name  [ “:” NumberFormat ]
+NumberFormat =  width [ ( “.” | “,” )  precision ] [ Alignment ]
+Alignment = "R" | "Z"
+Condition = condition-name “:” charcode
+
+A number placeholder consists of a unit followed by an optional
+number format. The number format specifies the maximum number of
+digits, the maximum precision, and alignment of digits.
+
+Unit: a number format starts with the name of the unit, for example
+km for Kilometer or kmPerHr for Kilometer per hour. The raw metric
+is converted into this unit. Distance, for example, can be converted
+into km, mi, m.
+
+Width and precision: the unit name can optionally be followed by a
+format that describes the maximum number of digits to be used, and
+the number of digits used after the decimal point. The width specifies
+the desired number of digits. If a precision p is given, the value is
+formatted with at most p digits after the decimal point. The separator
+between width and precision can be a period or a comma. The formatter
+will use the given symbol to separate whole and fractional digits
+(1.5 or 1,5).
+
+Alignment:
+R: right-aligned in ‘width’ digits characters, the unused digit
+   positions on the left are filled with spaces.
+Z: right-aligned in ‘width’ digits,  the unused digit positions on the
+   left are filled with zeroes.
+
+Table 2 defines the default formats used if no number format is given.
+
+Condition placeholders are used to put one character into the formatted
+output if the condition is true. In the first release, the only
+conditions that are supported are a test whether the time of day is
+AM or PM. (See table 1). This allows the formatter to put a character
+code into a string that maps to a glyph representing “AM” or “PM”.
+
+The condition is followed by a colon and a decimal number in the range
+of 1 to 255. The decimal number is the character code that the formatter
+will put into the string if the condition is true. If the condition is
+false, the formatter will not insert the character.
+
+Example 1: Time in 12 hour format
+
+Assuming the ambiactive app uses a Font resource that contains a glyph
+for “AM” at character code  0xB0 (decimal 176) and a glyph for “PM” at
+character code 0xB1 (decimal 177), the format spec
+“{hr12}:{min}:{sec} {am?:176}{pm?:177}” will show time in 12 hour format,
+followed by a space and a glyph for am or pm depending on time.
+
+Example 2: Distance in km
+
+The format spec “{km:5.3}” results in a string that will have 2 digits
+before the decimal point and 3 digits after the decimal point, for a total
+of 5 digits. If the number is bigger or equal to 100, the decimal point
+shifts, so there will be 3 digits before the decimal point and 2 after.
+
+   The value 1 is formatted as “1.000”
+   The value 13.099 is formatted as “13.099”
+   The value 101.455 is formatted as “101.45”
+
+***************************************************************************/
+
+interface ISidekickMetrics {
+
+    /**
+     * Starts or resumes the update the metric instances given in the
+     * array metricIds.
+     *
+     * @param metricIds   An array of metric instance ids to start.
+     *
+     * @return status     OK, or BAD_VALUE if any of the ids
+     *                    is not valid.
+     */
+    start(vec<MetricId> metricIds) generates (Status s);
+
+
+    /**
+     * Pauses the update of the metric instances in the array metricIds.
+     *
+     * @param metricIds   An array of metric instance ids to start.
+     *
+     * @return status     OK, or BAD_VALUE if any of the ids
+     *                    is not valid.
+     */
+    stop(vec<MetricId> metricIds) generates (Status s);
+
+
+    /**
+     * Resets the metric instances given in the array metricIds to 0.
+     *
+     * @param metricIds   An array of metric instance ids to start.
+     *
+     * @return status     OK, or BAD_VALUE if any of the ids
+     *                    is not valid.
+     */
+    reset(vec<MetricId> metricIds) generates (Status s);
+
+
+    /**
+     * Creates a new instance of a metric with given id. This id is then
+     * used in the SidekickGraphics HAL to identify the value to be
+     * displayed when the Sidekick controls the display.
+     *
+     * If two metric instances of the same metric name are created,
+     * they maintain independent values. For example, an app might create
+     * two instances of the DURATION metric, one to measure overall
+     * duration, the other one to measure lap times. When the lap time
+     * instance is reset to 0, the instance measuring overall duration
+     * is not reset.
+     *
+     * @param metricId       The id that SidekickGraphics uses to
+     *                       retrieve the formatted value.
+     * @param metricName     The metric name to be formatted.
+     * @param format         The format spec. TODO: See XXXX for documentation.
+     * @param rate           The rate in milliseconds at which the formatted
+     *                       value is updated.
+     *
+     * @return status    OK, or UNKNOW_ERROR. BAD_VALUE if a format
+     *                   spec contains an error, or an incompatible
+     *                   sensor is used for the given format spec.
+     */
+    createMetricInstance(MetricId metricId, string metricName, string format, uint32_t rate)
+        generates (Status status);
+
+
+    /**
+     * When an application no longer needs a previously defined
+     * metric instance, it must call destroyMetricInstance() so that
+     * the HAL can release the resources for that instance.
+     *
+     * @param metricId   The metric instance id to be destroyed.
+     *
+     * @return status    OK, or BAD_VALUE if the id does not refer to
+     *                   a valid metric instance.
+     */
+    destroyMetricInstance(MetricId metricId)
+        generates (Status status);
+
+
+    /**
+     * Returns the current value for a metric instance. The value
+     * is a string that is formatted according to the format string
+     * for the metric instance.
+     *
+     * @param metricIds  The metric instance ids for which to retrieve the
+     *                   current value.
+     *
+     * @return status    OK, or BAD_VALUE if an id does not refer to
+     *                   a valid metric instance.
+     * @return values    An array of formatted values for the metric
+     *                   instances requested in metricIds. The order
+     *                   of values corresponds to the order of the ids
+     *                   in metricIds.
+     */
+    getValue(vec<MetricId> metricIds)
+        generates (Status status, vec<string> values);
+};
+

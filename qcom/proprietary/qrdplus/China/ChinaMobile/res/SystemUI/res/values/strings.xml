@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+        Copyright (c) 2014, Qualcomm Technologies, Inc.
+        All Rights Reserved.
+        Qualcomm Technologies Proprietary and Confidential.
+    -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Content description of the phone signal when no signal for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_no_phone">No phone.</string>
+    <!-- Content description of the phone signal when it is full for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_phone_signal_full">Phone signal full.</string>
+    <!-- Content description of the data connection type GPRS for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_data_connection_gprs">GPRS</string>
+
+    <!-- Content description of the roaming data connection type for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_data_connection_roaming">Roaming</string>
+
+    <!-- Content description of the data connection type Edge for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_data_connection_edge">Edge</string>
+
+    <!-- Content description of the data connection type WiFi for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_data_connection_wifi">Wi-Fi</string>
+
+    <!-- Content description of the data connection with no SIM for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_no_sim">No SIM.</string>
+</resources>

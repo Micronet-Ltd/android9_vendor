@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (c) 2018, Qualcomm Technologies, Inc.
+    All Rights Reserved.
+    Confidential and Proprietary - Qualcomm Technologies, Inc.
+ -->
+
+<resources>
+    <!-- Show enabled 4G option for CT subsidized device -->
+    <bool name="config_enabled_4g" translatable="false">true</bool>
+    <!-- whether to start service to monitor enhanced 4G LTE status -->
+    <bool name="config_enhanced4glte_status" translatable="false">true</bool>
+</resources>

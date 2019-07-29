@@ -1,0 +1,167 @@
+<!--
+/*
+ * Copyright (c) 2016-2017 Qualcomm Technologies, Inc.
+ * All Rights Reserved.
+ * Confidential and Proprietary - Qualcomm Technologies, Inc.
+ */
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qualcomm.qti.irisenrolldemo.IrisEnrollDemo">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="0dp"
+        android:adjustViewBounds="true"
+        android:baselineAligned="false"
+        android:scaleType="centerCrop"
+        android:src="@drawable/demobg" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/surface_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <view class="com.qualcomm.qti.iris.IrisManager$IrisSurfaceView"
+                android:id="@+id/texture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/performance_info"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="20sp" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/timerbar"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView"
+        android:minHeight="0dip" />
+
+    <ProgressBar
+        android:id="@+id/enrollProgLeft"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/iris_progress_ring_bg"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/iris_progress_ring" />
+
+    <ProgressBar
+        android:id="@+id/enrollProgRight"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="35dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/iris_progress_ring_bg"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/iris_progress_ring" />
+
+    <FrameLayout
+        android:id="@+id/list_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/timerbar">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:text="@string/iris_enrolled"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <ListView
+                android:id="@+id/enrolledList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scrollbars="none"
+                android:textAlignment="center" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/btnCancelAuth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="20dp"
+            android:src="@drawable/red_x"
+            style="?android:buttonStyle" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btn_enroll"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:padding="20dp"
+                android:src="@drawable/eye_enroll"
+                style="?android:buttonStyle" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,46 @@
+#Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
+
+#Redistribution and use in source and binary forms, with or without
+#modification, are permitted provided that the following conditions are
+#met:
+#    * Redistributions of source code must retain the above copyright
+#      notice, this list of conditions and the following disclaimer.
+#    * Redistributions in binary form must reproduce the above
+#      copyright notice, this list of conditions and the following
+#      disclaimer in the documentation and/or other materials provided
+#      with the distribution.
+#    * Neither the name of The Linux Foundation nor the names of its
+#      contributors may be used to endorse or promote products derived
+#      from this software without specific prior written permission.
+
+#THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+#WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+#ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+#BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+#SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+#BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+#OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+#IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#HAL released in Android O
+0f53273ad37cc730b1fb4ea953fa0697ec0cc529b5b5a0a960aa5b276cea8143 vendor.display.config@1.0::IDisplayConfig
+
+#HAL released in Android O-MR1
+fcc31b8e0d422752cf4f4c69618488ea9cd5a4e0f21404adca087dc4ef23d6df vendor.display.config@1.1::IDisplayConfig
+
+#HAL released in Android P
+44a03774c9931f3779affaa88bb0217a3666420c38ca0c98170a7cf40a581419 vendor.qti.hardware.display.allocator@1.0::IQtiAllocator
+f5c217947f9e7ddc9b20d339928adfb4c84fb91969119b2479e9993ca3e4db08 vendor.qti.hardware.display.composer@1.0::IQtiComposer
+6a1ce8d44bf75d2102ae54bddce02f2bc7bd064444c30402b6dea741114703de vendor.qti.hardware.display.composer@1.0::IQtiComposerClient
+db19f93c419a59c901c1530a9241480b047a0f026b2eef7fe0c55cf3874c56c0 vendor.qti.hardware.display.mapper@1.0::IQtiMapper
+f955d3cd7704809f64a6e1f5b1e6cf92b3765386af5e7e485ec4563c975467ba vendor.qti.hardware.display.mapper@1.1::IQtiMapper
+503415d1b4d8aefe231fd751cc36e374e91d561f3d3dd3459f31f3a67aa6dfe5 vendor.display.config@1.2::IDisplayConfig
+e89567ed6383dc0e5fd168babaf046352962b571f47fba26804c2c7690256b1f vendor.display.config@1.3::IDisplayConfig
+cbdb70cc5999b9537497b1e56955278ce1c3510245c82f861bf847ed1609f05b vendor.display.config@1.4::IDisplayConfig
+f852a7cf003eaf02a26784dff919ea1f334308df888f406962bfdb08ab51b59e vendor.display.config@1.5::IDisplayConfig
+bff30d77ca2327e719a4bd6938bad222c5f1a87f0517b8baf9ef5c3edd0bdc35 vendor.display.config@1.6::IDisplayConfig
+ccf20944596b1cd140769257bdb93d10244b256d47e296ec84d41ed1261c1089 vendor.display.config@1.7::IDisplayConfig
+a34b984a4eee8b76a123390002843f050288a92f0f0c6b8d576930f738858f4c vendor.display.config@1.8::IDisplayConfig

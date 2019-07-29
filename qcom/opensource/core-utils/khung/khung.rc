@@ -1,0 +1,20 @@
+on property:init.svc.cameraserver=running
+    exec_background u:r:qti-khung:s0 -- /system/bin/sh /system/bin/init.qti.khung.sh  cameraserver
+
+on property:init.svc.surfaceflinger=running
+    exec_background u:r:qti-khung:s0 -- /system/bin/sh /system/bin/init.qti.khung.sh  surfaceflinger
+
+on property:init.svc.audioserver=running
+    exec_background u:r:qti-khung:s0 -- /system/bin/sh /system/bin/init.qti.khung.sh  audioserver
+
+on property:init.svc.zygote=running
+    exec_background u:r:qti-khung:s0 -- /system/bin/sh /system/bin/init.qti.khung.sh  system_server
+
+on property:init.svc.vold=running
+    exec_background u:r:qti-khung:s0 -- /system/bin/sh /system/bin/init.qti.khung.sh  vold
+
+on property:persist.vendor.khung.disable=1
+    exec_background u:r:qti-khung:s0 -- /system/bin/sh /system/bin/init.qti.khung.sh  disable
+
+on property:persist.vendor.khung.disable=0
+    exec_background u:r:qti-khung:s0 -- /system/bin/sh /system/bin/init.qti.khung.sh  enable
