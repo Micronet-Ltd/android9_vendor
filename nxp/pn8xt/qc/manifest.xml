@@ -9,6 +9,7 @@
             <instance>default</instance>
         </interface>
     </hal>
+	<!-- >
     <hal format="hidl">
         <name>vendor.nxp.nxpese</name>
         <transport>hwbinder</transport>
@@ -19,6 +20,7 @@
             <instance>default</instance>
         </interface>
     </hal>
+    </hal> -->
     <hal format="hidl">
         <name>vendor.nxp.nxpwiredse</name>
         <transport>hwbinder</transport>

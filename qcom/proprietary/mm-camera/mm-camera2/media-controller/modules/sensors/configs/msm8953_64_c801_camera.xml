@@ -112,10 +112,10 @@ LensInfo : Information of the lens present in the module.
     <CameraId>0</CameraId>
     <SensorName>ov2718</SensorName>
     <FlashName>pmic</FlashName>
-    <ChromatixName>ov2718_chromatix</ChromatixName>
+    <ChromatixName>ov13850_q13v06k_chromatix</ChromatixName>
     <ModesSupported>0</ModesSupported>
     <Position>BACK</Position>
-    <MountAngle>180</MountAngle>
+    <MountAngle>270</MountAngle>
     <CSIInfo>
       <CSIDCore>0</CSIDCore>
       <LaneMask>0x1F</LaneMask>
