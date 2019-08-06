@@ -112,10 +112,10 @@ LensInfo : Information of the lens present in the module.
     <CameraId>0</CameraId>
     <SensorName>ov2718</SensorName>
     <FlashName>pmic</FlashName>
-    <ChromatixName>ov13850_q13v06k_chromatix</ChromatixName>
+    <ChromatixName>ov2718_chromatix</ChromatixName>
     <ModesSupported>0</ModesSupported>
     <Position>BACK</Position>
-    <MountAngle>270</MountAngle>
+    <MountAngle>180</MountAngle>
     <CSIInfo>
       <CSIDCore>0</CSIDCore>
       <LaneMask>0x1F</LaneMask>
@@ -150,6 +150,30 @@ LensInfo : Information of the lens present in the module.
       <TotalFocusDistance>1.97</TotalFocusDistance>
       <HorizontalViewAngle>68.0</HorizontalViewAngle>
       <VerticalViewAngle>49.0</VerticalViewAngle>
+      <MinFocusDistance>0.1</MinFocusDistance>
+    </LensInfo>
+  </CameraModuleConfig>
+  <CameraModuleConfig>
+    <CameraId>2</CameraId>
+    <SensorName>ov9284</SensorName>
+    <ActuatorName>dw9714</ActuatorName>
+    <FlashName>pmic</FlashName>
+    <ChromatixName>ov9284_chromatix</ChromatixName>
+    <ModesSupported>0</ModesSupported>
+    <Position>FRONT</Position>
+    <MountAngle>90</MountAngle>
+    <CSIInfo>
+      <CSIDCore>0</CSIDCore>
+      <LaneMask>0x7</LaneMask>
+      <LaneAssign>0x4320</LaneAssign>
+      <ComboMode>0</ComboMode>
+    </CSIInfo>
+    <LensInfo>
+      <FocalLength>1.75</FocalLength>
+      <FNumber>2.0</FNumber>
+      <TotalFocusDistance>1.97</TotalFocusDistance>
+      <HorizontalViewAngle>116</HorizontalViewAngle>
+      <VerticalViewAngle>76</VerticalViewAngle>
       <MinFocusDistance>0.1</MinFocusDistance>
     </LensInfo>
   </CameraModuleConfig>

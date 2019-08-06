@@ -3648,33 +3648,37 @@ MM_CAMERA += libchromatix_csidtg_preview
 MM_CAMERA += libchromatix_csidtg_zsl_preview
 
 
-#MM_CAMERA += libchromatix_ov2718_default_video
-#MM_CAMERA += libchromatix_ov2718_postproc
-#MM_CAMERA += libchromatix_ov2718_preview
-#MM_CAMERA += libchromatix_ov2718_snapshot
-#MM_CAMERA += libchromatix_ov2718_video_full
-#MM_CAMERA += libchromatix_ov2718_cpp_hfr_60
-#MM_CAMERA += libchromatix_ov2718_cpp_hfr_90
-#MM_CAMERA += libchromatix_ov2718_cpp_liveshot
-#MM_CAMERA += libchromatix_ov2718_cpp_preview
-#MM_CAMERA += libchromatix_ov2718_cpp_snapshot
-#MM_CAMERA += libchromatix_ov2718_cpp_us_chromatix
-#MM_CAMERA += libchromatix_ov2718_cpp_video
-#MM_CAMERA += libchromatix_ov2718_cpp_video_full
-#MM_CAMERA += libchromatix_ov2718_hfr_60
-#MM_CAMERA += libchromatix_ov2718_hfr_90
-#MM_CAMERA += libchromatix_ov2718_hfr_120
-#MM_CAMERA += libchromatix_ov2718_liveshot
-#MM_CAMERA += libchromatix_ov2718_common
-#MM_CAMERA += libchromatix_ov2718_cpp_ds_chromatix
-#MM_CAMERA += libchromatix_ov2718_cpp_hfr_120
-#MM_CAMERA += libchromatix_ov2718_default_preview_bu64297
-#MM_CAMERA += libchromatix_ov2718_default_video_bu64297
-#MM_CAMERA += libchromatix_ov2718_hfr_60_bu64297
-#MM_CAMERA += libchromatix_ov2718_hfr_90_bu64297
-#MM_CAMERA += libchromatix_ov2718_hfr_120_bu64297
-#MM_CAMERA += libchromatix_ov2718_zsl_preview_bu64297
-#MM_CAMERA += libchromatix_ov2718_zsl_video_bu64297
+MM_CAMERA += libchromatix_ov2718_default_video
+MM_CAMERA += libchromatix_ov2718_postproc
+MM_CAMERA += libchromatix_ov2718_preview
+MM_CAMERA += libchromatix_ov2718_snapshot
+MM_CAMERA += libchromatix_ov2718_video_full
+MM_CAMERA += libchromatix_ov2718_cpp_hfr_60
+MM_CAMERA += libchromatix_ov2718_cpp_hfr_90
+MM_CAMERA += libchromatix_ov2718_cpp_liveshot
+MM_CAMERA += libchromatix_ov2718_cpp_preview
+MM_CAMERA += libchromatix_ov2718_cpp_snapshot
+MM_CAMERA += libchromatix_ov2718_cpp_us_chromatix
+MM_CAMERA += libchromatix_ov2718_cpp_video
+MM_CAMERA += libchromatix_ov2718_cpp_video_full
+MM_CAMERA += libchromatix_ov2718_hfr_60
+MM_CAMERA += libchromatix_ov2718_hfr_90
+MM_CAMERA += libchromatix_ov2718_hfr_120
+MM_CAMERA += libchromatix_ov2718_liveshot
+MM_CAMERA += libchromatix_ov2718_common
+MM_CAMERA += libchromatix_ov2718_cpp_ds_chromatix
+MM_CAMERA += libchromatix_ov2718_cpp_hfr_120
+MM_CAMERA += libchromatix_ov2718_default_preview_bu64297
+MM_CAMERA += libchromatix_ov2718_default_video_bu64297
+MM_CAMERA += libchromatix_ov2718_hfr_60_bu64297
+MM_CAMERA += libchromatix_ov2718_hfr_90_bu64297
+MM_CAMERA += libchromatix_ov2718_hfr_120_bu64297
+MM_CAMERA += libchromatix_ov2718_zsl_preview_bu64297
+MM_CAMERA += libchromatix_ov2718_zsl_video_bu64297
+
+# add by zhj start
+MM_CAMERA += libmmcamera_ov9284
+# add by zhj end
 
 MM_CAMERA += camera_config.xml
 MM_CAMERA += msm8996_camera.xml
@@ -3731,6 +3735,7 @@ MM_CAMERA += s5k3m2xm_chromatix_bear.xml
 MM_CAMERA += s5k3m2xx_chromatix.xml
 MM_CAMERA += s5k3p3sm_chromatix.xml
 MM_CAMERA += ov2718_chromatix.xml
+MM_CAMERA += ov9284_chromatix.xml
 MM_CAMERA += sensors.hal.tof
 
 MM_CAMERA += libchromaflash
@@ -3947,11 +3952,6 @@ MM_CAMERA += libcom.qti.stats.awb
 MM_CAMERA += libcom.qti.stats.asd
 MM_CAMERA += libcom.qtistatic.stats.asd
 #end of can be removed after source code merges
-
-#end copy from product.mk
-
-
-MM_CAMERA += CAMERA_ICP.elf
 
 MM_CAMERA += camera.qcom
 MM_CAMERA += com.qti.eisv2
@@ -6702,7 +6702,7 @@ endif
 # currently this is been defined as below but need to be modifed
 # based on security issues been addressed.
 ifeq ($(ENABLE_VENDOR_IMAGE), true)
-VENDOR_SECURITY_PATCH := "2018-08-05"
+VENDOR_SECURITY_PATCH := "2019-07-05"
 endif
 
 #interage widewine L3 by zzj start
