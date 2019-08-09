@@ -3,7 +3,7 @@
 <favorites>
   <!-- Hotseat (We use the screen as the position of the item in the hotseat) -->
   <!-- Dialer Messaging Calendar Contacts Camera -->
-  <favorite container="-101" screen="0" x="0" y="0" packageName="com.android.dialer" className="com.android.dialer.app.DialtactsActivity"/>
+  <favorite container="-101" screen="0" x="0" y="0" packageName="org.codeaurora.dialer" className="com.android.dialer.app.DialtactsActivity"/>
   <favorite container="-101" screen="1" x="1" y="0" packageName="com.android.mms" className="com.android.mms.ui.ConversationList"/>
   <favorite container="-101" screen="2" x="2" y="0" packageName="com.google.android.calendar" className="com.android.calendar.event.LaunchInfoActivity"/>
   <favorite container="-101" screen="3" x="3" y="0" packageName="com.android.contacts" className="com.android.contacts.activities.PeopleActivity"/>

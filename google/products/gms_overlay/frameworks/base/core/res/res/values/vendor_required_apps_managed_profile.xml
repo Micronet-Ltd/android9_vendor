@@ -19,8 +19,10 @@
 <resources>
     <!-- A list of apps to be retained in the managed profile. This includes any Google experience apps required. -->
     <string-array name="vendor_required_apps_managed_profile">
+        <!--modify google app to qualcomm app for GMS pass start-->
         <item>com.android.vending</item> <!-- Google Play -->
         <item>com.google.android.gms</item> <!-- Required by Play -->
-        <item>com.google.android.contacts</item> <!-- Google Contacts -->
+        <item>com.android.contacts</item> <!-- Google Contacts -->
+        <!--modify google app to qualcomm app for GMS pass end-->
     </string-array>
 </resources>
