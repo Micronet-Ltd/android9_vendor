@@ -79,76 +79,76 @@ special_mode_mask values:
 <ChromatixConfigurationRoot>
   <CommonChromatixInfo>
     <ChromatixName>
-      <ISPCommon>ov9284_common</ISPCommon>
-      <PostProc>ov9284_postproc</PostProc>
+      <ISPCommon>ov9281_common</ISPCommon>
+      <PostProc>ov9281_postproc</PostProc>
     </ChromatixName>
   </CommonChromatixInfo>
   <ResolutionChromatixInfo>
     <ChromatixName sensor_resolution_index="0">
-      <ISPPreview>ov9284_snapshot</ISPPreview>
-      <ISPSnapshot>ov9284_snapshot</ISPSnapshot>
-      <ISPVideo>ov9284_video_full</ISPVideo>
-      <CPPPreview>ov9284_cpp_snapshot</CPPPreview>
-      <CPPSnapshot>ov9284_cpp_snapshot</CPPSnapshot>
-      <CPPVideo>ov9284_cpp_video_full</CPPVideo>
-      <CPPLiveshot>ov9284_cpp_liveshot</CPPLiveshot>
-      <A3Preview>ov9284_zsl_preview_bu64297</A3Preview>
-      <A3Video>ov9284_zsl_video_bu64297</A3Video>
+      <ISPPreview>ov9281_snapshot</ISPPreview>
+      <ISPSnapshot>ov9281_snapshot</ISPSnapshot>
+      <ISPVideo>ov9281_video_full</ISPVideo>
+      <CPPPreview>ov9281_cpp_snapshot</CPPPreview>
+      <CPPSnapshot>ov9281_cpp_snapshot</CPPSnapshot>
+      <CPPVideo>ov9281_cpp_video_full</CPPVideo>
+      <CPPLiveshot>ov9281_cpp_liveshot</CPPLiveshot>
+      <A3Preview>ov9281_zsl_preview_bu64297</A3Preview>
+      <A3Video>ov9281_zsl_video_bu64297</A3Video>
     </ChromatixName>
     <ChromatixName sensor_resolution_index="1">
-      <ISPPreview>ov9284_preview</ISPPreview>
-      <ISPSnapshot>ov9284_preview</ISPSnapshot>
-      <ISPVideo>ov9284_default_video</ISPVideo>
-      <CPPPreview>ov9284_cpp_preview</CPPPreview>
-      <CPPSnapshot>ov9284_cpp_preview</CPPSnapshot>
-      <CPPVideo>ov9284_cpp_video</CPPVideo>
-      <CPPLiveshot>ov9284_cpp_preview</CPPLiveshot>
-      <A3Preview>ov9284_default_preview_bu64297</A3Preview>
-      <A3Video>ov9284_default_video_bu64297</A3Video>
+      <ISPPreview>ov9281_preview</ISPPreview>
+      <ISPSnapshot>ov9281_preview</ISPSnapshot>
+      <ISPVideo>ov9281_default_video</ISPVideo>
+      <CPPPreview>ov9281_cpp_preview</CPPPreview>
+      <CPPSnapshot>ov9281_cpp_preview</CPPSnapshot>
+      <CPPVideo>ov9281_cpp_video</CPPVideo>
+      <CPPLiveshot>ov9281_cpp_preview</CPPLiveshot>
+      <A3Preview>ov9281_default_preview_bu64297</A3Preview>
+      <A3Video>ov9281_default_video_bu64297</A3Video>
     </ChromatixName>
     <ChromatixName sensor_resolution_index="2">
-      <ISPPreview>ov9284_preview</ISPPreview>
-      <ISPSnapshot>ov9284_preview</ISPSnapshot>
-      <ISPVideo>ov9284_default_video</ISPVideo>
-      <CPPPreview>ov9284_cpp_preview</CPPPreview>
-      <CPPSnapshot>ov9284_cpp_preview</CPPSnapshot>
-      <CPPVideo>ov9284_cpp_video</CPPVideo>
-      <CPPLiveshot>ov9284_cpp_preview</CPPLiveshot>
-      <A3Preview>ov9284_default_preview_bu64297</A3Preview>
-      <A3Video>ov9284_default_video_bu64297</A3Video>
+      <ISPPreview>ov9281_preview</ISPPreview>
+      <ISPSnapshot>ov9281_preview</ISPSnapshot>
+      <ISPVideo>ov9281_default_video</ISPVideo>
+      <CPPPreview>ov9281_cpp_preview</CPPPreview>
+      <CPPSnapshot>ov9281_cpp_preview</CPPSnapshot>
+      <CPPVideo>ov9281_cpp_video</CPPVideo>
+      <CPPLiveshot>ov9281_cpp_preview</CPPLiveshot>
+      <A3Preview>ov9281_default_preview_bu64297</A3Preview>
+      <A3Video>ov9281_default_video_bu64297</A3Video>
     </ChromatixName>
     <ChromatixName sensor_resolution_index="3">
-      <ISPPreview>ov9284_hfr_60</ISPPreview>
-      <ISPSnapshot>ov9284_hfr_60</ISPSnapshot>
-      <ISPVideo>ov9284_hfr_60</ISPVideo>
-      <CPPPreview>ov9284_cpp_hfr_60</CPPPreview>
-      <CPPSnapshot>ov9284_cpp_hfr_60</CPPSnapshot>
-      <CPPVideo>ov9284_cpp_hfr_60</CPPVideo>
-      <CPPLiveshot>ov9284_cpp_hfr_60</CPPLiveshot>
-      <A3Preview>ov9284_hfr_60_bu64297</A3Preview>
-      <A3Video>ov9284_hfr_60_bu64297</A3Video>
+      <ISPPreview>ov9281_hfr_60</ISPPreview>
+      <ISPSnapshot>ov9281_hfr_60</ISPSnapshot>
+      <ISPVideo>ov9281_hfr_60</ISPVideo>
+      <CPPPreview>ov9281_cpp_hfr_60</CPPPreview>
+      <CPPSnapshot>ov9281_cpp_hfr_60</CPPSnapshot>
+      <CPPVideo>ov9281_cpp_hfr_60</CPPVideo>
+      <CPPLiveshot>ov9281_cpp_hfr_60</CPPLiveshot>
+      <A3Preview>ov9281_hfr_60_bu64297</A3Preview>
+      <A3Video>ov9281_hfr_60_bu64297</A3Video>
     </ChromatixName>
     <ChromatixName sensor_resolution_index="4">
-      <ISPPreview>ov9284_hfr_90</ISPPreview>
-      <ISPSnapshot>ov9284_hfr_90</ISPSnapshot>
-      <ISPVideo>ov9284_hfr_90</ISPVideo>
-      <CPPPreview>ov9284_cpp_hfr_90</CPPPreview>
-      <CPPSnapshot>ov9284_cpp_hfr_90</CPPSnapshot>
-      <CPPVideo>ov9284_cpp_hfr_90</CPPVideo>
-      <CPPLiveshot>ov9284_cpp_hfr_90</CPPLiveshot>
-      <A3Preview>ov9284_hfr_90_bu64297</A3Preview>
-      <A3Video>ov9284_hfr_90_bu64297</A3Video>
+      <ISPPreview>ov9281_hfr_90</ISPPreview>
+      <ISPSnapshot>ov9281_hfr_90</ISPSnapshot>
+      <ISPVideo>ov9281_hfr_90</ISPVideo>
+      <CPPPreview>ov9281_cpp_hfr_90</CPPPreview>
+      <CPPSnapshot>ov9281_cpp_hfr_90</CPPSnapshot>
+      <CPPVideo>ov9281_cpp_hfr_90</CPPVideo>
+      <CPPLiveshot>ov9281_cpp_hfr_90</CPPLiveshot>
+      <A3Preview>ov9281_hfr_90_bu64297</A3Preview>
+      <A3Video>ov9281_hfr_90_bu64297</A3Video>
     </ChromatixName>
     <ChromatixName sensor_resolution_index="5">
-      <ISPPreview>ov9284_hfr_120</ISPPreview>
-      <ISPSnapshot>ov9284_hfr_120</ISPSnapshot>
-      <ISPVideo>ov9284_hfr_120</ISPVideo>
-      <CPPPreview>ov9284_cpp_hfr_120</CPPPreview>
-      <CPPSnapshot>ov9284_cpp_hfr_120</CPPSnapshot>
-      <CPPVideo>ov9284_cpp_hfr_120</CPPVideo>
-      <CPPLiveshot>ov9284_cpp_hfr_120</CPPLiveshot>
-      <A3Preview>ov9284_hfr_120_bu64297</A3Preview>
-      <A3Video>ov9284_hfr_120_bu64297</A3Video>
+      <ISPPreview>ov9281_hfr_120</ISPPreview>
+      <ISPSnapshot>ov9281_hfr_120</ISPSnapshot>
+      <ISPVideo>ov9281_hfr_120</ISPVideo>
+      <CPPPreview>ov9281_cpp_hfr_120</CPPPreview>
+      <CPPSnapshot>ov9281_cpp_hfr_120</CPPSnapshot>
+      <CPPVideo>ov9281_cpp_hfr_120</CPPVideo>
+      <CPPLiveshot>ov9281_cpp_hfr_120</CPPLiveshot>
+      <A3Preview>ov9281_hfr_120_bu64297</A3Preview>
+      <A3Video>ov9281_hfr_120_bu64297</A3Video>
     </ChromatixName>
   </ResolutionChromatixInfo>
 </ChromatixConfigurationRoot>

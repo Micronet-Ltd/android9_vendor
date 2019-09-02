@@ -3676,8 +3676,67 @@ MM_CAMERA += libchromatix_ov2718_hfr_120_bu64297
 MM_CAMERA += libchromatix_ov2718_zsl_preview_bu64297
 MM_CAMERA += libchromatix_ov2718_zsl_video_bu64297
 
+
+MM_CAMERA += libchromatix_ov9284_default_video
+MM_CAMERA += libchromatix_ov9284_postproc
+MM_CAMERA += libchromatix_ov9284_preview
+MM_CAMERA += libchromatix_ov9284_snapshot
+MM_CAMERA += libchromatix_ov9284_video_full
+MM_CAMERA += libchromatix_ov9284_cpp_hfr_60
+MM_CAMERA += libchromatix_ov9284_cpp_hfr_90
+MM_CAMERA += libchromatix_ov9284_cpp_liveshot
+MM_CAMERA += libchromatix_ov9284_cpp_preview
+MM_CAMERA += libchromatix_ov9284_cpp_snapshot
+MM_CAMERA += libchromatix_ov9284_cpp_us_chromatix
+MM_CAMERA += libchromatix_ov9284_cpp_video
+MM_CAMERA += libchromatix_ov9284_cpp_video_full
+MM_CAMERA += libchromatix_ov9284_hfr_60
+MM_CAMERA += libchromatix_ov9284_hfr_90
+MM_CAMERA += libchromatix_ov9284_hfr_120
+MM_CAMERA += libchromatix_ov9284_liveshot
+MM_CAMERA += libchromatix_ov9284_common
+MM_CAMERA += libchromatix_ov9284_cpp_ds_chromatix
+MM_CAMERA += libchromatix_ov9284_cpp_hfr_120
+MM_CAMERA += libchromatix_ov9284_default_preview_bu64297
+MM_CAMERA += libchromatix_ov9284_default_video_bu64297
+MM_CAMERA += libchromatix_ov9284_hfr_60_bu64297
+MM_CAMERA += libchromatix_ov9284_hfr_90_bu64297
+MM_CAMERA += libchromatix_ov9284_hfr_120_bu64297
+MM_CAMERA += libchromatix_ov9284_zsl_preview_bu64297
+MM_CAMERA += libchromatix_ov9284_zsl_video_bu64297
+
+MM_CAMERA += libchromatix_ov9281_default_video
+MM_CAMERA += libchromatix_ov9281_postproc
+MM_CAMERA += libchromatix_ov9281_preview
+MM_CAMERA += libchromatix_ov9281_snapshot
+MM_CAMERA += libchromatix_ov9281_video_full
+MM_CAMERA += libchromatix_ov9281_cpp_hfr_60
+MM_CAMERA += libchromatix_ov9281_cpp_hfr_90
+MM_CAMERA += libchromatix_ov9281_cpp_liveshot
+MM_CAMERA += libchromatix_ov9281_cpp_preview
+MM_CAMERA += libchromatix_ov9281_cpp_snapshot
+MM_CAMERA += libchromatix_ov9281_cpp_us_chromatix
+MM_CAMERA += libchromatix_ov9281_cpp_video
+MM_CAMERA += libchromatix_ov9281_cpp_video_full
+MM_CAMERA += libchromatix_ov9281_hfr_60
+MM_CAMERA += libchromatix_ov9281_hfr_90
+MM_CAMERA += libchromatix_ov9281_hfr_120
+MM_CAMERA += libchromatix_ov9281_liveshot
+MM_CAMERA += libchromatix_ov9281_common
+MM_CAMERA += libchromatix_ov9281_cpp_ds_chromatix
+MM_CAMERA += libchromatix_ov9281_cpp_hfr_120
+MM_CAMERA += libchromatix_ov9281_default_preview_bu64297
+MM_CAMERA += libchromatix_ov9281_default_video_bu64297
+MM_CAMERA += libchromatix_ov9281_hfr_60_bu64297
+MM_CAMERA += libchromatix_ov9281_hfr_90_bu64297
+MM_CAMERA += libchromatix_ov9281_hfr_120_bu64297
+MM_CAMERA += libchromatix_ov9281_zsl_preview_bu64297
+MM_CAMERA += libchromatix_ov9281_zsl_video_bu64297
+
+
 # add by zhj start
 MM_CAMERA += libmmcamera_ov9284
+MM_CAMERA += libmmcamera_ov9281
 # add by zhj end
 
 MM_CAMERA += camera_config.xml
@@ -3736,6 +3795,7 @@ MM_CAMERA += s5k3m2xx_chromatix.xml
 MM_CAMERA += s5k3p3sm_chromatix.xml
 MM_CAMERA += ov2718_chromatix.xml
 MM_CAMERA += ov9284_chromatix.xml
+MM_CAMERA += ov9281_chromatix.xml
 MM_CAMERA += sensors.hal.tof
 
 MM_CAMERA += libchromaflash
@@ -4048,6 +4108,8 @@ MM_CAMERA += libchromatix_ov5670_30010a3_zsl
 MM_CAMERA += libchromatix_ov5670_30010a3_hfr_90fps
 MM_CAMERA += libchromatix_ov5670_30010a3_livesho
 MM_CAMERA += libmmcamera_ov2718
+MM_CAMERA += libmmcamera_ov9284
+MM_CAMERA += libmmcamera_ov9281
 ifeq ($(TARGET_BOARD_AUTO),true)
 MM_CAMERA_AIS := libais
 MM_CAMERA_AIS += libais_client
