@@ -47,6 +47,7 @@ PRODUCT_COPY_FILES += \
     $(ANDROID_PARTNER_GMS_HOME)/etc/permissions/privapp-permissions-google.xml:system/etc/permissions/privapp-permissions-google.xml \
     $(ANDROID_PARTNER_GMS_HOME)/etc/preferred-apps/google.xml:system/etc/preferred-apps/google.xml \
     $(ANDROID_PARTNER_GMS_HOME)/etc/sysconfig/google.xml:system/etc/sysconfig/google.xml \
+    $(ANDROID_PARTNER_GMS_HOME)/etc/sysconfig/wellbeing.xml:system/etc/sysconfig/wellbeing.xml \
     $(ANDROID_PARTNER_GMS_HOME)/etc/sysconfig/google-hiddenapi-package-whitelist.xml:system/etc/sysconfig/google-hiddenapi-package-whitelist.xml
 
 # GMS mandatory application packages
@@ -55,7 +56,7 @@ PRODUCT_PACKAGES += \
     Gmail2 \
     Duo \
     Maps \
-    Music2 \
+    YTMusic \
     Photos \
     Videos \
     YouTube
@@ -90,5 +91,6 @@ PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.opa.eligible_device=true \
     ro.setupwizard.mode=OPTIONAL \
+    ro.product.first_api_level=28 \
     setupwizard.feature.predeferred_enabled=false \
-    ro.com.google.gmsversion=9_201906
+    ro.com.google.gmsversion=9_201909

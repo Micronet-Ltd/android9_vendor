@@ -46,12 +46,13 @@ PRODUCT_PACKAGE_OVERLAYS += $(ANDROID_PARTNER_GMS_HOME)/apps_go/GoogleDialerGo/o
 PRODUCT_COPY_FILES += \
     $(ANDROID_PARTNER_GMS_HOME)/etc/default-permissions/default-permissions-google.xml:system/etc/default-permissions/default-permissions-google.xml \
     $(ANDROID_PARTNER_GMS_HOME)/etc/permissions/privapp-permissions-google.xml:system/etc/permissions/privapp-permissions-google.xml \
-    $(ANDROID_PARTNER_GMS_HOME)/etc/preferred-apps/google.xml:system/etc/preferred-apps/google.xml \
+    $(ANDROID_PARTNER_GMS_HOME)/etc/preferred-apps/google_go.xml:system/etc/preferred-apps/google.xml \
     $(ANDROID_PARTNER_GMS_HOME)/etc/sysconfig/google_go.xml:system/etc/sysconfig/google.xml \
     $(ANDROID_PARTNER_GMS_HOME)/etc/sysconfig/google-hiddenapi-package-whitelist.xml:system/etc/sysconfig/google-hiddenapi-package-whitelist.xml
 
 # GMS mandatory application packages
 PRODUCT_PACKAGES += \
+    GalleryGo \
     GMailGo \
     LatinImeGoogleGo \
     MapsGo \
@@ -84,4 +85,4 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.opa.eligible_device=true \
     ro.setupwizard.mode=OPTIONAL \
     setupwizard.feature.predeferred_enabled=false \
-    ro.com.google.gmsversion=9_201906.go
+    ro.com.google.gmsversion=9_201909.go
