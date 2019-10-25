@@ -2,7 +2,7 @@
 # GoogleDialer
 LOCAL_PATH := $(call my-dir)
 
-my_archs := arm
+my_archs := arm arm64
 my_src_arch := $(call get-prebuilt-src-arch, $(my_archs))
 
 include $(CLEAR_VARS)
