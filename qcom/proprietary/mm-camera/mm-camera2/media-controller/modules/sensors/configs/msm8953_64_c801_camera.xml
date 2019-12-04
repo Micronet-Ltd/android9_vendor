@@ -123,11 +123,11 @@ LensInfo : Information of the lens present in the module.
       <ComboMode>0</ComboMode>
     </CSIInfo>
     <LensInfo>
-      <FocalLength>3.83</FocalLength>
+      <FocalLength>3.05</FocalLength>
       <FNumber>2.0</FNumber>
       <TotalFocusDistance>1.97</TotalFocusDistance>
-      <HorizontalViewAngle>63.2</HorizontalViewAngle>
-      <VerticalViewAngle>49.0</VerticalViewAngle>
+      <HorizontalViewAngle>120</HorizontalViewAngle>
+      <VerticalViewAngle>62.4</VerticalViewAngle>
       <MinFocusDistance>0.1</MinFocusDistance>
     </LensInfo>
   </CameraModuleConfig>
