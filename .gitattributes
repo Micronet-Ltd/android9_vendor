@@ -78,3 +78,5 @@ widevine/libwvdrmengine/level3/x86/libl3oemcrypto.cpp filter=lfs diff=lfs merge=
 widevine/libwvdrmengine/level3/mips64/libl3oemcrypto.cpp filter=lfs diff=lfs merge=lfs -text
 widevine/libwvdrmengine/level3/mips/libl3oemcrypto.cpp filter=lfs diff=lfs merge=lfs -text
 widevine/libwvdrmengine/level3/arm64/libl3oemcrypto.cpp filter=lfs diff=lfs merge=lfs -text
+google/apps/YTMusic/*.apk filter=lfs diff=lfs merge=lfs -text
+google/apps_go/GalleryGo/*.apk filter=lfs diff=lfs merge=lfs -text
