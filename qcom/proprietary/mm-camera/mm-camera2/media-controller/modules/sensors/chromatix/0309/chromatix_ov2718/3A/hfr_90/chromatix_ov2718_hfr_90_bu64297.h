@@ -2610,7 +2610,7 @@
       {
          /* D65 */
          {
-            0, /* Enable */
+            1, /* Enable */
             /* D65 */
             {
                1.000000f,    0.000000f,    0.000000f,
@@ -2622,7 +2622,7 @@
          },
          /* D50 */
          {
-            0, /* Enable */
+            1, /* Enable */
             /* D50 */
             {
                1.000000f,    0.000000f,    0.000000f,
@@ -2634,7 +2634,7 @@
          },
          /* CW */
          {
-            0, /* Enable */
+            1, /* Enable */
             /* Cool White */
             {
                1.000000f,    0.000000f,    0.000000f,
@@ -2646,7 +2646,7 @@
          },
          /* TL84 */
          {
-            0, /* Enable */
+            1, /* Enable */
             /* TL84 */
             {
                1.000000f,    0.000000f,    0.000000f,
@@ -2658,7 +2658,7 @@
          },
          /* A */
          {
-            0, /* Enable */
+            1, /* Enable */
             /* A */
             {
                1.000000f,    0.000000f,    0.000000f,
@@ -2670,7 +2670,7 @@
          },
          /* H */
          {
-            0, /* Enable */
+            1, /* Enable */
             /* H */
             {
                1.000000f,    0.000000f,    0.000000f,
@@ -2784,7 +2784,7 @@
          },
          /* Green */
          {
-            0, /* Enable */
+            1, /* Enable */
             /* Green */
             {
                1.000000f,    0.000000f,    0.000000f,
@@ -2796,7 +2796,7 @@
          },
          /* Sky */
          {
-            0, /* Enable */
+            1, /* Enable */
             /* Sky */
             {
                1.000000f,    0.000000f,    0.000000f,
@@ -2808,7 +2808,7 @@
          },
          /* Skin */
          {
-            0, /* Enable */
+            1, /* Enable */
             /* Skin */
             {
                1.000000f,    0.000000f,    0.000000f,
@@ -2820,7 +2820,7 @@
          },
          /* Lowlight */
          {
-            0, /* Enable */
+            1, /* Enable */
             /* Lowlight */
             {
                1.835900f,    -0.894000f,    0.058200f,
@@ -6571,456 +6571,456 @@
 
    /* Exposure Table */
    {
-      372, /* Max Exposure Table Entries for EV0 */
+      401, /* Max Exposure Table Entries for EV0 */
       1, /* Enable Digital Gain for EV Lowlight */
-      418, /* Max Exposure Table Entries for EV+2 with digital gain */
-      264, /* Fix FPS AEC Table Index */
+      445, /* Max Exposure Table Entries for EV+2 with digital gain */
+      350, /* Fix FPS AEC Table Index */
       {
-         {256, 6}, /* Gain= 1.000 Exposure Index=0 */
-         {264, 6}, /* Gain= 1.031 Exposure Index=1 */
-         {272, 6}, /* Gain= 1.063 Exposure Index=2 */
-         {280, 6}, /* Gain= 1.094 Exposure Index=3 */
-         {288, 6}, /* Gain= 1.125 Exposure Index=4 */
-         {297, 6}, /* Gain= 1.160 Exposure Index=5 */
-         {262, 7}, /* Gain= 1.023 Exposure Index=6 */
-         {270, 7}, /* Gain= 1.055 Exposure Index=7 */
-         {278, 7}, /* Gain= 1.086 Exposure Index=8 */
-         {286, 7}, /* Gain= 1.117 Exposure Index=9 */
-         {258, 8}, /* Gain= 1.008 Exposure Index=10 */
-         {266, 8}, /* Gain= 1.039 Exposure Index=11 */
-         {274, 8}, /* Gain= 1.070 Exposure Index=12 */
-         {282, 8}, /* Gain= 1.102 Exposure Index=13 */
-         {258, 9}, /* Gain= 1.008 Exposure Index=14 */
-         {266, 9}, /* Gain= 1.039 Exposure Index=15 */
-         {274, 9}, /* Gain= 1.070 Exposure Index=16 */
-         {282, 9}, /* Gain= 1.102 Exposure Index=17 */
-         {261, 10}, /* Gain= 1.020 Exposure Index=18 */
-         {269, 10}, /* Gain= 1.051 Exposure Index=19 */
-         {277, 10}, /* Gain= 1.082 Exposure Index=20 */
-         {259, 11}, /* Gain= 1.012 Exposure Index=21 */
-         {267, 11}, /* Gain= 1.043 Exposure Index=22 */
-         {275, 11}, /* Gain= 1.074 Exposure Index=23 */
-         {260, 12}, /* Gain= 1.016 Exposure Index=24 */
-         {268, 12}, /* Gain= 1.047 Exposure Index=25 */
-         {276, 12}, /* Gain= 1.078 Exposure Index=26 */
-         {262, 13}, /* Gain= 1.023 Exposure Index=27 */
-         {270, 13}, /* Gain= 1.055 Exposure Index=28 */
-         {258, 14}, /* Gain= 1.008 Exposure Index=29 */
-         {266, 14}, /* Gain= 1.039 Exposure Index=30 */
-         {274, 14}, /* Gain= 1.070 Exposure Index=31 */
-         {263, 15}, /* Gain= 1.027 Exposure Index=32 */
-         {271, 15}, /* Gain= 1.059 Exposure Index=33 */
-         {262, 16}, /* Gain= 1.023 Exposure Index=34 */
-         {270, 16}, /* Gain= 1.055 Exposure Index=35 */
-         {262, 17}, /* Gain= 1.023 Exposure Index=36 */
-         {270, 17}, /* Gain= 1.055 Exposure Index=37 */
-         {263, 18}, /* Gain= 1.027 Exposure Index=38 */
-         {257, 19}, /* Gain= 1.004 Exposure Index=39 */
-         {265, 19}, /* Gain= 1.035 Exposure Index=40 */
-         {259, 20}, /* Gain= 1.012 Exposure Index=41 */
-         {267, 20}, /* Gain= 1.043 Exposure Index=42 */
-         {262, 21}, /* Gain= 1.023 Exposure Index=43 */
-         {258, 22}, /* Gain= 1.008 Exposure Index=44 */
-         {266, 22}, /* Gain= 1.039 Exposure Index=45 */
-         {262, 23}, /* Gain= 1.023 Exposure Index=46 */
-         {259, 24}, /* Gain= 1.012 Exposure Index=47 */
-         {256, 25}, /* Gain= 1.000 Exposure Index=48 */
-         {264, 25}, /* Gain= 1.031 Exposure Index=49 */
-         {261, 26}, /* Gain= 1.020 Exposure Index=50 */
-         {259, 27}, /* Gain= 1.012 Exposure Index=51 */
-         {257, 28}, /* Gain= 1.004 Exposure Index=52 */
-         {265, 28}, /* Gain= 1.035 Exposure Index=53 */
-         {264, 29}, /* Gain= 1.031 Exposure Index=54 */
-         {263, 30}, /* Gain= 1.027 Exposure Index=55 */
-         {262, 31}, /* Gain= 1.023 Exposure Index=56 */
-         {261, 32}, /* Gain= 1.020 Exposure Index=57 */
-         {261, 33}, /* Gain= 1.020 Exposure Index=58 */
-         {261, 34}, /* Gain= 1.020 Exposure Index=59 */
-         {261, 35}, /* Gain= 1.020 Exposure Index=60 */
-         {261, 36}, /* Gain= 1.020 Exposure Index=61 */
-         {262, 37}, /* Gain= 1.023 Exposure Index=62 */
-         {256, 39}, /* Gain= 1.000 Exposure Index=63 */
-         {257, 40}, /* Gain= 1.004 Exposure Index=64 */
-         {258, 41}, /* Gain= 1.008 Exposure Index=65 */
-         {259, 42}, /* Gain= 1.012 Exposure Index=66 */
-         {261, 43}, /* Gain= 1.020 Exposure Index=67 */
-         {257, 45}, /* Gain= 1.004 Exposure Index=68 */
-         {259, 46}, /* Gain= 1.012 Exposure Index=69 */
-         {261, 47}, /* Gain= 1.020 Exposure Index=70 */
-         {258, 49}, /* Gain= 1.008 Exposure Index=71 */
-         {260, 50}, /* Gain= 1.016 Exposure Index=72 */
-         {258, 52}, /* Gain= 1.008 Exposure Index=73 */
-         {261, 53}, /* Gain= 1.020 Exposure Index=74 */
-         {259, 55}, /* Gain= 1.012 Exposure Index=75 */
-         {257, 57}, /* Gain= 1.004 Exposure Index=76 */
-         {260, 58}, /* Gain= 1.016 Exposure Index=77 */
-         {259, 60}, /* Gain= 1.012 Exposure Index=78 */
-         {258, 62}, /* Gain= 1.008 Exposure Index=79 */
-         {257, 64}, /* Gain= 1.004 Exposure Index=80 */
-         {257, 66}, /* Gain= 1.004 Exposure Index=81 */
-         {257, 68}, /* Gain= 1.004 Exposure Index=82 */
-         {257, 70}, /* Gain= 1.004 Exposure Index=83 */
-         {257, 72}, /* Gain= 1.004 Exposure Index=84 */
-         {258, 74}, /* Gain= 1.008 Exposure Index=85 */
-         {259, 76}, /* Gain= 1.012 Exposure Index=86 */
-         {257, 79}, /* Gain= 1.004 Exposure Index=87 */
-         {258, 81}, /* Gain= 1.008 Exposure Index=88 */
-         {256, 84}, /* Gain= 1.000 Exposure Index=89 */
-         {258, 86}, /* Gain= 1.008 Exposure Index=90 */
-         {257, 89}, /* Gain= 1.004 Exposure Index=91 */
-         {256, 92}, /* Gain= 1.000 Exposure Index=92 */
-         {258, 94}, /* Gain= 1.008 Exposure Index=93 */
-         {258, 97}, /* Gain= 1.008 Exposure Index=94 */
-         {258, 100}, /* Gain= 1.008 Exposure Index=95 */
-         {258, 103}, /* Gain= 1.008 Exposure Index=96 */
-         {258, 106}, /* Gain= 1.008 Exposure Index=97 */
-         {256, 110}, /* Gain= 1.000 Exposure Index=98 */
-         {257, 113}, /* Gain= 1.004 Exposure Index=99 */
-         {258, 116}, /* Gain= 1.008 Exposure Index=100 */
-         {257, 120}, /* Gain= 1.004 Exposure Index=101 */
-         {256, 124}, /* Gain= 1.000 Exposure Index=102 */
-         {257, 127}, /* Gain= 1.004 Exposure Index=103 */
-         {257, 131}, /* Gain= 1.004 Exposure Index=104 */
-         {257, 135}, /* Gain= 1.004 Exposure Index=105 */
-         {257, 139}, /* Gain= 1.004 Exposure Index=106 */
-         {257, 143}, /* Gain= 1.004 Exposure Index=107 */
-         {258, 147}, /* Gain= 1.008 Exposure Index=108 */
-         {257, 152}, /* Gain= 1.004 Exposure Index=109 */
-         {256, 157}, /* Gain= 1.000 Exposure Index=110 */
-         {257, 161}, /* Gain= 1.004 Exposure Index=111 */
-         {257, 166}, /* Gain= 1.004 Exposure Index=112 */
-         {257, 171}, /* Gain= 1.004 Exposure Index=113 */
-         {257, 176}, /* Gain= 1.004 Exposure Index=114 */
-         {257, 181}, /* Gain= 1.004 Exposure Index=115 */
-         {256, 187}, /* Gain= 1.000 Exposure Index=116 */
-         {257, 192}, /* Gain= 1.004 Exposure Index=117 */
-         {257, 198}, /* Gain= 1.004 Exposure Index=118 */
-         {257, 204}, /* Gain= 1.004 Exposure Index=119 */
-         {257, 210}, /* Gain= 1.004 Exposure Index=120 */
-         {256, 217}, /* Gain= 1.000 Exposure Index=121 */
-         {257, 223}, /* Gain= 1.004 Exposure Index=122 */
-         {257, 230}, /* Gain= 1.004 Exposure Index=123 */
-         {257, 237}, /* Gain= 1.004 Exposure Index=124 */
-         {256, 245}, /* Gain= 1.000 Exposure Index=125 */
-         {256, 252}, /* Gain= 1.000 Exposure Index=126 */
-         {257, 259}, /* Gain= 1.004 Exposure Index=127 */
-         {257, 267}, /* Gain= 1.004 Exposure Index=128 */
-         {256, 276}, /* Gain= 1.000 Exposure Index=129 */
-         {256, 284}, /* Gain= 1.000 Exposure Index=130 */
-         {256, 292}, /* Gain= 1.000 Exposure Index=131 */
-         {257, 300}, /* Gain= 1.004 Exposure Index=132 */
-         {256, 310}, /* Gain= 1.000 Exposure Index=133 */
-         {256, 319}, /* Gain= 1.000 Exposure Index=134 */
-         {256, 328}, /* Gain= 1.000 Exposure Index=135 */
-         {257, 337}, /* Gain= 1.004 Exposure Index=136 */
-         {256, 348}, /* Gain= 1.000 Exposure Index=137 */
-         {256, 358}, /* Gain= 1.000 Exposure Index=138 */
-         {257, 368}, /* Gain= 1.004 Exposure Index=139 */
-         {256, 380}, /* Gain= 1.000 Exposure Index=140 */
-         {256, 391}, /* Gain= 1.000 Exposure Index=141 */
-         {256, 402}, /* Gain= 1.000 Exposure Index=142 */
-         {256, 414}, /* Gain= 1.000 Exposure Index=143 */
-         {256, 426}, /* Gain= 1.000 Exposure Index=144 */
-         {256, 438}, /* Gain= 1.000 Exposure Index=145 */
-         {256, 451}, /* Gain= 1.000 Exposure Index=146 */
-         {256, 464}, /* Gain= 1.000 Exposure Index=147 */
-         {256, 477}, /* Gain= 1.000 Exposure Index=148 */
-         {256, 491}, /* Gain= 1.000 Exposure Index=149 */
-         {256, 505}, /* Gain= 1.000 Exposure Index=150 */
-         {256, 520}, /* Gain= 1.000 Exposure Index=151 */
-         {256, 535}, /* Gain= 1.000 Exposure Index=152 */
-         {256, 551}, /* Gain= 1.000 Exposure Index=153 */
-         {256, 567}, /* Gain= 1.000 Exposure Index=154 */
-         {256, 584}, /* Gain= 1.000 Exposure Index=155 */
-         {256, 601}, /* Gain= 1.000 Exposure Index=156 */
-         {256, 619}, /* Gain= 1.000 Exposure Index=157 */
-         {256, 637}, /* Gain= 1.000 Exposure Index=158 */
-         {256, 656}, /* Gain= 1.000 Exposure Index=159 */
-         {256, 675}, /* Gain= 1.000 Exposure Index=160 */
-         {256, 695}, /* Gain= 1.000 Exposure Index=161 */
-         {256, 715}, /* Gain= 1.000 Exposure Index=162 */
-         {256, 736}, /* Gain= 1.000 Exposure Index=163 */
-         {256, 758}, /* Gain= 1.000 Exposure Index=164 */
-         {256, 780}, /* Gain= 1.000 Exposure Index=165 */
-         {256, 803}, /* Gain= 1.000 Exposure Index=166 */
-         {256, 827}, /* Gain= 1.000 Exposure Index=167 */
-         {256, 851}, /* Gain= 1.000 Exposure Index=168 */
-         {256, 876}, /* Gain= 1.000 Exposure Index=169 */
-         {256, 902}, /* Gain= 1.000 Exposure Index=170 */
-         {256, 929}, /* Gain= 1.000 Exposure Index=171 */
-         {256, 956}, /* Gain= 1.000 Exposure Index=172 */
-         {256, 984}, /* Gain= 1.000 Exposure Index=173 */
-         {256, 1013}, /* Gain= 1.000 Exposure Index=174 */
-         {256, 1043}, /* Gain= 1.000 Exposure Index=175 */
-         {256, 1074}, /* Gain= 1.000 Exposure Index=176 */
-         {256, 1106}, /* Gain= 1.000 Exposure Index=177 */
-         {256, 1139}, /* Gain= 1.000 Exposure Index=178 */
-         {256, 1173}, /* Gain= 1.000 Exposure Index=179 */
-         {256, 1208}, /* Gain= 1.000 Exposure Index=180 */
-         {256, 1244}, /* Gain= 1.000 Exposure Index=181 */
-         {256, 1281}, /* Gain= 1.000 Exposure Index=182 */
-         {256, 1319}, /* Gain= 1.000 Exposure Index=183 */
-         {256, 1358}, /* Gain= 1.000 Exposure Index=184 */
-         {256, 1398}, /* Gain= 1.000 Exposure Index=185 */
-         {256, 1439}, /* Gain= 1.000 Exposure Index=186 */
-         {256, 1482}, /* Gain= 1.000 Exposure Index=187 */
-         {256, 1526}, /* Gain= 1.000 Exposure Index=188 */
-         {256, 1571}, /* Gain= 1.000 Exposure Index=189 */
-         {256, 1618}, /* Gain= 1.000 Exposure Index=190 */
-         {256, 1666}, /* Gain= 1.000 Exposure Index=191 */
-         {256, 1715}, /* Gain= 1.000 Exposure Index=192 */
-         {256, 1766}, /* Gain= 1.000 Exposure Index=193 */
-         {256, 1818}, /* Gain= 1.000 Exposure Index=194 */
-         {264, 1818}, /* Gain= 1.031 Exposure Index=195 */
-         {272, 1818}, /* Gain= 1.063 Exposure Index=196 */
-         {280, 1818}, /* Gain= 1.094 Exposure Index=197 */
-         {288, 1818}, /* Gain= 1.125 Exposure Index=198 */
-         {297, 1818}, /* Gain= 1.160 Exposure Index=199 */
-         {306, 1818}, /* Gain= 1.195 Exposure Index=200 */
-         {315, 1818}, /* Gain= 1.230 Exposure Index=201 */
-         {324, 1818}, /* Gain= 1.266 Exposure Index=202 */
-         {334, 1818}, /* Gain= 1.305 Exposure Index=203 */
-         {344, 1818}, /* Gain= 1.344 Exposure Index=204 */
-         {354, 1818}, /* Gain= 1.383 Exposure Index=205 */
-         {365, 1818}, /* Gain= 1.426 Exposure Index=206 */
-         {376, 1818}, /* Gain= 1.469 Exposure Index=207 */
-         {387, 1818}, /* Gain= 1.512 Exposure Index=208 */
-         {399, 1818}, /* Gain= 1.559 Exposure Index=209 */
-         {411, 1818}, /* Gain= 1.605 Exposure Index=210 */
-         {423, 1818}, /* Gain= 1.652 Exposure Index=211 */
-         {436, 1818}, /* Gain= 1.703 Exposure Index=212 */
-         {449, 1818}, /* Gain= 1.754 Exposure Index=213 */
-         {462, 1818}, /* Gain= 1.805 Exposure Index=214 */
-         {476, 1818}, /* Gain= 1.859 Exposure Index=215 */
-         {490, 1818}, /* Gain= 1.914 Exposure Index=216 */
-         {505, 1818}, /* Gain= 1.973 Exposure Index=217 */
-         {520, 1818}, /* Gain= 2.031 Exposure Index=218 */
-         {536, 1818}, /* Gain= 2.094 Exposure Index=219 */
-         {552, 1818}, /* Gain= 2.156 Exposure Index=220 */
-         {569, 1818}, /* Gain= 2.223 Exposure Index=221 */
-         {586, 1818}, /* Gain= 2.289 Exposure Index=222 */
-         {604, 1818}, /* Gain= 2.359 Exposure Index=223 */
-         {622, 1818}, /* Gain= 2.430 Exposure Index=224 */
-         {641, 1818}, /* Gain= 2.504 Exposure Index=225 */
-         {660, 1818}, /* Gain= 2.578 Exposure Index=226 */
-         {680, 1818}, /* Gain= 2.656 Exposure Index=227 */
-         {700, 1818}, /* Gain= 2.734 Exposure Index=228 */
-         {721, 1818}, /* Gain= 2.816 Exposure Index=229 */
-         {743, 1818}, /* Gain= 2.902 Exposure Index=230 */
-         {765, 1818}, /* Gain= 2.988 Exposure Index=231 */
-         {788, 1818}, /* Gain= 3.078 Exposure Index=232 */
-         {812, 1818}, /* Gain= 3.172 Exposure Index=233 */
-         {836, 1818}, /* Gain= 3.266 Exposure Index=234 */
-         {861, 1818}, /* Gain= 3.363 Exposure Index=235 */
-         {887, 1818}, /* Gain= 3.465 Exposure Index=236 */
-         {914, 1818}, /* Gain= 3.570 Exposure Index=237 */
-         {941, 1818}, /* Gain= 3.676 Exposure Index=238 */
-         {969, 1818}, /* Gain= 3.785 Exposure Index=239 */
-         {998, 1818}, /* Gain= 3.898 Exposure Index=240 */
-         {1028, 1818}, /* Gain= 4.016 Exposure Index=241 */
-         {1059, 1818}, /* Gain= 4.137 Exposure Index=242 */
-         {1091, 1818}, /* Gain= 4.262 Exposure Index=243 */
-         {1124, 1818}, /* Gain= 4.391 Exposure Index=244 */
-         {1158, 1818}, /* Gain= 4.523 Exposure Index=245 */
-         {1193, 1818}, /* Gain= 4.660 Exposure Index=246 */
-         {1229, 1818}, /* Gain= 4.801 Exposure Index=247 */
-         {1266, 1818}, /* Gain= 4.945 Exposure Index=248 */
-         {1304, 1818}, /* Gain= 5.094 Exposure Index=249 */
-         {1343, 1818}, /* Gain= 5.246 Exposure Index=250 */
-         {1383, 1818}, /* Gain= 5.402 Exposure Index=251 */
-         {1424, 1818}, /* Gain= 5.563 Exposure Index=252 */
-         {1467, 1818}, /* Gain= 5.730 Exposure Index=253 */
-         {1511, 1818}, /* Gain= 5.902 Exposure Index=254 */
-         {1556, 1818}, /* Gain= 6.078 Exposure Index=255 */
-         {1603, 1818}, /* Gain= 6.262 Exposure Index=256 */
-         {1651, 1818}, /* Gain= 6.449 Exposure Index=257 */
-         {1701, 1818}, /* Gain= 6.645 Exposure Index=258 */
-         {1752, 1818}, /* Gain= 6.844 Exposure Index=259 */
-         {1805, 1818}, /* Gain= 7.051 Exposure Index=260 */
-         {1859, 1818}, /* Gain= 7.262 Exposure Index=261 */
-         {1915, 1818}, /* Gain= 7.480 Exposure Index=262 */
-         {1972, 1818}, /* Gain= 7.703 Exposure Index=263 */
-         {2031, 1818}, /* Gain= 7.934 Exposure Index=264 */
-         {2032, 1872}, /* Gain= 7.938 Exposure Index=265 */
-         {2031, 1929}, /* Gain= 7.934 Exposure Index=266 */
-         {2032, 1986}, /* Gain= 7.938 Exposure Index=267 */
-         {2032, 2046}, /* Gain= 7.938 Exposure Index=268 */
-         {2031, 2108}, /* Gain= 7.934 Exposure Index=269 */
-         {2031, 2171}, /* Gain= 7.934 Exposure Index=270 */
-         {2031, 2236}, /* Gain= 7.934 Exposure Index=271 */
-         {2031, 2303}, /* Gain= 7.934 Exposure Index=272 */
-         {2031, 2372}, /* Gain= 7.934 Exposure Index=273 */
-         {2031, 2443}, /* Gain= 7.934 Exposure Index=274 */
-         {2031, 2516}, /* Gain= 7.934 Exposure Index=275 */
-         {2031, 2591}, /* Gain= 7.934 Exposure Index=276 */
-         {2032, 2668}, /* Gain= 7.938 Exposure Index=277 */
-         {2031, 2749}, /* Gain= 7.934 Exposure Index=278 */
-         {2031, 2831}, /* Gain= 7.934 Exposure Index=279 */
-         {2032, 2915}, /* Gain= 7.938 Exposure Index=280 */
-         {2032, 3003}, /* Gain= 7.938 Exposure Index=281 */
-         {2031, 3094}, /* Gain= 7.934 Exposure Index=282 */
-         {2032, 3186}, /* Gain= 7.938 Exposure Index=283 */
-         {2031, 3283}, /* Gain= 7.934 Exposure Index=284 */
-         {2031, 3381}, /* Gain= 7.934 Exposure Index=285 */
-         {2031, 3482}, /* Gain= 7.934 Exposure Index=286 */
-         {2031, 3586}, /* Gain= 7.934 Exposure Index=287 */
-         {2063, 3636}, /* Gain= 8.059 Exposure Index=288 */
-         {2125, 3636}, /* Gain= 8.301 Exposure Index=289 */
-         {2189, 3636}, /* Gain= 8.551 Exposure Index=290 */
-         {2255, 3636}, /* Gain= 8.809 Exposure Index=291 */
-         {2323, 3636}, /* Gain= 9.074 Exposure Index=292 */
-         {2393, 3636}, /* Gain= 9.348 Exposure Index=293 */
-         {2465, 3636}, /* Gain= 9.629 Exposure Index=294 */
-         {2539, 3636}, /* Gain= 9.918 Exposure Index=295 */
-         {2615, 3636}, /* Gain=10.215 Exposure Index=296 */
-         {2693, 3636}, /* Gain=10.520 Exposure Index=297 */
-         {2774, 3636}, /* Gain=10.836 Exposure Index=298 */
-         {2857, 3636}, /* Gain=11.160 Exposure Index=299 */
-         {2943, 3636}, /* Gain=11.496 Exposure Index=300 */
-         {3031, 3636}, /* Gain=11.840 Exposure Index=301 */
-         {3122, 3636}, /* Gain=12.195 Exposure Index=302 */
-         {3216, 3636}, /* Gain=12.563 Exposure Index=303 */
-         {3312, 3636}, /* Gain=12.938 Exposure Index=304 */
-         {3411, 3636}, /* Gain=13.324 Exposure Index=305 */
-         {3513, 3636}, /* Gain=13.723 Exposure Index=306 */
-         {3618, 3636}, /* Gain=14.133 Exposure Index=307 */
-         {3727, 3636}, /* Gain=14.559 Exposure Index=308 */
-         {3839, 3636}, /* Gain=14.996 Exposure Index=309 */
-         {3954, 3636}, /* Gain=15.445 Exposure Index=310 */
-         {4073, 3636}, /* Gain=15.910 Exposure Index=311 */
-         {4195, 3636}, /* Gain=16.387 Exposure Index=312 */
-         {4321, 3636}, /* Gain=16.879 Exposure Index=313 */
-         {4451, 3636}, /* Gain=17.387 Exposure Index=314 */
-         {4585, 3636}, /* Gain=17.910 Exposure Index=315 */
-         {4723, 3636}, /* Gain=18.449 Exposure Index=316 */
-         {4865, 3636}, /* Gain=19.004 Exposure Index=317 */
-         {5011, 3636}, /* Gain=19.574 Exposure Index=318 */
-         {5161, 3636}, /* Gain=20.160 Exposure Index=319 */
-         {5316, 3636}, /* Gain=20.766 Exposure Index=320 */
-         {5475, 3636}, /* Gain=21.387 Exposure Index=321 */
-         {5639, 3636}, /* Gain=22.027 Exposure Index=322 */
-         {5808, 3636}, /* Gain=22.688 Exposure Index=323 */
-         {5982, 3636}, /* Gain=23.367 Exposure Index=324 */
-         {5982, 3745}, /* Gain=23.367 Exposure Index=325 */
-         {5983, 3857}, /* Gain=23.371 Exposure Index=326 */
-         {5983, 3973}, /* Gain=23.371 Exposure Index=327 */
-         {5983, 4092}, /* Gain=23.371 Exposure Index=328 */
-         {5983, 4215}, /* Gain=23.371 Exposure Index=329 */
-         {5982, 4342}, /* Gain=23.367 Exposure Index=330 */
-         {5982, 4472}, /* Gain=23.367 Exposure Index=331 */
-         {5982, 4606}, /* Gain=23.367 Exposure Index=332 */
-         {5982, 4744}, /* Gain=23.367 Exposure Index=333 */
-         {5982, 4886}, /* Gain=23.367 Exposure Index=334 */
-         {5983, 5032}, /* Gain=23.371 Exposure Index=335 */
-         {5983, 5183}, /* Gain=23.371 Exposure Index=336 */
-         {5982, 5339}, /* Gain=23.367 Exposure Index=337 */
-         {6032, 5454}, /* Gain=23.563 Exposure Index=338 */
-         {6213, 5454}, /* Gain=24.270 Exposure Index=339 */
-         {6399, 5454}, /* Gain=24.996 Exposure Index=340 */
-         {6591, 5454}, /* Gain=25.746 Exposure Index=341 */
-         {6789, 5454}, /* Gain=26.520 Exposure Index=342 */
-         {6993, 5454}, /* Gain=27.316 Exposure Index=343 */
-         {7203, 5454}, /* Gain=28.137 Exposure Index=344 */
-         {7419, 5454}, /* Gain=28.980 Exposure Index=345 */
-         {7642, 5454}, /* Gain=29.852 Exposure Index=346 */
-         {7871, 5454}, /* Gain=30.746 Exposure Index=347 */
-         {8107, 5454}, /* Gain=31.668 Exposure Index=348 */
-         {8350, 5454}, /* Gain=32.617 Exposure Index=349 */
-         {8600, 5454}, /* Gain=33.594 Exposure Index=350 */
-         {8858, 5454}, /* Gain=34.602 Exposure Index=351 */
-         {9124, 5454}, /* Gain=35.641 Exposure Index=352 */
-         {9398, 5454}, /* Gain=36.711 Exposure Index=353 */
-         {9680, 5454}, /* Gain=37.813 Exposure Index=354 */
-         {9970, 5454}, /* Gain=38.945 Exposure Index=355 */
-         {10269, 5454}, /* Gain=40.113 Exposure Index=356 */
-         {10577, 5454}, /* Gain=41.316 Exposure Index=357 */
-         {10894, 5454}, /* Gain=42.555 Exposure Index=358 */
-         {11221, 5454}, /* Gain=43.832 Exposure Index=359 */
-         {11558, 5454}, /* Gain=45.148 Exposure Index=360 */
-         {11905, 5454}, /* Gain=46.504 Exposure Index=361 */
-         {12262, 5454}, /* Gain=47.898 Exposure Index=362 */
-         {12630, 5454}, /* Gain=49.336 Exposure Index=363 */
-         {13009, 5454}, /* Gain=50.816 Exposure Index=364 */
-         {13399, 5454}, /* Gain=52.340 Exposure Index=365 */
-         {13801, 5454}, /* Gain=53.910 Exposure Index=366 */
-         {14215, 5454}, /* Gain=55.527 Exposure Index=367 */
-         {14641, 5454}, /* Gain=57.191 Exposure Index=368 */
-         {15080, 5454}, /* Gain=58.906 Exposure Index=369 */
-         {15532, 5454}, /* Gain=60.672 Exposure Index=370 */
-         {15998, 5454}, /* Gain=62.492 Exposure Index=371 */
-         {16478, 5454}, /* Gain=64.367 Exposure Index=372 */
-         {16972, 5454}, /* Gain=66.297 Exposure Index=373 */
-         {17481, 5454}, /* Gain=68.285 Exposure Index=374 */
-         {18005, 5454}, /* Gain=70.332 Exposure Index=375 */
-         {18545, 5454}, /* Gain=72.441 Exposure Index=376 */
-         {19101, 5454}, /* Gain=74.613 Exposure Index=377 */
-         {19674, 5454}, /* Gain=76.852 Exposure Index=378 */
-         {20264, 5454}, /* Gain=79.156 Exposure Index=379 */
-         {20872, 5454}, /* Gain=81.531 Exposure Index=380 */
-         {21498, 5454}, /* Gain=83.977 Exposure Index=381 */
-         {22143, 5454}, /* Gain=86.496 Exposure Index=382 */
-         {22807, 5454}, /* Gain=89.090 Exposure Index=383 */
-         {23491, 5454}, /* Gain=91.762 Exposure Index=384 */
-         {24196, 5454}, /* Gain=94.516 Exposure Index=385 */
-         {24922, 5454}, /* Gain=97.352 Exposure Index=386 */
-         {25670, 5454}, /* Gain=100.273 Exposure Index=387 */
-         {26440, 5454}, /* Gain=103.281 Exposure Index=388 */
-         {27233, 5454}, /* Gain=106.379 Exposure Index=389 */
-         {28050, 5454}, /* Gain=109.570 Exposure Index=390 */
-         {28892, 5454}, /* Gain=112.859 Exposure Index=391 */
-         {29759, 5454}, /* Gain=116.246 Exposure Index=392 */
-         {30652, 5454}, /* Gain=119.734 Exposure Index=393 */
-         {31572, 5454}, /* Gain=123.328 Exposure Index=394 */
-         {32519, 5454}, /* Gain=127.027 Exposure Index=395 */
-         {33495, 5454}, /* Gain=130.840 Exposure Index=396 */
-         {34500, 5454}, /* Gain=134.766 Exposure Index=397 */
-         {35535, 5454}, /* Gain=138.809 Exposure Index=398 */
-         {36601, 5454}, /* Gain=142.973 Exposure Index=399 */
-         {37699, 5454}, /* Gain=147.262 Exposure Index=400 */
-         {38830, 5454}, /* Gain=151.680 Exposure Index=401 */
-         {39995, 5454}, /* Gain=156.230 Exposure Index=402 */
-         {41195, 5454}, /* Gain=160.918 Exposure Index=403 */
-         {42431, 5454}, /* Gain=165.746 Exposure Index=404 */
-         {43704, 5454}, /* Gain=170.719 Exposure Index=405 */
-         {45015, 5454}, /* Gain=175.840 Exposure Index=406 */
-         {46365, 5454}, /* Gain=181.113 Exposure Index=407 */
-         {47756, 5454}, /* Gain=186.547 Exposure Index=408 */
-         {49189, 5454}, /* Gain=192.145 Exposure Index=409 */
-         {50665, 5454}, /* Gain=197.910 Exposure Index=410 */
-         {52185, 5454}, /* Gain=203.848 Exposure Index=411 */
-         {53751, 5454}, /* Gain=209.965 Exposure Index=412 */
-         {55364, 5454}, /* Gain=216.266 Exposure Index=413 */
-         {57025, 5454}, /* Gain=222.754 Exposure Index=414 */
-         {58736, 5454}, /* Gain=229.438 Exposure Index=415 */
-         {60498, 5454}, /* Gain=236.320 Exposure Index=416 */
-         {62313, 5454}, /* Gain=243.410 Exposure Index=417 */
-         {0, 0}, /* Gain=0.000 Exposure Index=418 */
-         {0, 0}, /* Gain=0.000 Exposure Index=419 */
-         {0, 0}, /* Gain=0.000 Exposure Index=420 */
-         {0, 0}, /* Gain=0.000 Exposure Index=421 */
-         {0, 0}, /* Gain=0.000 Exposure Index=422 */
-         {0, 0}, /* Gain=0.000 Exposure Index=423 */
-         {0, 0}, /* Gain=0.000 Exposure Index=424 */
-         {0, 0}, /* Gain=0.000 Exposure Index=425 */
-         {0, 0}, /* Gain=0.000 Exposure Index=426 */
-         {0, 0}, /* Gain=0.000 Exposure Index=427 */
-         {0, 0}, /* Gain=0.000 Exposure Index=428 */
-         {0, 0}, /* Gain=0.000 Exposure Index=429 */
-         {0, 0}, /* Gain=0.000 Exposure Index=430 */
-         {0, 0}, /* Gain=0.000 Exposure Index=431 */
-         {0, 0}, /* Gain=0.000 Exposure Index=432 */
-         {0, 0}, /* Gain=0.000 Exposure Index=433 */
-         {0, 0}, /* Gain=0.000 Exposure Index=434 */
-         {0, 0}, /* Gain=0.000 Exposure Index=435 */
-         {0, 0}, /* Gain=0.000 Exposure Index=436 */
-         {0, 0}, /* Gain=0.000 Exposure Index=437 */
-         {0, 0}, /* Gain=0.000 Exposure Index=438 */
-         {0, 0}, /* Gain=0.000 Exposure Index=439 */
-         {0, 0}, /* Gain=0.000 Exposure Index=440 */
-         {0, 0}, /* Gain=0.000 Exposure Index=441 */
-         {0, 0}, /* Gain=0.000 Exposure Index=442 */
-         {0, 0}, /* Gain=0.000 Exposure Index=443 */
-         {0, 0}, /* Gain=0.000 Exposure Index=444 */
+         {256, 1}, /* Gain= 1.000 Exposure Index=0 */
+         {264, 1}, /* Gain= 1.031 Exposure Index=1 */
+         {272, 1}, /* Gain= 1.063 Exposure Index=2 */
+         {280, 1}, /* Gain= 1.094 Exposure Index=3 */
+         {288, 1}, /* Gain= 1.125 Exposure Index=4 */
+         {297, 1}, /* Gain= 1.160 Exposure Index=5 */
+         {306, 1}, /* Gain= 1.195 Exposure Index=6 */
+         {315, 1}, /* Gain= 1.230 Exposure Index=7 */
+         {324, 1}, /* Gain= 1.266 Exposure Index=8 */
+         {334, 1}, /* Gain= 1.305 Exposure Index=9 */
+         {344, 1}, /* Gain= 1.344 Exposure Index=10 */
+         {354, 1}, /* Gain= 1.383 Exposure Index=11 */
+         {365, 1}, /* Gain= 1.426 Exposure Index=12 */
+         {376, 1}, /* Gain= 1.469 Exposure Index=13 */
+         {387, 1}, /* Gain= 1.512 Exposure Index=14 */
+         {399, 1}, /* Gain= 1.559 Exposure Index=15 */
+         {411, 1}, /* Gain= 1.605 Exposure Index=16 */
+         {423, 1}, /* Gain= 1.652 Exposure Index=17 */
+         {436, 1}, /* Gain= 1.703 Exposure Index=18 */
+         {449, 1}, /* Gain= 1.754 Exposure Index=19 */
+         {462, 1}, /* Gain= 1.805 Exposure Index=20 */
+         {476, 1}, /* Gain= 1.859 Exposure Index=21 */
+         {490, 1}, /* Gain= 1.914 Exposure Index=22 */
+         {505, 1}, /* Gain= 1.973 Exposure Index=23 */
+         {260, 2}, /* Gain= 1.016 Exposure Index=24 */
+         {268, 2}, /* Gain= 1.047 Exposure Index=25 */
+         {276, 2}, /* Gain= 1.078 Exposure Index=26 */
+         {284, 2}, /* Gain= 1.109 Exposure Index=27 */
+         {293, 2}, /* Gain= 1.145 Exposure Index=28 */
+         {302, 2}, /* Gain= 1.180 Exposure Index=29 */
+         {311, 2}, /* Gain= 1.215 Exposure Index=30 */
+         {320, 2}, /* Gain= 1.250 Exposure Index=31 */
+         {330, 2}, /* Gain= 1.289 Exposure Index=32 */
+         {340, 2}, /* Gain= 1.328 Exposure Index=33 */
+         {350, 2}, /* Gain= 1.367 Exposure Index=34 */
+         {361, 2}, /* Gain= 1.410 Exposure Index=35 */
+         {372, 2}, /* Gain= 1.453 Exposure Index=36 */
+         {383, 2}, /* Gain= 1.496 Exposure Index=37 */
+         {263, 3}, /* Gain= 1.027 Exposure Index=38 */
+         {271, 3}, /* Gain= 1.059 Exposure Index=39 */
+         {279, 3}, /* Gain= 1.090 Exposure Index=40 */
+         {287, 3}, /* Gain= 1.121 Exposure Index=41 */
+         {296, 3}, /* Gain= 1.156 Exposure Index=42 */
+         {305, 3}, /* Gain= 1.191 Exposure Index=43 */
+         {314, 3}, /* Gain= 1.227 Exposure Index=44 */
+         {323, 3}, /* Gain= 1.262 Exposure Index=45 */
+         {333, 3}, /* Gain= 1.301 Exposure Index=46 */
+         {257, 4}, /* Gain= 1.004 Exposure Index=47 */
+         {265, 4}, /* Gain= 1.035 Exposure Index=48 */
+         {273, 4}, /* Gain= 1.066 Exposure Index=49 */
+         {281, 4}, /* Gain= 1.098 Exposure Index=50 */
+         {289, 4}, /* Gain= 1.129 Exposure Index=51 */
+         {298, 4}, /* Gain= 1.164 Exposure Index=52 */
+         {307, 4}, /* Gain= 1.199 Exposure Index=53 */
+         {316, 4}, /* Gain= 1.234 Exposure Index=54 */
+         {260, 5}, /* Gain= 1.016 Exposure Index=55 */
+         {268, 5}, /* Gain= 1.047 Exposure Index=56 */
+         {276, 5}, /* Gain= 1.078 Exposure Index=57 */
+         {284, 5}, /* Gain= 1.109 Exposure Index=58 */
+         {293, 5}, /* Gain= 1.145 Exposure Index=59 */
+         {302, 5}, /* Gain= 1.180 Exposure Index=60 */
+         {259, 6}, /* Gain= 1.012 Exposure Index=61 */
+         {267, 6}, /* Gain= 1.043 Exposure Index=62 */
+         {275, 6}, /* Gain= 1.074 Exposure Index=63 */
+         {283, 6}, /* Gain= 1.105 Exposure Index=64 */
+         {291, 6}, /* Gain= 1.137 Exposure Index=65 */
+         {257, 7}, /* Gain= 1.004 Exposure Index=66 */
+         {265, 7}, /* Gain= 1.035 Exposure Index=67 */
+         {273, 7}, /* Gain= 1.066 Exposure Index=68 */
+         {281, 7}, /* Gain= 1.098 Exposure Index=69 */
+         {289, 7}, /* Gain= 1.129 Exposure Index=70 */
+         {260, 8}, /* Gain= 1.016 Exposure Index=71 */
+         {268, 8}, /* Gain= 1.047 Exposure Index=72 */
+         {276, 8}, /* Gain= 1.078 Exposure Index=73 */
+         {284, 8}, /* Gain= 1.109 Exposure Index=74 */
+         {260, 9}, /* Gain= 1.016 Exposure Index=75 */
+         {268, 9}, /* Gain= 1.047 Exposure Index=76 */
+         {276, 9}, /* Gain= 1.078 Exposure Index=77 */
+         {284, 9}, /* Gain= 1.109 Exposure Index=78 */
+         {263, 10}, /* Gain= 1.027 Exposure Index=79 */
+         {271, 10}, /* Gain= 1.059 Exposure Index=80 */
+         {279, 10}, /* Gain= 1.090 Exposure Index=81 */
+         {261, 11}, /* Gain= 1.020 Exposure Index=82 */
+         {269, 11}, /* Gain= 1.051 Exposure Index=83 */
+         {277, 11}, /* Gain= 1.082 Exposure Index=84 */
+         {262, 12}, /* Gain= 1.023 Exposure Index=85 */
+         {270, 12}, /* Gain= 1.055 Exposure Index=86 */
+         {257, 13}, /* Gain= 1.004 Exposure Index=87 */
+         {265, 13}, /* Gain= 1.035 Exposure Index=88 */
+         {273, 13}, /* Gain= 1.066 Exposure Index=89 */
+         {261, 14}, /* Gain= 1.020 Exposure Index=90 */
+         {269, 14}, /* Gain= 1.051 Exposure Index=91 */
+         {259, 15}, /* Gain= 1.012 Exposure Index=92 */
+         {267, 15}, /* Gain= 1.043 Exposure Index=93 */
+         {258, 16}, /* Gain= 1.008 Exposure Index=94 */
+         {266, 16}, /* Gain= 1.039 Exposure Index=95 */
+         {258, 17}, /* Gain= 1.008 Exposure Index=96 */
+         {266, 17}, /* Gain= 1.039 Exposure Index=97 */
+         {259, 18}, /* Gain= 1.012 Exposure Index=98 */
+         {267, 18}, /* Gain= 1.043 Exposure Index=99 */
+         {261, 19}, /* Gain= 1.020 Exposure Index=100 */
+         {269, 19}, /* Gain= 1.051 Exposure Index=101 */
+         {263, 20}, /* Gain= 1.027 Exposure Index=102 */
+         {258, 21}, /* Gain= 1.008 Exposure Index=103 */
+         {266, 21}, /* Gain= 1.039 Exposure Index=104 */
+         {262, 22}, /* Gain= 1.023 Exposure Index=105 */
+         {258, 23}, /* Gain= 1.008 Exposure Index=106 */
+         {266, 23}, /* Gain= 1.039 Exposure Index=107 */
+         {263, 24}, /* Gain= 1.027 Exposure Index=108 */
+         {260, 25}, /* Gain= 1.016 Exposure Index=109 */
+         {258, 26}, /* Gain= 1.008 Exposure Index=110 */
+         {266, 26}, /* Gain= 1.039 Exposure Index=111 */
+         {264, 27}, /* Gain= 1.031 Exposure Index=112 */
+         {262, 28}, /* Gain= 1.023 Exposure Index=113 */
+         {261, 29}, /* Gain= 1.020 Exposure Index=114 */
+         {260, 30}, /* Gain= 1.016 Exposure Index=115 */
+         {259, 31}, /* Gain= 1.012 Exposure Index=116 */
+         {258, 32}, /* Gain= 1.008 Exposure Index=117 */
+         {258, 33}, /* Gain= 1.008 Exposure Index=118 */
+         {258, 34}, /* Gain= 1.008 Exposure Index=119 */
+         {258, 35}, /* Gain= 1.008 Exposure Index=120 */
+         {258, 36}, /* Gain= 1.008 Exposure Index=121 */
+         {259, 37}, /* Gain= 1.012 Exposure Index=122 */
+         {260, 38}, /* Gain= 1.016 Exposure Index=123 */
+         {261, 39}, /* Gain= 1.020 Exposure Index=124 */
+         {262, 40}, /* Gain= 1.023 Exposure Index=125 */
+         {257, 42}, /* Gain= 1.004 Exposure Index=126 */
+         {259, 43}, /* Gain= 1.012 Exposure Index=127 */
+         {261, 44}, /* Gain= 1.020 Exposure Index=128 */
+         {257, 46}, /* Gain= 1.004 Exposure Index=129 */
+         {259, 47}, /* Gain= 1.012 Exposure Index=130 */
+         {261, 48}, /* Gain= 1.020 Exposure Index=131 */
+         {258, 50}, /* Gain= 1.008 Exposure Index=132 */
+         {261, 51}, /* Gain= 1.020 Exposure Index=133 */
+         {259, 53}, /* Gain= 1.012 Exposure Index=134 */
+         {257, 55}, /* Gain= 1.004 Exposure Index=135 */
+         {260, 56}, /* Gain= 1.016 Exposure Index=136 */
+         {259, 58}, /* Gain= 1.012 Exposure Index=137 */
+         {258, 60}, /* Gain= 1.008 Exposure Index=138 */
+         {257, 62}, /* Gain= 1.004 Exposure Index=139 */
+         {256, 64}, /* Gain= 1.000 Exposure Index=140 */
+         {260, 65}, /* Gain= 1.016 Exposure Index=141 */
+         {260, 67}, /* Gain= 1.016 Exposure Index=142 */
+         {256, 70}, /* Gain= 1.000 Exposure Index=143 */
+         {256, 72}, /* Gain= 1.000 Exposure Index=144 */
+         {257, 74}, /* Gain= 1.004 Exposure Index=145 */
+         {258, 76}, /* Gain= 1.008 Exposure Index=146 */
+         {259, 78}, /* Gain= 1.012 Exposure Index=147 */
+         {257, 81}, /* Gain= 1.004 Exposure Index=148 */
+         {258, 83}, /* Gain= 1.008 Exposure Index=149 */
+         {256, 86}, /* Gain= 1.000 Exposure Index=150 */
+         {258, 88}, /* Gain= 1.008 Exposure Index=151 */
+         {257, 91}, /* Gain= 1.004 Exposure Index=152 */
+         {256, 94}, /* Gain= 1.000 Exposure Index=153 */
+         {258, 96}, /* Gain= 1.008 Exposure Index=154 */
+         {258, 99}, /* Gain= 1.008 Exposure Index=155 */
+         {258, 102}, /* Gain= 1.008 Exposure Index=156 */
+         {258, 105}, /* Gain= 1.008 Exposure Index=157 */
+         {258, 108}, /* Gain= 1.008 Exposure Index=158 */
+         {256, 112}, /* Gain= 1.000 Exposure Index=159 */
+         {257, 115}, /* Gain= 1.004 Exposure Index=160 */
+         {258, 118}, /* Gain= 1.008 Exposure Index=161 */
+         {257, 122}, /* Gain= 1.004 Exposure Index=162 */
+         {256, 126}, /* Gain= 1.000 Exposure Index=163 */
+         {258, 129}, /* Gain= 1.008 Exposure Index=164 */
+         {258, 133}, /* Gain= 1.008 Exposure Index=165 */
+         {256, 138}, /* Gain= 1.000 Exposure Index=166 */
+         {256, 142}, /* Gain= 1.000 Exposure Index=167 */
+         {256, 146}, /* Gain= 1.000 Exposure Index=168 */
+         {257, 150}, /* Gain= 1.004 Exposure Index=169 */
+         {256, 155}, /* Gain= 1.000 Exposure Index=170 */
+         {257, 159}, /* Gain= 1.004 Exposure Index=171 */
+         {257, 164}, /* Gain= 1.004 Exposure Index=172 */
+         {257, 169}, /* Gain= 1.004 Exposure Index=173 */
+         {257, 174}, /* Gain= 1.004 Exposure Index=174 */
+         {257, 179}, /* Gain= 1.004 Exposure Index=175 */
+         {256, 185}, /* Gain= 1.000 Exposure Index=176 */
+         {257, 190}, /* Gain= 1.004 Exposure Index=177 */
+         {257, 196}, /* Gain= 1.004 Exposure Index=178 */
+         {259, 200}, /* Gain= 1.012 Exposure Index=179 */
+         {267, 200}, /* Gain= 1.043 Exposure Index=180 */
+         {275, 200}, /* Gain= 1.074 Exposure Index=181 */
+         {283, 200}, /* Gain= 1.105 Exposure Index=182 */
+         {291, 200}, /* Gain= 1.137 Exposure Index=183 */
+         {300, 200}, /* Gain= 1.172 Exposure Index=184 */
+         {309, 200}, /* Gain= 1.207 Exposure Index=185 */
+         {318, 200}, /* Gain= 1.242 Exposure Index=186 */
+         {328, 200}, /* Gain= 1.281 Exposure Index=187 */
+         {338, 200}, /* Gain= 1.320 Exposure Index=188 */
+         {348, 200}, /* Gain= 1.359 Exposure Index=189 */
+         {358, 200}, /* Gain= 1.398 Exposure Index=190 */
+         {369, 200}, /* Gain= 1.441 Exposure Index=191 */
+         {380, 200}, /* Gain= 1.484 Exposure Index=192 */
+         {391, 200}, /* Gain= 1.527 Exposure Index=193 */
+         {403, 200}, /* Gain= 1.574 Exposure Index=194 */
+         {415, 200}, /* Gain= 1.621 Exposure Index=195 */
+         {427, 200}, /* Gain= 1.668 Exposure Index=196 */
+         {440, 200}, /* Gain= 1.719 Exposure Index=197 */
+         {453, 200}, /* Gain= 1.770 Exposure Index=198 */
+         {467, 200}, /* Gain= 1.824 Exposure Index=199 */
+         {481, 200}, /* Gain= 1.879 Exposure Index=200 */
+         {495, 200}, /* Gain= 1.934 Exposure Index=201 */
+         {510, 200}, /* Gain= 1.992 Exposure Index=202 */
+         {525, 200}, /* Gain= 2.051 Exposure Index=203 */
+         {541, 200}, /* Gain= 2.113 Exposure Index=204 */
+         {557, 200}, /* Gain= 2.176 Exposure Index=205 */
+         {574, 200}, /* Gain= 2.242 Exposure Index=206 */
+         {591, 200}, /* Gain= 2.309 Exposure Index=207 */
+         {609, 200}, /* Gain= 2.379 Exposure Index=208 */
+         {627, 200}, /* Gain= 2.449 Exposure Index=209 */
+         {646, 200}, /* Gain= 2.523 Exposure Index=210 */
+         {665, 200}, /* Gain= 2.598 Exposure Index=211 */
+         {685, 200}, /* Gain= 2.676 Exposure Index=212 */
+         {706, 200}, /* Gain= 2.758 Exposure Index=213 */
+         {727, 200}, /* Gain= 2.840 Exposure Index=214 */
+         {749, 200}, /* Gain= 2.926 Exposure Index=215 */
+         {771, 200}, /* Gain= 3.012 Exposure Index=216 */
+         {794, 200}, /* Gain= 3.102 Exposure Index=217 */
+         {818, 200}, /* Gain= 3.195 Exposure Index=218 */
+         {843, 200}, /* Gain= 3.293 Exposure Index=219 */
+         {868, 200}, /* Gain= 3.391 Exposure Index=220 */
+         {894, 200}, /* Gain= 3.492 Exposure Index=221 */
+         {921, 200}, /* Gain= 3.598 Exposure Index=222 */
+         {949, 200}, /* Gain= 3.707 Exposure Index=223 */
+         {977, 200}, /* Gain= 3.816 Exposure Index=224 */
+         {1006, 200}, /* Gain= 3.930 Exposure Index=225 */
+         {1036, 200}, /* Gain= 4.047 Exposure Index=226 */
+         {1067, 200}, /* Gain= 4.168 Exposure Index=227 */
+         {1099, 200}, /* Gain= 4.293 Exposure Index=228 */
+         {1132, 200}, /* Gain= 4.422 Exposure Index=229 */
+         {1166, 200}, /* Gain= 4.555 Exposure Index=230 */
+         {1201, 200}, /* Gain= 4.691 Exposure Index=231 */
+         {1237, 200}, /* Gain= 4.832 Exposure Index=232 */
+         {1274, 200}, /* Gain= 4.977 Exposure Index=233 */
+         {1312, 200}, /* Gain= 5.125 Exposure Index=234 */
+         {1351, 200}, /* Gain= 5.277 Exposure Index=235 */
+         {1392, 200}, /* Gain= 5.438 Exposure Index=236 */
+         {1434, 200}, /* Gain= 5.602 Exposure Index=237 */
+         {1477, 200}, /* Gain= 5.770 Exposure Index=238 */
+         {1521, 200}, /* Gain= 5.941 Exposure Index=239 */
+         {1567, 200}, /* Gain= 6.121 Exposure Index=240 */
+         {1614, 200}, /* Gain= 6.305 Exposure Index=241 */
+         {1662, 200}, /* Gain= 6.492 Exposure Index=242 */
+         {1712, 200}, /* Gain= 6.688 Exposure Index=243 */
+         {1763, 200}, /* Gain= 6.887 Exposure Index=244 */
+         {1816, 200}, /* Gain= 7.094 Exposure Index=245 */
+         {1870, 200}, /* Gain= 7.305 Exposure Index=246 */
+         {1926, 200}, /* Gain= 7.523 Exposure Index=247 */
+         {1984, 200}, /* Gain= 7.750 Exposure Index=248 */
+         {2044, 200}, /* Gain= 7.984 Exposure Index=249 */
+         {2105, 200}, /* Gain= 8.223 Exposure Index=250 */
+         {2168, 200}, /* Gain= 8.469 Exposure Index=251 */
+         {2233, 200}, /* Gain= 8.723 Exposure Index=252 */
+         {2300, 200}, /* Gain= 8.984 Exposure Index=253 */
+         {2369, 200}, /* Gain= 9.254 Exposure Index=254 */
+         {2440, 200}, /* Gain= 9.531 Exposure Index=255 */
+         {2513, 200}, /* Gain= 9.816 Exposure Index=256 */
+         {2588, 200}, /* Gain=10.109 Exposure Index=257 */
+         {2666, 200}, /* Gain=10.414 Exposure Index=258 */
+         {2746, 200}, /* Gain=10.727 Exposure Index=259 */
+         {2828, 200}, /* Gain=11.047 Exposure Index=260 */
+         {2913, 200}, /* Gain=11.379 Exposure Index=261 */
+         {3000, 200}, /* Gain=11.719 Exposure Index=262 */
+         {3090, 200}, /* Gain=12.070 Exposure Index=263 */
+         {3183, 200}, /* Gain=12.434 Exposure Index=264 */
+         {3278, 200}, /* Gain=12.805 Exposure Index=265 */
+         {3376, 200}, /* Gain=13.188 Exposure Index=266 */
+         {3477, 200}, /* Gain=13.582 Exposure Index=267 */
+         {3581, 200}, /* Gain=13.988 Exposure Index=268 */
+         {3688, 200}, /* Gain=14.406 Exposure Index=269 */
+         {3799, 200}, /* Gain=14.840 Exposure Index=270 */
+         {3913, 200}, /* Gain=15.285 Exposure Index=271 */
+         {4030, 200}, /* Gain=15.742 Exposure Index=272 */
+         {4151, 200}, /* Gain=16.215 Exposure Index=273 */
+         {4276, 200}, /* Gain=16.703 Exposure Index=274 */
+         {4404, 200}, /* Gain=17.203 Exposure Index=275 */
+         {4536, 200}, /* Gain=17.719 Exposure Index=276 */
+         {4672, 200}, /* Gain=18.250 Exposure Index=277 */
+         {4812, 200}, /* Gain=18.797 Exposure Index=278 */
+         {4956, 200}, /* Gain=19.359 Exposure Index=279 */
+         {5105, 200}, /* Gain=19.941 Exposure Index=280 */
+         {5258, 200}, /* Gain=20.539 Exposure Index=281 */
+         {5416, 200}, /* Gain=21.156 Exposure Index=282 */
+         {5578, 200}, /* Gain=21.789 Exposure Index=283 */
+         {5745, 200}, /* Gain=22.441 Exposure Index=284 */
+         {5917, 200}, /* Gain=23.113 Exposure Index=285 */
+         {6095, 200}, /* Gain=23.809 Exposure Index=286 */
+         {6278, 200}, /* Gain=24.523 Exposure Index=287 */
+         {6466, 200}, /* Gain=25.258 Exposure Index=288 */
+         {6660, 200}, /* Gain=26.016 Exposure Index=289 */
+         {6860, 200}, /* Gain=26.797 Exposure Index=290 */
+         {7066, 200}, /* Gain=27.602 Exposure Index=291 */
+         {7278, 200}, /* Gain=28.430 Exposure Index=292 */
+         {7496, 200}, /* Gain=29.281 Exposure Index=293 */
+         {7721, 200}, /* Gain=30.160 Exposure Index=294 */
+         {7953, 200}, /* Gain=31.066 Exposure Index=295 */
+         {8192, 200}, /* Gain=32.000 Exposure Index=296 */
+         {8192, 206}, /* Gain=32.000 Exposure Index=297 */
+         {8199, 212}, /* Gain=32.027 Exposure Index=298 */
+         {8213, 218}, /* Gain=32.082 Exposure Index=299 */
+         {8196, 225}, /* Gain=32.016 Exposure Index=300 */
+         {8223, 231}, /* Gain=32.121 Exposure Index=301 */
+         {8221, 238}, /* Gain=32.113 Exposure Index=302 */
+         {8192, 246}, /* Gain=32.000 Exposure Index=303 */
+         {8204, 253}, /* Gain=32.047 Exposure Index=304 */
+         {8223, 260}, /* Gain=32.121 Exposure Index=305 */
+         {8217, 268}, /* Gain=32.098 Exposure Index=306 */
+         {8218, 276}, /* Gain=32.102 Exposure Index=307 */
+         {8197, 285}, /* Gain=32.020 Exposure Index=308 */
+         {8212, 293}, /* Gain=32.078 Exposure Index=309 */
+         {8206, 302}, /* Gain=32.055 Exposure Index=310 */
+         {8208, 311}, /* Gain=32.063 Exposure Index=311 */
+         {8216, 320}, /* Gain=32.094 Exposure Index=312 */
+         {8206, 330}, /* Gain=32.055 Exposure Index=313 */
+         {8204, 340}, /* Gain=32.047 Exposure Index=314 */
+         {8209, 350}, /* Gain=32.066 Exposure Index=315 */
+         {8198, 361}, /* Gain=32.023 Exposure Index=316 */
+         {8194, 372}, /* Gain=32.008 Exposure Index=317 */
+         {8197, 383}, /* Gain=32.020 Exposure Index=318 */
+         {8207, 394}, /* Gain=32.059 Exposure Index=319 */
+         {8203, 406}, /* Gain=32.043 Exposure Index=320 */
+         {8207, 418}, /* Gain=32.059 Exposure Index=321 */
+         {8198, 431}, /* Gain=32.023 Exposure Index=322 */
+         {8197, 444}, /* Gain=32.020 Exposure Index=323 */
+         {8203, 457}, /* Gain=32.043 Exposure Index=324 */
+         {8198, 471}, /* Gain=32.023 Exposure Index=325 */
+         {8200, 485}, /* Gain=32.031 Exposure Index=326 */
+         {8193, 500}, /* Gain=32.004 Exposure Index=327 */
+         {8439, 500}, /* Gain=32.965 Exposure Index=328 */
+         {8692, 500}, /* Gain=33.953 Exposure Index=329 */
+         {8953, 500}, /* Gain=34.973 Exposure Index=330 */
+         {9222, 500}, /* Gain=36.023 Exposure Index=331 */
+         {9499, 500}, /* Gain=37.105 Exposure Index=332 */
+         {9784, 500}, /* Gain=38.219 Exposure Index=333 */
+         {10078, 500}, /* Gain=39.367 Exposure Index=334 */
+         {10380, 500}, /* Gain=40.547 Exposure Index=335 */
+         {10691, 500}, /* Gain=41.762 Exposure Index=336 */
+         {11012, 500}, /* Gain=43.016 Exposure Index=337 */
+         {11342, 500}, /* Gain=44.305 Exposure Index=338 */
+         {11682, 500}, /* Gain=45.633 Exposure Index=339 */
+         {12032, 500}, /* Gain=47.000 Exposure Index=340 */
+         {12393, 500}, /* Gain=48.410 Exposure Index=341 */
+         {12765, 500}, /* Gain=49.863 Exposure Index=342 */
+         {13148, 500}, /* Gain=51.359 Exposure Index=343 */
+         {13542, 500}, /* Gain=52.898 Exposure Index=344 */
+         {13948, 500}, /* Gain=54.484 Exposure Index=345 */
+         {14366, 500}, /* Gain=56.117 Exposure Index=346 */
+         {14797, 500}, /* Gain=57.801 Exposure Index=347 */
+         {15241, 500}, /* Gain=59.535 Exposure Index=348 */
+         {15698, 500}, /* Gain=61.320 Exposure Index=349 */
+         {16169, 500}, /* Gain=63.160 Exposure Index=350 */
+         {16169, 515}, /* Gain=63.160 Exposure Index=351 */
+         {16183, 530}, /* Gain=63.215 Exposure Index=352 */
+         {16180, 546}, /* Gain=63.203 Exposure Index=353 */
+         {16191, 562}, /* Gain=63.246 Exposure Index=354 */
+         {16187, 579}, /* Gain=63.230 Exposure Index=355 */
+         {16170, 597}, /* Gain=63.164 Exposure Index=356 */
+         {16194, 614}, /* Gain=63.258 Exposure Index=357 */
+         {16179, 633}, /* Gain=63.199 Exposure Index=358 */
+         {16179, 652}, /* Gain=63.199 Exposure Index=359 */
+         {16193, 671}, /* Gain=63.254 Exposure Index=360 */
+         {16173, 692}, /* Gain=63.176 Exposure Index=361 */
+         {16190, 712}, /* Gain=63.242 Exposure Index=362 */
+         {16176, 734}, /* Gain=63.188 Exposure Index=363 */
+         {16176, 756}, /* Gain=63.188 Exposure Index=364 */
+         {16169, 779}, /* Gain=63.160 Exposure Index=365 */
+         {16176, 802}, /* Gain=63.188 Exposure Index=366 */
+         {16177, 826}, /* Gain=63.191 Exposure Index=367 */
+         {16173, 851}, /* Gain=63.176 Exposure Index=368 */
+         {16183, 876}, /* Gain=63.215 Exposure Index=369 */
+         {16170, 903}, /* Gain=63.164 Exposure Index=370 */
+         {16172, 930}, /* Gain=63.172 Exposure Index=371 */
+         {16170, 958}, /* Gain=63.164 Exposure Index=372 */
+         {16182, 986}, /* Gain=63.211 Exposure Index=373 */
+         {16434, 1000}, /* Gain=64.195 Exposure Index=374 */
+         {16927, 1000}, /* Gain=66.121 Exposure Index=375 */
+         {17435, 1000}, /* Gain=68.105 Exposure Index=376 */
+         {17958, 1000}, /* Gain=70.148 Exposure Index=377 */
+         {18497, 1000}, /* Gain=72.254 Exposure Index=378 */
+         {19052, 1000}, /* Gain=74.422 Exposure Index=379 */
+         {19624, 1000}, /* Gain=76.656 Exposure Index=380 */
+         {20213, 1000}, /* Gain=78.957 Exposure Index=381 */
+         {20819, 1000}, /* Gain=81.324 Exposure Index=382 */
+         {21444, 1000}, /* Gain=83.766 Exposure Index=383 */
+         {22087, 1000}, /* Gain=86.277 Exposure Index=384 */
+         {22750, 1000}, /* Gain=88.867 Exposure Index=385 */
+         {23433, 1000}, /* Gain=91.535 Exposure Index=386 */
+         {24136, 1000}, /* Gain=94.281 Exposure Index=387 */
+         {24136, 1030}, /* Gain=94.281 Exposure Index=388 */
+         {24156, 1060}, /* Gain=94.359 Exposure Index=389 */
+         {24152, 1092}, /* Gain=94.344 Exposure Index=390 */
+         {24147, 1125}, /* Gain=94.324 Exposure Index=391 */
+         {26142, 1159}, /* Gain=94.305 Exposure Index=392 */
+         {26137, 1194}, /* Gain=94.285 Exposure Index=393 */
+         {26153, 1229}, /* Gain=94.348 Exposure Index=394 */
+         {26151, 1266}, /* Gain=94.340 Exposure Index=395 */
+         {26151, 1304}, /* Gain=94.340 Exposure Index=396 */
+         {28153, 1343}, /* Gain=94.348 Exposure Index=397 */
+         {28141, 1384}, /* Gain=94.301 Exposure Index=398 */
+         {28150, 1425}, /* Gain=94.336 Exposure Index=399 */
+         {28146, 1468}, /* Gain=94.320 Exposure Index=400 */
+         {28147, 1512}, /* Gain=94.324 Exposure Index=401 */
+         {40549, 1558}, /* Gain=94.285 Exposure Index=402 */
+         {40549, 1604}, /* Gain=94.328 Exposure Index=403 */
+         {40549, 1652}, /* Gain=94.336 Exposure Index=404 */
+         {40549, 1702}, /* Gain=94.313 Exposure Index=405 */
+         {40549, 1753}, /* Gain=94.316 Exposure Index=406 */
+         {40549, 1806}, /* Gain=94.297 Exposure Index=407 */
+         {40549, 1860}, /* Gain=94.305 Exposure Index=408 */
+         {40549, 1916}, /* Gain=94.293 Exposure Index=409 */
+         {40549, 1973}, /* Gain=94.316 Exposure Index=410 */
+         {40549, 2000}, /* Gain=95.836 Exposure Index=411 */
+         {40549, 2000}, /* Gain=98.711 Exposure Index=412 */
+         {40549, 2000}, /* Gain=101.672 Exposure Index=413 */
+         {40549, 2000}, /* Gain=104.723 Exposure Index=414 */
+         {41765, 2000}, /* Gain=107.863 Exposure Index=415 */
+         {41765, 2000}, /* Gain=111.098 Exposure Index=416 */
+         {41765, 2000}, /* Gain=114.430 Exposure Index=417 */
+         {41765, 2000}, /* Gain=117.863 Exposure Index=418 */
+         {41765, 2000}, /* Gain=121.398 Exposure Index=419 */
+         {41765, 2000}, /* Gain=125.039 Exposure Index=420 */
+         {41765, 2000}, /* Gain=128.789 Exposure Index=421 */
+         {41765, 2000}, /* Gain=132.652 Exposure Index=422 */
+         {41765, 2000}, /* Gain=136.633 Exposure Index=423 */
+         {41765, 2000}, /* Gain=140.730 Exposure Index=424 */
+         {41765, 2000}, /* Gain=144.953 Exposure Index=425 */
+         {41765, 2000}, /* Gain=149.301 Exposure Index=426 */
+         {41765, 2000}, /* Gain=153.781 Exposure Index=427 */
+         {41765, 2000}, /* Gain=158.395 Exposure Index=428 */
+         {41765, 2000}, /* Gain=163.145 Exposure Index=429 */
+         {43018, 2000}, /* Gain=168.039 Exposure Index=430 */
+         {44309, 2000}, /* Gain=173.082 Exposure Index=431 */
+         {45638, 2000}, /* Gain=178.273 Exposure Index=432 */
+         {47007, 2000}, /* Gain=183.621 Exposure Index=433 */
+         {48417, 2000}, /* Gain=189.129 Exposure Index=434 */
+         {49870, 2000}, /* Gain=194.805 Exposure Index=435 */
+         {51366, 2000}, /* Gain=200.648 Exposure Index=436 */
+         {52907, 2000}, /* Gain=206.668 Exposure Index=437 */
+         {54494, 2000}, /* Gain=212.867 Exposure Index=438 */
+         {56129, 2000}, /* Gain=219.254 Exposure Index=439 */
+         {57813, 2000}, /* Gain=225.832 Exposure Index=440 */
+         {59547, 2000}, /* Gain=232.605 Exposure Index=441 */
+         {61333, 2000}, /* Gain=239.582 Exposure Index=442 */
+         {63173, 2000}, /* Gain=246.770 Exposure Index=443 */
+         {65068, 2000}, /* Gain=254.172 Exposure Index=444 */
          {0, 0}, /* Gain=0.000 Exposure Index=445 */
          {0, 0}, /* Gain=0.000 Exposure Index=446 */
          {0, 0}, /* Gain=0.000 Exposure Index=447 */
