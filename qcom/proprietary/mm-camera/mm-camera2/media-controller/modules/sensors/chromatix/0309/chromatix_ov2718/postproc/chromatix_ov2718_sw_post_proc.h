@@ -1,4 +1,4 @@
-/* csv1: 7C8ECB82 */
+/* csv1: CC67615A */
 //=============================================================================
 //                          C H R O M A T I X
 //
@@ -43,7 +43,7 @@
 //
 // Variable name: sigma_lut[MAX_SIGMA_TABLES][RNR_LUT_SIZE].
 // This LUT is used to describe the spatial varying noise property based
-//   on pixel’s distance to the image center. This LUT should be calibrated from Chromatix tool.
+//   on pixelï¿½s distance to the image center. This LUT should be calibrated from Chromatix tool.
 // Data range: 1 to 5. Values outside this range indicate there may be problems in the calibration.
 //
 // Variable name: Sampling Factor.
@@ -195,8 +195,8 @@
       {
          /* Trigger */
          {
-            2.960000f, /* Gain Start */
-            3.552000f, /* Gain End */
+            35.62047f, /* Gain Start */
+            42.74456f, /* Gain End */
             285, /* Lux Index Start */
             297, /* Lux Index End */
          },
@@ -209,8 +209,8 @@
       {
          /* Trigger */
          {
-            4.920000f, /* Gain Start */
-            5.904000f, /* Gain End */
+            70.24094f, /* Gain Start */
+            84.28912f, /* Gain End */
             305, /* Lux Index Start */
             317, /* Lux Index End */
          },
@@ -223,8 +223,8 @@
       {
          /* Trigger */
          {
-            8.000000f, /* Gain Start */
-            9.600000f, /* Gain End */
+            124.6445f, /* Gain Start */
+            149.5734f, /* Gain End */
             380, /* Lux Index Start */
             392, /* Lux Index End */
          },
@@ -237,8 +237,8 @@
       {
          /* Trigger */
          {
-            28.00000f, /* Gain Start */
-            33.60000f, /* Gain End */
+            190.3203f, /* Gain Start */
+            228.3844f, /* Gain End */
             395, /* Lux Index Start */
             407, /* Lux Index End */
          },
@@ -251,8 +251,8 @@
       {
          /* Trigger */
          {
-            48.00000f, /* Gain Start */
-            57.60000f, /* Gain End */
+            255.9961f, /* Gain Start */
+            307.1953f, /* Gain End */
             420, /* Lux Index Start */
             432, /* Lux Index End */
          },
@@ -312,7 +312,7 @@
 // Default value: 10.
 // Data range : 0 to 63.
 // Effect: For one pixel, if its color saturation is less than c_saturation_thr,
-//   it won’t be detected as 'Color Artifacts' and will not be corrected.
+//   it wonï¿½t be detected as 'Color Artifacts' and will not be corrected.
 //
 // Variable name: c_spot_thr //8uQ0
 // The color spot threshold on color difference between one pixel and its surrounding pixels
@@ -320,7 +320,7 @@
 // Default value: 10.
 // Data range : 0 to 63.
 // Effect: For one pixel, if its color difference is less than c_spot_thr,
-//   it won’t be detected as 'Color Artifacts' and will not be corrected.
+//   it wonï¿½t be detected as 'Color Artifacts' and will not be corrected.
 //   This parameter is not used for 8994 SW CAC.
 /*******************************************************************************/
 
@@ -352,8 +352,8 @@
          1, /* Enable CAC2 for this region */
          /* Trigger */
          {
-            2.960000f, /* Gain Start */
-            3.552000f, /* Gain End */
+            35.62047f, /* Gain Start */
+            42.74456f, /* Gain End */
             285, /* Lux Index Start */
             297, /* Lux Index End */
          },
@@ -369,8 +369,8 @@
          0, /* Enable CAC2 for this region */
          /* Trigger */
          {
-            4.920000f, /* Gain Start */
-            5.904000f, /* Gain End */
+            70.24094f, /* Gain Start */
+            84.28912f, /* Gain End */
             305, /* Lux Index Start */
             317, /* Lux Index End */
          },
@@ -386,8 +386,8 @@
          0, /* Enable CAC2 for this region */
          /* Trigger */
          {
-            8.000000f, /* Gain Start */
-            9.600000f, /* Gain End */
+            124.6445f, /* Gain Start */
+            149.5734f, /* Gain End */
             380, /* Lux Index Start */
             392, /* Lux Index End */
          },
@@ -403,8 +403,8 @@
          0, /* Enable CAC2 for this region */
          /* Trigger */
          {
-            28.00000f, /* Gain Start */
-            33.60000f, /* Gain End */
+            190.3203f, /* Gain Start */
+            228.3844f, /* Gain End */
             395, /* Lux Index Start */
             407, /* Lux Index End */
          },
@@ -420,8 +420,8 @@
          0, /* Enable CAC2 for this region */
          /* Trigger */
          {
-            48.00000f, /* Gain Start */
-            57.60000f, /* Gain End */
+            255.9961f, /* Gain Start */
+            307.1953f, /* Gain End */
             420, /* Lux Index Start */
             432, /* Lux Index End */
          },

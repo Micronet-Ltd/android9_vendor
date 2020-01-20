@@ -1,4 +1,4 @@
-/* csv1: 2B4C00CC */
+/* csv1: B1CA324E */
 //=============================================================================
 //                          C H R O M A T I X
 //
@@ -49,13 +49,13 @@
       // 1 means to use gain to control.
       /*********************************************************************/
 
-      1, /* Control Method - 1 = Gain, 0 = Lux Index */
+      0, /* Control Method - 1 = Gain, 0 = Lux Index */
       /* Low-Light Trigger Points */
       {
-         45.60000f, /* Gain Start */
-         48.00000f, /* Gain End */
-         383, /* Lux Index Start */
-         426, /* Lux Index End */
+         243.1963f, /* Gain Start */
+         255.9961f, /* Gain End */
+         400, /* Lux Index Start */
+         445, /* Lux Index End */
       },
    },
    /* Channel Balance Gains */
@@ -65,7 +65,7 @@
       1, /* Enable */
       1, /* Control Enable */
       1, /* Control Method - 1 = Gain, 0 = Lux Index */
-      63, /* Enable Lux Index */
+      66, /* Enable Lux Index */
       /* Core Data */
       {
          /* ABF2 Set1 */
@@ -78,29 +78,29 @@
                262, /* Lux Index End */
             },
             /* Red channel parameters */
-            {112, 128, 2416}, /* 12-bit pixels */
-            {0.111685f, 0.000000f},
+            {128, 144, 2256}, /* 12-bit pixels */
+            {0.122686f, 0.000000f},
 
             /* Green channel parameters */
-            {112, 128, 2576}, /* 12-bit pixels */
-            {0.080676f, 0.000000f},
+            {112, 128, 2256}, /* 12-bit pixels */
+            {0.085313f, 0.000000f},
             {1.000000f, 0.000000f},
 
             /* Blue channel parameters */
-            {112, 128, 2576}, /* 12-bit pixels */
-            {0.109811f, 0.000000f},
+            {128, 144, 2256}, /* 12-bit pixels */
+            {0.112759f, 0.000000f},
 
             /* Positive table */
             {
                1.000000f, 1.000000f, 1.000000f, 1.000000f,
-               1.000000f, 1.000000f, 1.000000f, 0.879157f,
-               0.879157f, 0.637470f, 0.637470f, 0.395784f,
-               0.395784f, 0.190033f, 0.190033f, 0.105125f
+               1.000000f, 1.000000f, 0.928919f, 0.888155f,
+               0.745994f, 0.664466f, 0.522304f, 0.440777f,
+               0.319430f, 0.250978f, 0.150446f, 0.072491f
             },
             /* Negative table */
             {
-               -0.244716f, -1.000000f, -0.535160f, -0.535513f,
-               -0.474463f, -0.404151f, -0.088354f, -0.084945f
+               -0.289974f, -1.000000f, -0.822754f, -0.335529f,
+               -0.512198f, -0.149733f, -0.102415f, -0.054765f
             },
          },
          /* ABF2 Set2 */
@@ -113,29 +113,29 @@
                297, /* Lux Index End */
             },
             /* Red channel parameters */
-            {128, 144, 2736}, /* 12-bit pixels */
-            {0.160265f, 0.000000f},
+            {144, 160, 2256}, /* 12-bit pixels */
+            {0.165636f, 0.000000f},
 
             /* Green channel parameters */
-            {112, 128, 2576}, /* 12-bit pixels */
-            {0.097509f, 0.000000f},
+            {128, 144, 2256}, /* 12-bit pixels */
+            {0.101436f, 0.000000f},
             {1.000000f, 0.000000f},
 
             /* Blue channel parameters */
-            {128, 144, 2736}, /* 12-bit pixels */
-            {0.144090f, 0.000000f},
+            {128, 144, 2256}, /* 12-bit pixels */
+            {0.148392f, 0.000000f},
 
             /* Positive table */
             {
                1.000000f, 1.000000f, 1.000000f, 1.000000f,
-               1.000000f, 1.000000f, 0.929337f, 0.889048f,
-               0.747721f, 0.667143f, 0.525816f, 0.445238f,
-               0.326188f, 0.258234f, 0.161460f, 0.085408f
+               1.000000f, 1.000000f, 0.898152f, 0.834408f,
+               0.694455f, 0.630711f, 0.458886f, 0.435825f,
+               0.270230f, 0.270230f, 0.125114f, 0.052555f
             },
             /* Negative table */
             {
-               -0.313890f, -1.000000f, -0.648447f, -0.338903f,
-               -0.518959f, -0.414397f, -0.004442f, -0.088655f
+               -0.329286f, -1.000000f, -0.931873f, -0.426789f,
+               -0.570089f, -0.230754f, -0.082122f, -0.046735f
             },
          },
          /* ABF2 Set3 */
@@ -148,29 +148,29 @@
                317, /* Lux Index End */
             },
             /* Red channel parameters */
-            {128, 144, 2736}, /* 12-bit pixels */
-            {0.185152f, 0.000000f},
+            {144, 160, 2256}, /* 12-bit pixels */
+            {0.189441f, 0.000000f},
 
             /* Green channel parameters */
-            {112, 128, 2416}, /* 12-bit pixels */
-            {0.112059f, 0.000000f},
+            {128, 144, 2256}, /* 12-bit pixels */
+            {0.121338f, 0.000000f},
             {1.000000f, 0.000000f},
 
             /* Blue channel parameters */
-            {144, 160, 2736}, /* 12-bit pixels */
-            {0.199484f, 0.000000f},
+            {144, 160, 2576}, /* 12-bit pixels */
+            {0.200259f, 0.000000f},
 
             /* Positive table */
             {
                1.000000f, 1.000000f, 1.000000f, 1.000000f,
-               1.000000f, 1.000000f, 0.935170f, 0.832280f,
-               0.766944f, 0.625487f, 0.527990f, 0.427953f,
-               0.325848f, 0.260090f, 0.167023f, 0.093298f
+               1.000000f, 1.000000f, 0.904323f, 0.783236f,
+               0.712968f, 0.591881f, 0.461069f, 0.415383f,
+               0.263794f, 0.263794f, 0.122257f, 0.051488f
             },
             /* Negative table */
             {
-               -0.177876f, -1.000000f, -0.647535f, -0.354256f,
-               -0.454535f, -0.305887f, -0.096661f, -0.130571f
+               -0.268758f, -0.939797f, -0.953872f, -0.495815f,
+               -0.409368f, -0.267665f, -0.046505f, -0.102937f
             },
          },
          /* ABF2 Set4 */
@@ -184,28 +184,28 @@
             },
             /* Red channel parameters */
             {160, 176, 2256}, /* 12-bit pixels */
-            {0.294565f, 0.000000f},
+            {0.292109f, 0.000000f},
 
             /* Green channel parameters */
-            {144, 160, 2736}, /* 12-bit pixels */
-            {0.201328f, 0.000000f},
+            {144, 160, 2256}, /* 12-bit pixels */
+            {0.207669f, 0.000000f},
             {1.000000f, 0.000000f},
 
             /* Blue channel parameters */
-            {160, 176, 2256}, /* 12-bit pixels */
-            {0.313517f, 0.000000f},
+            {176, 192, 2256}, /* 12-bit pixels */
+            {0.309661f, 0.000000f},
 
             /* Positive table */
             {
                1.000000f, 1.000000f, 1.000000f, 1.000000f,
-               1.000000f, 0.945678f, 0.859268f, 0.740770f,
-               0.632125f, 0.513627f, 0.438330f, 0.329190f,
-               0.240538f, 0.197328f, 0.085231f, 0.039065f
+               1.000000f, 0.948534f, 0.842341f, 0.706534f,
+               0.653828f, 0.521653f, 0.427711f, 0.319664f,
+               0.253595f, 0.198252f, 0.094757f, 0.047476f
             },
             /* Negative table */
             {
-               -0.231794f, -1.000000f, -0.637697f, -0.453922f,
-               -0.454028f, -0.483352f, -0.315143f, -0.052221f
+               -0.249146f, -1.000000f, -0.969504f, -0.580436f,
+               -0.552603f, -0.303690f, -0.055902f, -0.071054f
             },
          },
          /* ABF2 Set5 */
@@ -218,29 +218,29 @@
                407, /* Lux Index End */
             },
             /* Red channel parameters */
-            {144, 160, 2736}, /* 12-bit pixels */
-            {0.203032f, 0.000000f},
+            {144, 160, 2256}, /* 12-bit pixels */
+            {0.205162f, 0.000000f},
 
             /* Green channel parameters */
-            {112, 128, 2576}, /* 12-bit pixels */
-            {0.117996f, 0.000000f},
+            {128, 144, 2256}, /* 12-bit pixels */
+            {0.127395f, 0.000000f},
             {1.000000f, 0.000000f},
 
             /* Blue channel parameters */
-            {144, 160, 2736}, /* 12-bit pixels */
-            {0.215195f, 0.000000f},
+            {144, 160, 2256}, /* 12-bit pixels */
+            {0.213183f, 0.000000f},
 
             /* Positive table */
             {
                1.000000f, 1.000000f, 1.000000f, 1.000000f,
-               1.000000f, 1.000000f, 0.936075f, 0.770410f,
-               0.770410f, 0.566928f, 0.503003f, 0.382801f,
-               0.293660f, 0.228843f, 0.139702f, 0.068130f
+               1.000000f, 1.000000f, 0.906292f, 0.787927f,
+               0.718876f, 0.600511f, 0.472278f, 0.427484f,
+               0.279062f, 0.279062f, 0.140856f, 0.071753f
             },
             /* Negative table */
             {
-               -0.196247f, -1.000000f, -0.672078f, -0.314360f,
-               -0.525066f, -0.387533f, -0.083382f, -0.074733f
+               -0.141519f, -0.998540f, -0.946036f, -0.435495f,
+               -0.578617f, -0.272843f, -0.048819f, -0.074715f
             },
          },
          /* ABF2 Set6 */
@@ -254,28 +254,28 @@
             },
             /* Red channel parameters */
             {160, 176, 2256}, /* 12-bit pixels */
-            {0.262625f, 0.000000f},
+            {0.258171f, 0.000000f},
 
             /* Green channel parameters */
-            {128, 144, 2736}, /* 12-bit pixels */
-            {0.182491f, 0.000000f},
+            {144, 160, 2256}, /* 12-bit pixels */
+            {0.186972f, 0.000000f},
             {1.000000f, 0.000000f},
 
             /* Blue channel parameters */
-            {160, 176, 2576}, /* 12-bit pixels */
-            {0.269203f, 0.000000f},
+            {160, 176, 2256}, /* 12-bit pixels */
+            {0.262081f, 0.000000f},
 
             /* Positive table */
             {
                1.000000f, 1.000000f, 1.000000f, 1.000000f,
-               1.000000f, 0.941057f, 0.849035f, 0.790092f,
-               0.606047f, 0.547104f, 0.437572f, 0.350829f,
-               0.250376f, 0.207004f, 0.092286f, 0.044939f
+               1.000000f, 0.945096f, 0.859841f, 0.744235f,
+               0.634427f, 0.518821f, 0.445454f, 0.336599f,
+               0.247937f, 0.204921f, 0.090672f, 0.042262f
             },
             /* Negative table */
             {
-               -0.401124f, -1.000000f, -0.717352f, -0.528401f,
-               -0.475960f, -0.413409f, -0.196864f, -0.131008f
+               -0.270485f, -0.977156f, -0.984686f, -0.555687f,
+               -0.509562f, -0.301223f, -0.052929f, -0.033131f
             },
          },
       },
@@ -453,8 +453,8 @@
       1, /* Control Method - 1 = Gain, 0 = Lux Index */
       /* Hysteresis Control */
       {
-         8.000000f, /* Gain Start */
-         9.600000f, /* Gain End */
+         124.6445f, /* Gain Start */
+         149.5734f, /* Gain End */
          380, /* Lux Index Start */
          392, /* Lux Index End */
       },
@@ -557,8 +557,8 @@
          {
             /* Trigger */
             {
-               2.960000f, /* Gain Start */
-               3.552000f, /* Gain End */
+               35.62047f, /* Gain Start */
+               42.74456f, /* Gain End */
                285, /* Lux Index Start */
                297, /* Lux Index End */
             },
@@ -649,8 +649,8 @@
          {
             /* Trigger */
             {
-               4.920000f, /* Gain Start */
-               5.904000f, /* Gain End */
+               70.24094f, /* Gain Start */
+               84.28912f, /* Gain End */
                305, /* Lux Index Start */
                317, /* Lux Index End */
             },
@@ -741,8 +741,8 @@
          {
             /* Trigger */
             {
-               8.000000f, /* Gain Start */
-               9.600000f, /* Gain End */
+               124.6445f, /* Gain Start */
+               149.5734f, /* Gain End */
                380, /* Lux Index Start */
                392, /* Lux Index End */
             },
@@ -833,8 +833,8 @@
          {
             /* Trigger */
             {
-               28.00000f, /* Gain Start */
-               33.60000f, /* Gain End */
+               190.3203f, /* Gain Start */
+               228.3844f, /* Gain End */
                395, /* Lux Index Start */
                407, /* Lux Index End */
             },
@@ -925,8 +925,8 @@
          {
             /* Trigger */
             {
-               48.00000f, /* Gain Start */
-               57.60000f, /* Gain End */
+               255.9961f, /* Gain Start */
+               307.1953f, /* Gain End */
                420, /* Lux Index Start */
                432, /* Lux Index End */
             },
@@ -1528,8 +1528,8 @@
          {
             /* Trigger */
             {
-               2.960000f, /* Gain Start */
-               3.552000f, /* Gain End */
+               35.62047f, /* Gain Start */
+               42.74456f, /* Gain End */
                285, /* Lux Index Start */
                297, /* Lux Index End */
             },
@@ -1553,8 +1553,8 @@
          {
             /* Trigger */
             {
-               4.920000f, /* Gain Start */
-               5.904000f, /* Gain End */
+               70.24094f, /* Gain Start */
+               84.28912f, /* Gain End */
                305, /* Lux Index Start */
                317, /* Lux Index End */
             },
@@ -1578,8 +1578,8 @@
          {
             /* Trigger */
             {
-               8.000000f, /* Gain Start */
-               9.600000f, /* Gain End */
+               124.6445f, /* Gain Start */
+               149.5734f, /* Gain End */
                380, /* Lux Index Start */
                392, /* Lux Index End */
             },
@@ -1603,8 +1603,8 @@
          {
             /* Trigger */
             {
-               28.00000f, /* Gain Start */
-               33.60000f, /* Gain End */
+               190.3203f, /* Gain Start */
+               228.3844f, /* Gain End */
                395, /* Lux Index Start */
                407, /* Lux Index End */
             },
@@ -1628,8 +1628,8 @@
          {
             /* Trigger */
             {
-               48.00000f, /* Gain Start */
-               57.60000f, /* Gain End */
+               255.9961f, /* Gain Start */
+               307.1953f, /* Gain End */
                420, /* Lux Index Start */
                432, /* Lux Index End */
             },
@@ -1728,10 +1728,10 @@
 
       /* Low-Light Trigger Points */
       {
-         45.60000f, /* Gain Start */
-         48.00000f, /* Gain End */
-         383, /* Lux Index Start */
-         426, /* Lux Index End */
+         243.1963f, /* Gain Start */
+         255.9961f, /* Gain End */
+         400, /* Lux Index Start */
+         445, /* Lux Index End */
       },
       32, /* Fmin */
       96, /* Fmax */
@@ -1840,10 +1840,10 @@
 
       /* Low-Light Trigger Points */
       {
-         45.60000f, /* Gain Start */
-         48.00000f, /* Gain End */
-         383, /* Lux Index Start */
-         426, /* Lux Index End */
+         243.1963f, /* Gain Start */
+         255.9961f, /* Gain End */
+         400, /* Lux Index Start */
+         445, /* Lux Index End */
       },
       32, /* Fmin */
       96, /* Fmax */
@@ -2016,7 +2016,7 @@
    // Core Parameters
    //
    // Variable name: same_channel_detection.
-   // Determine if only use central pixel’s Same Channel
+   // Determine if only use central pixelï¿½s Same Channel
    //   Neighbor's information in detection and recovery.
    // Default value: 0 for bright and normal light, 1 for low light.
    // Data range: 0 to 1 (1u)
@@ -2025,8 +2025,8 @@
    //           bad pixels (including clusters) will be removed, but more color artifacts will appear.
    //
    // Variable name: same_channel_recovery.
-   // Determine if only use central pixel’s Same Channel
-   //   Neighbors’ information in recovery.
+   // Determine if only use central pixelï¿½s Same Channel
+   //   Neighborsï¿½ information in recovery.
    // Default value: 0 for bright and normal light, 1 for low light.
    // Data range: 0 to 1 (1u)
    // Effect: 0 Use same and cross channel information in BPC Recovery.
@@ -2112,8 +2112,8 @@
       1, /* Control Method - 1 = Gain, 0 = Lux Index */
       /* Hysteresis Control */
       {
-         8.000000f, /* Gain Start */
-         9.600000f, /* Gain End */
+         124.6445f, /* Gain Start */
+         149.5734f, /* Gain End */
          380, /* Lux Index Start */
          392, /* Lux Index End */
       },
@@ -2144,8 +2144,8 @@
          {
             /* Trigger */
             {
-               2.960000f, /* Gain Start */
-               3.552000f, /* Gain End */
+               35.62047f, /* Gain Start */
+               42.74456f, /* Gain End */
                285, /* Lux Index Start */
                297, /* Lux Index End */
             },
@@ -2164,8 +2164,8 @@
          {
             /* Trigger */
             {
-               4.920000f, /* Gain Start */
-               5.904000f, /* Gain End */
+               70.24094f, /* Gain Start */
+               84.28912f, /* Gain End */
                305, /* Lux Index Start */
                317, /* Lux Index End */
             },
@@ -2184,8 +2184,8 @@
          {
             /* Trigger */
             {
-               8.000000f, /* Gain Start */
-               9.600000f, /* Gain End */
+               124.6445f, /* Gain Start */
+               149.5734f, /* Gain End */
                380, /* Lux Index Start */
                392, /* Lux Index End */
             },
@@ -2204,8 +2204,8 @@
          {
             /* Trigger */
             {
-               28.00000f, /* Gain Start */
-               33.60000f, /* Gain End */
+               190.3203f, /* Gain Start */
+               228.3844f, /* Gain End */
                395, /* Lux Index Start */
                407, /* Lux Index End */
             },
@@ -2224,8 +2224,8 @@
          {
             /* Trigger */
             {
-               48.00000f, /* Gain Start */
-               57.60000f, /* Gain End */
+               255.9961f, /* Gain Start */
+               307.1953f, /* Gain End */
                420, /* Lux Index Start */
                432, /* Lux Index End */
             },
@@ -2262,10 +2262,10 @@
 
       /* Low-Light Trigger Points */
       {
-         45.60000f, /* Gain Start */
-         48.00000f, /* Gain End */
-         383, /* Lux Index Start */
-         426, /* Lux Index End */
+         243.1963f, /* Gain Start */
+         255.9961f, /* Gain End */
+         400, /* Lux Index Start */
+         445, /* Lux Index End */
       },
       /* Data */
       {
@@ -2507,10 +2507,10 @@
       0, /* Control Method - 1 = Gain, 0 = Lux Index */
       /* Low-Light Trigger Points */
       {
-         45.60000f, /* Gain Start */
-         48.00000f, /* Gain End */
-         383, /* Lux Index Start */
-         426, /* Lux Index End */
+         243.1963f, /* Gain Start */
+         255.9961f, /* Gain End */
+         400, /* Lux Index Start */
+         445, /* Lux Index End */
       },
       /* Data */
       {
@@ -2617,10 +2617,10 @@
 
       /* Trigger Points */
       {
-         43.20000f, /* Gain Start */
-         48.00000f, /* Gain End */
-         383, /* Lux Index Start */
-         426, /* Lux Index End */
+         230.3965f, /* Gain Start */
+         255.9961f, /* Gain End */
+         400, /* Lux Index Start */
+         445, /* Lux Index End */
       },
       /* Horizon CCT Trigger */
       {
@@ -2862,10 +2862,10 @@
 
       /* Low-Light Trigger Points */
       {
-         43.20000f, /* Gain Start */
-         48.00000f, /* Gain End */
-         383, /* Lux Index Start */
-         426, /* Lux Index End */
+         230.3965f, /* Gain Start */
+         255.9961f, /* Gain End */
+         400, /* Lux Index Start */
+         445, /* Lux Index End */
       },
 
       /*********************************************************************/
@@ -2899,10 +2899,10 @@
 
       /* Outdoor Trigger Points */
       {
-         28.80000f, /* Gain Start */
-         14.40000f, /* Gain End */
-         170, /* Lux Index Start */
-         127, /* Lux Index End */
+         153.5977f, /* Gain Start */
+         76.79883f, /* Gain End */
+         178, /* Lux Index Start */
+         133, /* Lux Index End */
       },
 
       /*********************************************************************/
@@ -3610,10 +3610,10 @@
 
       /* Low-Light Trigger Points */
       {
-         43.20000f, /* Gain Start */
-         48.00000f, /* Gain End */
-         383, /* Lux Index Start */
-         426, /* Lux Index End */
+         230.3965f, /* Gain Start */
+         255.9961f, /* Gain End */
+         400, /* Lux Index Start */
+         445, /* Lux Index End */
       },
       /* Horizon CCT Trigger */
       {
@@ -4229,8 +4229,8 @@
    /* Luma Adaptation */
    {
       0, /* Luma Adaptation Enable */
-      0, /* Control Enable */
-      1, /* Control Method - 1 = Gain, 0 = Lux Index */
+      1, /* Control Enable */
+      0, /* Control Method - 1 = Gain, 0 = Lux Index */
 
       /******************************************************************************/
       // Feature name : Luma Adaptation bright light trigger points
@@ -4239,10 +4239,10 @@
 
       /* Bright Light Trigger Points */
       {
-         28.80000f, /* Gain Start */
-         14.40000f, /* Gain End */
-         170, /* Lux Index Start */
-         127, /* Lux Index End */
+         153.5977f, /* Gain Start */
+         76.79883f, /* Gain End */
+         178, /* Lux Index Start */
+         133, /* Lux Index End */
       },
 
       /******************************************************************************/
@@ -4470,8 +4470,8 @@
          {
             /* Trigger */
             {
-               2.960000f, /* Gain Start */
-               3.552000f, /* Gain End */
+               35.62047f, /* Gain Start */
+               42.74456f, /* Gain End */
                285, /* Lux Index Start */
                297, /* Lux Index End */
             },
@@ -4505,8 +4505,8 @@
          {
             /* Trigger */
             {
-               4.920000f, /* Gain Start */
-               5.904000f, /* Gain End */
+               70.24094f, /* Gain Start */
+               84.28912f, /* Gain End */
                305, /* Lux Index Start */
                317, /* Lux Index End */
             },
@@ -4540,8 +4540,8 @@
          {
             /* Trigger */
             {
-               8.000000f, /* Gain Start */
-               9.600000f, /* Gain End */
+               124.6445f, /* Gain Start */
+               149.5734f, /* Gain End */
                380, /* Lux Index Start */
                392, /* Lux Index End */
             },
@@ -4575,8 +4575,8 @@
          {
             /* Trigger */
             {
-               28.00000f, /* Gain Start */
-               33.60000f, /* Gain End */
+               190.3203f, /* Gain Start */
+               228.3844f, /* Gain End */
                395, /* Lux Index Start */
                407, /* Lux Index End */
             },
@@ -4610,8 +4610,8 @@
          {
             /* Trigger */
             {
-               48.00000f, /* Gain Start */
-               57.60000f, /* Gain End */
+               255.9961f, /* Gain Start */
+               307.1953f, /* Gain End */
                420, /* Lux Index Start */
                432, /* Lux Index End */
             },
@@ -4689,7 +4689,7 @@
       // Default value: 5.
       // Data range : 0 to 63.
       // Effect: For one pixel, if its color saturation is less than c_saturation_thr,
-      //   it won’t be detected as ‘Color Artifacts’ and will not be corrected.
+      //   it wonï¿½t be detected as ï¿½Color Artifactsï¿½ and will not be corrected.
       //
       // Variable name: c_spot_thr //8uQ0
       // The threshold on color difference between one pixel and its surrounding pixels
@@ -4697,7 +4697,7 @@
       // Default value: 10.
       // Data range: 0 to 63.
       // Effect: For one pixel, if its color difference is less than c_spot_thr,
-      //   it won’t be detected as ‘Color Artifacts’ and will not be corrected
+      //   it wonï¿½t be detected as ï¿½Color Artifactsï¿½ and will not be corrected
       //
       /******************************************************************************/
 
@@ -4729,8 +4729,8 @@
          {
             /* Trigger */
             {
-               2.960000f, /* Gain Start */
-               3.552000f, /* Gain End */
+               35.62047f, /* Gain Start */
+               42.74456f, /* Gain End */
                285, /* Lux Index Start */
                297, /* Lux Index End */
             },
@@ -4743,8 +4743,8 @@
          {
             /* Trigger */
             {
-               4.920000f, /* Gain Start */
-               5.904000f, /* Gain End */
+               70.24094f, /* Gain Start */
+               84.28912f, /* Gain End */
                305, /* Lux Index Start */
                317, /* Lux Index End */
             },
@@ -4757,8 +4757,8 @@
          {
             /* Trigger */
             {
-               8.000000f, /* Gain Start */
-               9.600000f, /* Gain End */
+               124.6445f, /* Gain Start */
+               149.5734f, /* Gain End */
                380, /* Lux Index Start */
                392, /* Lux Index End */
             },
@@ -4771,8 +4771,8 @@
          {
             /* Trigger */
             {
-               28.00000f, /* Gain Start */
-               33.60000f, /* Gain End */
+               190.3203f, /* Gain Start */
+               228.3844f, /* Gain End */
                395, /* Lux Index Start */
                407, /* Lux Index End */
             },
@@ -4785,8 +4785,8 @@
          {
             /* Trigger */
             {
-               48.00000f, /* Gain Start */
-               57.60000f, /* Gain End */
+               255.9961f, /* Gain Start */
+               307.1953f, /* Gain End */
                420, /* Lux Index Start */
                432, /* Lux Index End */
             },
@@ -4842,10 +4842,10 @@
 
       /* Low-Light Trigger Points */
       {
-         43.20000f, /* Gain Start */
-         47.04000f, /* Gain End */
-         383, /* Lux Index Start */
-         417, /* Lux Index End */
+         230.3965f, /* Gain Start */
+         250.8762f, /* Gain End */
+         400, /* Lux Index Start */
+         436, /* Lux Index End */
       },
 
       /*********************************************************************/
@@ -4882,8 +4882,8 @@
       {
          2.000000f, /* Gain Start */
          1.000000f, /* Gain End */
-         213, /* Lux Index Start */
-         191, /* Lux Index End */
+         222, /* Lux Index Start */
+         200, /* Lux Index End */
       },
 
       /*********************************************************************/
@@ -5119,10 +5119,10 @@
 
       /* Low-Light Trigger Points */
       {
-         45.60000f, /* Gain Start */
-         48.00000f, /* Gain End */
-         383, /* Lux Index Start */
-         426, /* Lux Index End */
+         243.1963f, /* Gain Start */
+         255.9961f, /* Gain End */
+         400, /* Lux Index Start */
+         445, /* Lux Index End */
       },
 
       /*********************************************************************/
@@ -5450,10 +5450,10 @@
 
       /* Lowlight Trigger Points */
       {
-         45.60000f, /* Gain Start */
-         48.00000f, /* Gain End */
-         383, /* Lux Index Start */
-         426, /* Lux Index End */
+         243.1963f, /* Gain Start */
+         255.9961f, /* Gain End */
+         400, /* Lux Index Start */
+         445, /* Lux Index End */
       },
       /* Horizon CCT Trigger */
       {
@@ -6965,27 +6965,27 @@
          // Horizontal location of first pixel in terms of the ratio to the whole frame size.
          // For example, image width is 1000, we want to use the middle 500
          // as BH window. Horizontal offset ratio is 250/1000=0.25.
-         // Data range: 0.0 – 0.5
+         // Data range: 0.0 ï¿½ 0.5
          // Default value:  0.0
          // Constraints: horizontalOffsetRatio + horizontalWindowRatio <= 1.0
          //
          // Variable name: VerticalOffsetRatio.
          // Similar to Horizontal Offset Ratio, but this is in the vertical direction.
-         // Data range: 0.0 – 0.5
+         // Data range: 0.0 ï¿½ 0.5
          // Default value:  0.0
          // Constraints: verticalOffsetRatio + verticalWindowRatio   <= 1.0
          //
          // Variable name: HorizontalWindowRatio.
          // BH window horizontal size in terms of ratio to the whole image. For the
          // same example above, Horizontal Window Ratio is 500/1000=0.5.
-         // Data range: 0.0 – 1.0
+         // Data range: 0.0 ï¿½ 1.0
          // Default value:  1.0
          // Constraints: horizontalOffsetRatio + horizontalWindowRatio <= 1.0
          //
          // Variable name: VerticalWindowRatio.
          // BH window vertical size in terms of ratio to the whole image. For the
          // same example above, Vertical Window Ratio is 500/1000=0.5.
-         // Data range: 0.0 – 1.0
+         // Data range: 0.0 ï¿½ 1.0
          // Default value:  1.0
          // Constraints: verticalOffsetRatio + verticalWindowRatio   <= 1.0
          /*********************************************************************/
@@ -7007,62 +7007,62 @@
          //
          // Variable name: saturation_thresh_R.
          // When collecting Bayer Grid statistics, only pixels with all of its channel values
-         // same or higher than each channel’s threshold will be counted. This value is the
+         // same or higher than each channelï¿½s threshold will be counted. This value is the
          // threshold for R channel
-         // Data range: 0 – 255.
+         // Data range: 0 ï¿½ 255.
          // Default value: 239.
          //
          // Variable name: saturation_thresh_Gr.
          // Similar to saturation_thresh_R, this value is the threshold for Gr channel
-         // Data range: 0 – 255
+         // Data range: 0 ï¿½ 255
          // Default value: 239
          //
          // Variable name: saturation_thresh_Gb.
          // Similar to saturation_thresh_R, this value is the threshold for Gb channel
-         // Data range: 0 – 255.
+         // Data range: 0 ï¿½ 255.
          // Default value: 239.
          //
          // Variable name: saturation_thresh_B.
          // Similar to saturation_thresh_R, this value is the threshold for B channel
-         // Data range: 0 – 255.
+         // Data range: 0 ï¿½ 255.
          // Default value: 239.
          //
          // Variable name: HorizontalOffsetRatio.
          // Horizontal location of first pixel in terms of the ratio to the whole frame size.
          // For example, image width is 1000, we want to use the middle 500 pixels
          // as BG window. Horizontal offset ratio is 250/1000=0.25.
-         // Data range: 0.0 – 0.5.
+         // Data range: 0.0 ï¿½ 0.5.
          // default: 0.015
          // Constraints: horizontalOffsetRatio + horizontalWindowRatio <= 1.0
          //
          // Variable name: VerticalOffsetRatio.
          // Similar to Horizontal Offset Ratio, but this is in the vertical direction.
-         // Data range: 0.0 – 0.5.
+         // Data range: 0.0 ï¿½ 0.5.
          // default: 0.015
          // Constraints: verticalOffsetRatio + verticalWindowRatio   <= 1.0
          //
          // Variable name: HorizontalWindowRatio.
          // BG window horizontal size in terms of ratio to the whole image. For the
          // same example above, Horizontal Window Ratio is 500/1000=0.5.
-         // Data range: 0.0 – 1.0.
+         // Data range: 0.0 ï¿½ 1.0.
          // Default value: 0.97
          // Constraints: horizontalOffsetRatio + horizontalWindowRatio <= 1.0
          //
          // Variable name: VerticalWindowRatio.
          // BG window vertical size in terms of ratio to the whole image. For the
          // same example above, Vertical Window Ratio is 500/1000=0.5.
-         // Data range: 0.0 – 1.0.
+         // Data range: 0.0 ï¿½ 1.0.
          // Default value: 0.97
          // Constraints: verticalOffsetRatio + verticalWindowRatio   <= 1.0
          //
          // Variable name: num_H_regions.
          // Number of Bayer Grid regions in horizontal direction
-         // range: 1 – 72.
+         // range: 1 ï¿½ 72.
          // Default value: 64.
          //
          // Variable name: num_V_regions.
          // Number of Bayer Grid regions in vertical direction
-         // Data range: 1 – 48.
+         // Data range: 1 ï¿½ 48.
          // Default value: 48.
          /*********************************************************************/
 
@@ -7512,7 +7512,7 @@
       // Constraints : fCV_Kmax present in 8994, 8996 and later. fCV_kmin - present in 8996 and later.
       // Effect: fCV_R, fCV_G, fCV_B are regular RGB->Y conversion; fCV_Cthr sets the
       //   threshold of strong Cb/Cr color, and fCV_Kc sets the strength of strong
-      //   color inclusion to Yp.  fCV_Kmax(10uQ10) and fCV_Kmin(10uQ10) defines max(R,G,B) and min(R,G,B)’s
+      //   color inclusion to Yp.  fCV_Kmax(10uQ10) and fCV_Kmin(10uQ10) defines max(R,G,B) and min(R,G,B)ï¿½s
       //   contribution to Yp. If fCV_Kmax is not zero, the sum of (fCV_R, fCV_G, fCV_B, and fCV_Kmax) should be
       //   a little bit more than 1.0 (about 1.0 to 1.1). If the sum is more than 1.0, it introduces more
       //   highlight suppression, which might be desirable.
@@ -7557,7 +7557,7 @@
       // Variable name: master_curve[129], master_scale[129], shift_curve[129], shift_scale[129].
       // Value range: -8192 to 8191
       // Effect: The tone is modified by the following equation:
-      //   Tone(Y,m) = MasterCurve(Y) × MasterScale(m) + ShiftCurve(Y-m) × ShiftScale(m) + Y
+      //   Tone(Y,m) = MasterCurve(Y) ï¿½ MasterScale(m) + ShiftCurve(Y-m) ï¿½ ShiftScale(m) + Y
       //   Y - tone value, m - mask index
       // Default values:
       //  mask_rect_curve[129] = {
@@ -7803,20 +7803,20 @@
       {
          1, /* Enable */
          1, /* Control Enable */
-         1, /* Control Method - 1 = Gain, 0 = Lux Index */
+         0, /* Control Method - 1 = Gain, 0 = Lux Index */
          /* Lowlight Trigger Points */
          {
-            45.60000f, /* Gain Start */
-            48.00000f, /* Gain End */
-            383, /* Lux Index Start */
-            426, /* Lux Index End */
+            243.1963f, /* Gain Start */
+            255.9961f, /* Gain End */
+            400, /* Lux Index Start */
+            445, /* Lux Index End */
          },
          /* Bright Light Trigger Points */
          {
             2.000000f, /* Gain Start */
             1.000000f, /* Gain End */
-            213, /* Lux Index Start */
-            191, /* Lux Index End */
+            222, /* Lux Index Start */
+            200, /* Lux Index End */
          },
          /* Core Data */
          {
@@ -8181,7 +8181,7 @@
    // Variable name: max_Q_factor_reduction.
    // The maximum image Q factor percentage reduction used in image buffer size
    //   control. The min image Q factor =
-   //   default Q factor * (1- max_Q_factor_reduction).
+   //   default Q factor * (1-ï¿½max_Q_factor_reduction).
    // Default value: 20.
    // Data range: 0 to 30.
    // Constraints: None.
@@ -8395,7 +8395,7 @@
    // Effect: Controls the high light switching.
    //
    // Variable name: mac_high_light_dth_log2 // 4u.
-   // This value represents the  log2(th2 – th1) value for high light switching for the right plane in 3D mode
+   // This value represents the  log2(th2 ï¿½ th1) value for high light switching for the right plane in 3D mode
    // Default value: 10.
    // Range: 2 to 14.
    // Effect: log2(th2-th1) for high light switching.
@@ -9055,10 +9055,10 @@
       1, /* Enable */
       /* Lowlight Trigger */
       {
-         45.60000f, /* Gain Start */
-         48.00000f, /* Gain End */
-         383, /* Lux Index Start */
-         426, /* Lux Index End */
+         243.1963f, /* Gain Start */
+         255.9961f, /* Gain End */
+         400, /* Lux Index Start */
+         445, /* Lux Index End */
       },
       4, /* Threshold */
       8, /* High Accuracy Mode */
@@ -9228,7 +9228,7 @@
       // Constraints : fCV_Kmax present in 8994, 8996 and later. fCV_kmin - present in 8996 and later.
       // Effect: fCV_R, fCV_G, fCV_B are regular RGB->Y conversion; fCV_Cthr sets the
       //   threshold of strong Cb/Cr color, and fCV_Kc sets the strength of strong
-      //   color inclusion to Yp.  fCV_Kmax(10uQ10) and fCV_Kmin(10uQ10) defines max(R,G,B) and min(R,G,B)’s
+      //   color inclusion to Yp.  fCV_Kmax(10uQ10) and fCV_Kmin(10uQ10) defines max(R,G,B) and min(R,G,B)ï¿½s
       //   contribution to Yp. If fCV_Kmax is not zero, the sum of (fCV_R, fCV_G, fCV_B, and fCV_Kmax) should be
       //   a little bit more than 1.0 (about 1.0 to 1.1). If the sum is more than 1.0, it introduces more
       //   highlight suppression, which might be desirable.
@@ -9273,7 +9273,7 @@
       // Variable name: master_curve[129], master_scale[129], shift_curve[129], shift_scale[129].
       // Value range: -8192 to 8191
       // Effect: The tone is modified by the following equation:
-      //   Tone(Y,m) = MasterCurve(Y) × MasterScale(m) + ShiftCurve(Y-m) × ShiftScale(m) + Y
+      //   Tone(Y,m) = MasterCurve(Y) ï¿½ MasterScale(m) + ShiftCurve(Y-m) ï¿½ ShiftScale(m) + Y
       //   Y - tone value, m - mask index
       // Default values:
       //  mask_rect_curve[129] = {
@@ -9517,20 +9517,20 @@
 
       1, /* Enable */
       1, /* Control Enable */
-      1, /* Control Method - 1 = Gain, 0 = Lux Index */
+      0, /* Control Method - 1 = Gain, 0 = Lux Index */
       /* Lowlight Trigger Points */
       {
-         45.60000f, /* Gain Start */
-         48.00000f, /* Gain End */
-         383, /* Lux Index Start */
-         426, /* Lux Index End */
+         243.1963f, /* Gain Start */
+         255.9961f, /* Gain End */
+         400, /* Lux Index Start */
+         445, /* Lux Index End */
       },
       /* Bright Light Trigger Points */
       {
          2.000000f, /* Gain Start */
          1.000000f, /* Gain End */
-         213, /* Lux Index Start */
-         191, /* Lux Index End */
+         222, /* Lux Index Start */
+         200, /* Lux Index End */
       },
       /* Core Data */
       {
@@ -9798,10 +9798,10 @@
       0, /* Control Method - 1 = Gain, 0 = Lux Index */
       /* Trigger */
       {
-         43.20000f, /* Gain Start */
-         48.00000f, /* Gain End */
-         383, /* Lux Index Start */
-         426, /* Lux Index End */
+         230.3965f, /* Gain Start */
+         255.9961f, /* Gain End */
+         400, /* Lux Index Start */
+         445, /* Lux Index End */
       },
    },
 },
