@@ -7455,7 +7455,7 @@
          },
          /* Region 1 */
          {
-            56, /* Default Luma Target */
+            39, /* Default Luma Target */
          },
          /* Region 2 */
          {
