@@ -93,4 +93,4 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.setupwizard.mode=OPTIONAL \
     ro.product.first_api_level=28 \
     setupwizard.feature.predeferred_enabled=false \
-    ro.com.google.gmsversion=9_201909
+    ro.com.google.gmsversion=9_201911

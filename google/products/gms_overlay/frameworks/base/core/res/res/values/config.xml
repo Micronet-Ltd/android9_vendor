@@ -59,4 +59,5 @@
 
     <!-- Colon separated list of package names that should be granted DND access -->
     <string name="config_defaultDndAccessPackages" translatable="false">com.google.android.apps.wellbeing</string>
+    <string name="config_deviceProvisioningPackage">com.google.android.apps.work.oobconfig</string>
 </resources>

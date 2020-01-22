@@ -27,8 +27,9 @@
         <item>com.google.android.googlequicksearchbox</item> <!-- Google Launcher -->
         <item>com.google.android.launcher</item> <!-- Google Launcher meta home alternate name -->
         <item>com.android.launcher</item> <!-- Android Launcher (default on some Nexus devices) -->
-        <item>com.android.dialer</item> <!-- Google dialer to enable making phone calls -->
-        <item>com.android.apps.messaging</item> <!-- Google Messenger for SMS -->
+	<item>com.google.android.dialer</item>
+        <item>org.codeaurora.dialer</item> <!-- Google dialer to enable making phone calls -->
+        <item>com.google.android.apps.messaging</item> <!-- Google Messenger for SMS -->
        <!--modify google app to qualcomm app for GMS pass end-->
     </string-array>
 </resources>
