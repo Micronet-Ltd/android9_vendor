@@ -7,6 +7,33 @@
 
 #include <stdio.h>
 #include "ov2718_lib.h"
+#include <utils/Log.h> 
+#include "debug_lib.h"  
+
+#undef SLOW
+#undef SDBG
+#define OV2718_DEBUG
+#ifdef OV2718_DEBUG
+#define SLOW(fmt, args...) ALOGE("%s:%d," fmt "\n",__func__,__LINE__, ##args)
+#define SDBG(fmt, args...) SERR(fmt, ##args)
+#else
+#define SLOW(fmt, args...) do { } while (0)
+#define SDBG(fmt, args...) do { } while (0)
+ 
+#endif
+
+#define AWB_GAIN_R 0x3360
+#define AWB_GAIN_GR 0x3362
+#define AWB_GAIN_GB 0x3364
+#define AWB_GAIN_B 0x3366
+
+#define AWB_GAIN_R_OFFSET 0x3378
+#define AWB_GAIN_GR_OFFSET 0x337B
+#define AWB_GAIN_GB_OFFSET 0x337E
+#define AWB_GAIN_B_OFFSET 0x3381
+
+#define BL 64
+#define BLC 256
 
 
 
@@ -18,13 +45,19 @@
 static unsigned int sensor_real_to_register_gain(float gain)
 {
   uint16_t reg_analog_gain;
-
-  if (gain < MIN_GAIN) {
-      gain = MIN_GAIN;
-  } else if (gain > MAX_ANALOG_GAIN) {
-      gain = MAX_ANALOG_GAIN;
+  float analog_realGain = gain/MIN_DIGITAL_GAIN;
+      
+  if (analog_realGain < 2) {
+      gain = 1;
+  } else if (analog_realGain < 4) {
+      gain = 1;
+  } else if (analog_realGain < 8) {
+      gain = 2;
+  } else {
+      gain = 3;
   }
-  gain = (gain) * 256.0;
+    
+  gain = (gain) * 1.0;
   reg_analog_gain = (uint16_t) gain;
 
   return reg_analog_gain;
@@ -39,12 +72,17 @@ static float sensor_register_to_real_gain(unsigned int reg_gain)
 {
   float real_gain = 0;
 
-  if (reg_gain < 0x100) {
-    reg_gain = 0x100;
-  } else if (reg_gain > 0x2000) {
-    reg_gain = 0x20000;
+  if (reg_gain == 0) {
+    real_gain = 1.0;
+  } else if (reg_gain == 1) {
+    real_gain = 2.0;
+  } else if (reg_gain == 2) {
+    real_gain = 4.0;
+  } else if (reg_gain == 3) {
+    real_gain = 8.0;
+  } else {
+    real_gain = 1.0;
   }
-  real_gain = (float) reg_gain / 256.0;
 
   return real_gain;
 }
@@ -116,13 +154,9 @@ static int sensor_fill_exposure_array(unsigned int gain,
   __attribute__((unused)) int s_linecount,
   __attribute__((unused)) int is_hdr_enabled)
 {
-	int rc = 0;
-	unsigned short reg_count = 0;
-	unsigned short i = 0;
-	uint16_t gain_a = 0;
-	uint16_t gain_d_h = 0;
-	uint16_t gain_d_l = 0;
-	uint16_t BASEGAIN= 256;
+  int rc = 0;
+  unsigned short reg_count = 0;
+  unsigned short i = 0;
 
   if (!reg_setting) {
     return -1;
@@ -157,69 +191,17 @@ static int sensor_fill_exposure_array(unsigned int gain,
     sensor_lib_ptr.exp_gain_info.coarse_int_time_addr + 1;
   reg_setting->reg_setting[reg_count].reg_data = line & 0x00ff;
   reg_count++;
-/*
-  reg_setting->reg_setting[reg_count].reg_addr =
-    sensor_lib_ptr.exp_gain_info.coarse_int_time_addr + 2;
-  reg_setting->reg_setting[reg_count].reg_data = (line & 0x0f) << 4;
-  reg_count++;
-  */
-	#if 1
-	if (gain < 3*BASEGAIN || gain > 32* BASEGAIN) {
-	if (gain < 3*BASEGAIN)
-		gain = 3*BASEGAIN;
-	else if (gain > 32 * BASEGAIN)
-		gain = 32 * BASEGAIN;
-	}
-	//3x--4.375x
-	if(gain>= 3*256 && gain < 4.375*256)
-	{
-		gain_a=0x01;//LCG
-		gain_d_h=((unsigned int)(gain/2+0.5))>>8;
-		gain_d_l=(( unsigned int)(gain/2+0.5)) & 0x00ff;
-	}
-	//4.375x---8.75x
-	else if(gain>= 4.375*256 && gain < 8.75*256)
-	{
-		gain_a=0x02;//LCG
-		gain_d_h=((unsigned int)(gain/4+0.5))>>8;
-		gain_d_l=((unsigned int)(gain/4+0.5)) & 0x00ff;
-	}
-	//8.75x---22x
-	else if(gain>= 8.75*256 && gain < 22*256)
-	{
-		gain_a=0x03;//LCG		
-		gain_d_h= (( unsigned int)(gain/8+0.5))>>8;
-		gain_d_l= (( unsigned int)(gain/8+0.5)) & 0x00ff;
-	}
-	//22X---32X
-	else if(gain >=22*256 && gain<=32*256)
-	{
-		gain_a = 0x40;//HCG
-		gain_d_h = (( unsigned int)(gain/11+0.5))>>8;                
-		gain_d_l = (((unsigned int)(gain/11+0.5))>>1) & 0xff;
-	}
-	#endif
-  
-  reg_setting->reg_setting[reg_count].reg_addr =0x30bb;
-  reg_setting->reg_setting[reg_count].reg_data = gain_a;
-  reg_count++;
-  
-  reg_setting->reg_setting[reg_count].reg_addr =
-    sensor_lib_ptr.exp_gain_info.global_gain_addr;
-  reg_setting->reg_setting[reg_count].reg_data = gain_d_h;
-  reg_count++;
+
 
   reg_setting->reg_setting[reg_count].reg_addr =
-    sensor_lib_ptr.exp_gain_info.global_gain_addr + 1;
-  reg_setting->reg_setting[reg_count].reg_data = gain_d_l;
+    sensor_lib_ptr.exp_gain_info.global_gain_addr;
+  reg_setting->reg_setting[reg_count].reg_data = ((gain & 0x03)|0x01) << 2;
   reg_count++;
   
-    reg_setting->reg_setting[reg_count].reg_addr =0x315c;
-  reg_setting->reg_setting[reg_count].reg_data = gain_d_h;
-  reg_count++;
-    reg_setting->reg_setting[reg_count].reg_addr =0x315d;
-  reg_setting->reg_setting[reg_count].reg_data = gain_d_l;
-  reg_count++;
+  SLOW("fl_lines                                     = %d",fl_lines);
+  SLOW("line                                         = %d",line);
+  SLOW("gain                                         = %d",gain);
+  SLOW("reg_setting->reg_setting[reg_count].reg_data = %d",reg_setting->reg_setting[reg_count-1].reg_data);
 
   for (i = 0; i < sensor_lib_ptr.groupoff_settings.size; i++) {
     reg_setting->reg_setting[reg_count].reg_addr =
@@ -236,6 +218,146 @@ static int sensor_fill_exposure_array(unsigned int gain,
   return 0;
 }
 
+/**
+ * FUNCTION: sensor_fill_awb_array
+ *
+ * DESCRIPTION: Fill the AWB HDR array
+ **/
+static int sensor_fill_awb_array(unsigned short awb_gain_r,
+  unsigned short awb_gain_b, struct camera_i2c_seq_reg_setting* reg_setting)
+{
+    unsigned short reg_count = 0;
+    float isp_gain_r = 0, isp_gain_b = 0, isp_gain_g = 0;
+    float r_offset = 0, b_offset = 0, g_offset = 0;
+
+    isp_gain_r = (float)awb_gain_r/256.0;
+    isp_gain_b = (float)awb_gain_b/256.0;
+    isp_gain_g = 1.0;
+
+    r_offset = (isp_gain_r - 1) * BL;
+    b_offset = (isp_gain_b - 1) * BL;
+    g_offset = (isp_gain_g - 1) * BL;
+
+    SLOW("isp_gain_r = %f, isp_gain_b = %f, isp_gain_g = %f", isp_gain_r, isp_gain_b, isp_gain_g);
+    SLOW("r_offset = %f, b_offset = %f, g_offset = %f", r_offset, b_offset, g_offset);
+
+    /* Formula of Sensor AWB Gain */
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_R;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(isp_gain_r * BLC) & 0xFF00) >> 8;
+    SLOW("AWB_GAIN_R: %d", reg_setting->reg_setting[reg_count].reg_data[0]);
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_R + 1;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(isp_gain_r * BLC) & 0xFF);
+    SLOW("AWB_GAIN_R: %d", reg_setting->reg_setting[reg_count].reg_data[0]);
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_GR;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(isp_gain_g * BLC) & 0xFF00) >> 8;
+    SLOW("AWB_GAIN_GR: %d", reg_setting->reg_setting[reg_count].reg_data[0]);
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_GR + 1;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(isp_gain_g * BLC) & 0xFF);
+    SLOW("AWB_GAIN_GR: %d", reg_setting->reg_setting[reg_count].reg_data[0]);
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_GB;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(isp_gain_g * BLC) & 0xFF00) >> 8;
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_GB + 1;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(isp_gain_g * BLC) & 0xFF);
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_B;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(isp_gain_b * BLC) & 0xFF00) >> 8;
+    SLOW("AWB_GAIN_B: %d", reg_setting->reg_setting[reg_count].reg_data[0]);
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_B + 1;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(isp_gain_b * BLC) & 0xFF);
+    SLOW("AWB_GAIN_b: %d", reg_setting->reg_setting[reg_count].reg_data[0]);
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    /* Formula of Sensor AWB Offset */
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_R_OFFSET;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(r_offset * BLC) & 0xFF0000) >> 16;
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_R_OFFSET + 1;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(r_offset * BLC) & 0xFF00) >> 8;
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_R_OFFSET + 2;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(r_offset * BLC) & 0xFF);
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_GR_OFFSET;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(g_offset * BLC) & 0xFF0000) >> 16;
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_GR_OFFSET + 1;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(g_offset * BLC) & 0xFF00) >> 8;
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_GR_OFFSET + 2;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(g_offset * BLC) & 0xFF);
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_GB_OFFSET;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(g_offset * BLC) & 0xFF0000) >> 16;
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_GB_OFFSET + 1;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(g_offset * BLC) & 0xFF00) >> 8;
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_GB_OFFSET + 2;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(g_offset * BLC) & 0xFF);
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_B_OFFSET;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(b_offset * BLC) & 0xFF0000) >> 16;
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_B_OFFSET + 1;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(b_offset * BLC) & 0xFF00) >> 8;
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->reg_setting[reg_count].reg_addr = AWB_GAIN_B_OFFSET + 2;
+    reg_setting->reg_setting[reg_count].reg_data[0] = ((unsigned int)(b_offset * BLC) & 0xFF);
+    reg_setting->reg_setting[reg_count].reg_data_size = 1;
+    reg_count++;
+
+    reg_setting->size = reg_count;
+    reg_setting->addr_type = CAMERA_I2C_WORD_ADDR;
+    reg_setting->delay = 0;
+
+    return 0;
+}
 
 
 

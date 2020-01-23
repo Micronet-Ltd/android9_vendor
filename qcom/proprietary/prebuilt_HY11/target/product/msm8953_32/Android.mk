@@ -2249,15 +2249,15 @@ LOCAL_MODULE_PATH   := $(PRODUCT_OUT)/$(TARGET_COPY_OUT_VENDOR)/bin
 LOCAL_PROPRIETARY_MODULE := true
 include $(BUILD_PREBUILT)
 
-include $(CLEAR_VARS)
-LOCAL_MODULE        := StoreKeybox
-LOCAL_MODULE_OWNER  := qcom
-LOCAL_MODULE_TAGS   := optional
-LOCAL_MODULE_CLASS  := EXECUTABLES
-LOCAL_SRC_FILES     := ../../.././target/product/msm8953_32/vendor/bin/StoreKeybox
-LOCAL_MODULE_PATH   := $(PRODUCT_OUT)/$(TARGET_COPY_OUT_VENDOR)/bin
-LOCAL_PROPRIETARY_MODULE := true
-include $(BUILD_PREBUILT)
+#include $(CLEAR_VARS)
+#LOCAL_MODULE        := StoreKeybox
+#LOCAL_MODULE_OWNER  := qcom
+#LOCAL_MODULE_TAGS   := optional
+#LOCAL_MODULE_CLASS  := EXECUTABLES
+#LOCAL_SRC_FILES     := ../../.././target/product/msm8953_32/vendor/bin/StoreKeybox
+#LOCAL_MODULE_PATH   := $(PRODUCT_OUT)/$(TARGET_COPY_OUT_VENDOR)/bin
+#LOCAL_PROPRIETARY_MODULE := true
+#include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE        := tftp_server

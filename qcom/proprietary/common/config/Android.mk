@@ -50,6 +50,7 @@ EXTRA_VENDOR_LIBRARIES := \
     com.quicinc.cne.constants@1.0 \
     com.quicinc.cne.constants@2.0 \
     com.quicinc.cne.constants@2.1 \
+    com.quicinc.cne.server@2.3 \
     com.quicinc.cne.server@2.0 \
     com.quicinc.cne.server@2.1 \
     com.quicinc.cne.server@2.2 \
@@ -80,6 +81,7 @@ EXTRA_VENDOR_LIBRARIES := \
     vendor.qti.hardware.radio.qtiradio@1.0 \
     vendor.qti.hardware.radio.qtiradio@2.0 \
     vendor.qti.hardware.radio.qtiradio@2.1 \
+    vendor.qti.hardware.radio.qtiradio@2.2 \
     vendor.qti.hardware.radio.uim@1.0 \
     vendor.qti.hardware.radio.uim_remote_client@1.0 \
     vendor.qti.hardware.radio.uim_remote_server@1.0 \
@@ -90,6 +92,7 @@ EXTRA_VENDOR_LIBRARIES := \
     vendor.qti.hardware.wigig.supptunnel@1.0 \
     vendor.qti.ims.callinfo@1.0 \
     vendor.qti.ims.rcsconfig@1.0 \
+    vendor.qti.imsrtpservice@1.0 \
     vendor.qti.latency@2.0 \
     vendor.qti.voiceprint@1.0 \
     vendor.display.color@1.1 \
@@ -102,6 +105,12 @@ EXTRA_VENDOR_LIBRARIES := \
     vendor.display.color@1.2 \
     vendor.display.color@1.3 \
     vendor.display.config@1.2 \
+    vendor.display.config@1.3 \
+    vendor.display.config@1.4 \
+    vendor.display.config@1.5 \
+    vendor.display.config@1.6 \
+    vendor.display.config@1.7 \
+    vendor.display.config@1.8 \
     vendor.qti.gnss@1.2 \
     vendor.qti.hardware.radio.ims@1.2 \
     vendor.qti.hardware.radio.ims@1.3 \
@@ -110,8 +119,32 @@ EXTRA_VENDOR_LIBRARIES := \
     vendor.qti.gnss@2.0 \
     vendor.qti.hardware.iop@2.0 \
     vendor.qti.hardware.wifi.supplicant@2.0 \
+    android.hardware.soundtrigger@2.0-core \
+    android.hardware.wifi@1.0 \
+    android.hardware.wifi@1.1 \
+    android.hardware.wifi@1.2 \
+    vendor.qti.hardware.wifi@1.0 \
+    android.hardware.wifi.supplicant@1.0 \
+    android.hardware.wifi.supplicant@1.1 \
+    android.hardware.secure_element@1.0 \
+    android.hardware.radio.deprecated@1.0 \
+    android.hardware.radio@1.0 \
+    android.hardware.radio@1.1 \
+    android.hardware.radio@1.2 \
+    android.hardware.radio.config@1.0 \
+    android.hardware.tetheroffload.control@1.0 \
+    android.frameworks.displayservice@1.0 \
     vendor.qti.gnss@2.1 \
+    android.hidl.base@1.0 \
+    vendor.nxp.nxpnfc@1.0 \
+    vendor.nxp.nxpese@1.0 \
+    libaudioroute \
+    libyuv \
+    libcap \
+    libminijail \
     libdrm \
+    vendor.qti.hardware.wifi.hostapd@1.0 \
+    android.hardware.wifi.hostapd@1.0 \
 
 ifeq ($(TARGET_USES_NQ_NFC),true)
 EXTRA_VENDOR_LIBRARIES += vendor.nxp.hardware.nfc@1.0

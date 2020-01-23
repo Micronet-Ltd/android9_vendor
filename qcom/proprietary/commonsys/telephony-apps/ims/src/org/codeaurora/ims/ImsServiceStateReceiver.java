@@ -106,9 +106,11 @@ public class ImsServiceStateReceiver extends BroadcastReceiver {
                         mPhoneId + 1));
                 builder.setSmallIcon(R.drawable.volte_icon);
             } else {
-                builder.setContentTitle(mContext.getResources().getString(
+                /*builder.setContentTitle(mContext.getResources().getString(
                         R.string.device_is_hd_capable,
-                        mPhoneId + 1));
+                        mPhoneId + 1));*/
+                builder.setContentTitle(mContext.getResources().getString(
+                        R.string.device_is_hd_capable1));
                 builder.setSmallIcon(R.drawable.ims_state);
             }
             builder.setShowWhen(false);
