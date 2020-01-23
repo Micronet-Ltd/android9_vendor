@@ -2,6 +2,7 @@
 // source code may only be used and distributed under the Widevine Master
 // License Agreement.
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "file_store.h"
@@ -64,9 +65,8 @@ TEST_F(FileUtilsTest, CreateDirectory) {
 
 TEST_F(FileUtilsTest, IsDir) {
   std::string path = test_vectors::kTestDir + kTestFileName;
-  File* file = file_system.Open(path, FileSystem::kCreate);
+  std::unique_ptr<File> file = file_system.Open(path, FileSystem::kCreate);
   EXPECT_TRUE(file);
-  file->Close();
 
   EXPECT_TRUE(file_system.Exists(path));
   EXPECT_TRUE(file_system.Exists(test_vectors::kTestDir));
@@ -76,9 +76,8 @@ TEST_F(FileUtilsTest, IsDir) {
 
 TEST_F(FileUtilsTest, IsRegularFile) {
   std::string path = test_vectors::kTestDir + kTestFileName;
-  File* file = file_system.Open(path, FileSystem::kCreate);
+  std::unique_ptr<File> file = file_system.Open(path, FileSystem::kCreate);
   EXPECT_TRUE(file);
-  file->Close();
 
   EXPECT_TRUE(file_system.Exists(path));
   EXPECT_TRUE(file_system.Exists(test_vectors::kTestDir));
@@ -91,10 +90,11 @@ TEST_F(FileUtilsTest, CopyFile) {
   file_system.Remove(path);
 
   std::string write_data = GenerateRandomData(600);
-  File* wr_file = file_system.Open(path, FileSystem::kCreate);
+  size_t write_data_size = write_data.size();
+  std::unique_ptr<File> wr_file = file_system.Open(path, FileSystem::kCreate);
   EXPECT_TRUE(wr_file);
-  EXPECT_TRUE(wr_file->Write(write_data.data(), write_data.size()));
-  wr_file->Close();
+  EXPECT_EQ(wr_file->Write(write_data.data(), write_data_size),
+            write_data_size);
   ASSERT_TRUE(file_system.Exists(path));
 
   std::string path_copy = test_vectors::kTestDir + kTestFileName2;
@@ -103,10 +103,11 @@ TEST_F(FileUtilsTest, CopyFile) {
 
   std::string read_data;
   read_data.resize(file_system.FileSize(path_copy));
-  File* rd_file = file_system.Open(path_copy, FileSystem::kReadOnly);
+  size_t read_data_size = read_data.size();
+  std::unique_ptr<File> rd_file =
+    file_system.Open(path_copy, FileSystem::kReadOnly);
   EXPECT_TRUE(rd_file);
-  EXPECT_TRUE(rd_file->Read(&read_data[0], read_data.size()));
-  rd_file->Close();
+  EXPECT_EQ(rd_file->Read(&read_data[0], read_data_size), read_data_size);
   EXPECT_EQ(write_data, read_data);
   EXPECT_EQ(file_system.FileSize(path), file_system.FileSize(path_copy));
 }
@@ -123,18 +124,18 @@ TEST_F(FileUtilsTest, ListFiles) {
 
   path = test_vectors::kTestDir + kTestFileName;
   std::string write_data = GenerateRandomData(600);
-  File* file = file_system.Open(path, FileSystem::kCreate);
+  size_t write_data_size = write_data.size();
+  std::unique_ptr<File> file = file_system.Open(path, FileSystem::kCreate);
   EXPECT_TRUE(file);
-  EXPECT_TRUE(file->Write(write_data.data(), write_data.size()));
-  file->Close();
+  EXPECT_EQ(file->Write(write_data.data(), write_data_size), write_data_size);
   EXPECT_TRUE(file_system.Exists(path));
 
   path = test_vectors::kTestDir + kTestFileName2;
   write_data = GenerateRandomData(600);
+  write_data_size = write_data.size();
   file = file_system.Open(path, FileSystem::kCreate);
   EXPECT_TRUE(file);
-  EXPECT_TRUE(file->Write(write_data.data(), write_data.size()));
-  file->Close();
+  EXPECT_EQ(file->Write(write_data.data(), write_data_size), write_data_size);
   EXPECT_TRUE(file_system.Exists(path));
 
   std::vector<std::string> files;

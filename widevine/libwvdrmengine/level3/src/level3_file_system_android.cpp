@@ -16,7 +16,7 @@ using wvcdm::FileSystem;
 namespace wvoec3 {
 
 OEMCrypto_Level3AndroidFileSystem::OEMCrypto_Level3AndroidFileSystem()
-    : file_system_(new FileSystem) {
+    : file_system_(new FileSystem()) {
   const char kDirectoryDelimiter = '/';
   wvcdm::Properties::GetDeviceFilesBasePath(wvcdm::kSecurityLevelL3,
                                             &base_path_);
@@ -42,19 +42,15 @@ OEMCrypto_Level3AndroidFileSystem::OEMCrypto_Level3AndroidFileSystem()
   }
 }
 
-OEMCrypto_Level3AndroidFileSystem::~OEMCrypto_Level3AndroidFileSystem() {
-  delete file_system_;
-  file_system_ = NULL;
-}
+OEMCrypto_Level3AndroidFileSystem::~OEMCrypto_Level3AndroidFileSystem() {}
 
 ssize_t OEMCrypto_Level3AndroidFileSystem::Read(const char *filename,
                                                 void *buffer, size_t size) {
-  File *file = file_system_->Open(base_path_ + std::string(filename),
-                                  FileSystem::kReadOnly);
+  auto file = file_system_->Open(base_path_ + std::string(filename),
+                                 FileSystem::kReadOnly);
   ssize_t bytes_read = 0;
   if (file) {
     bytes_read = file->Read(static_cast<char *>(buffer), size);
-    file->Close();
   }
   return bytes_read;
 }
@@ -62,12 +58,11 @@ ssize_t OEMCrypto_Level3AndroidFileSystem::Read(const char *filename,
 ssize_t OEMCrypto_Level3AndroidFileSystem::Write(const char *filename,
                                                  const void *buffer,
                                                  size_t size) {
-  File *file = file_system_->Open(base_path_ + std::string(filename),
-                                  FileSystem::kCreate | FileSystem::kTruncate);
+  auto file = file_system_->Open(base_path_ + std::string(filename),
+                                 FileSystem::kCreate | FileSystem::kTruncate);
   ssize_t bytes_written = 0;
   if (file) {
     bytes_written = file->Write(static_cast<const char *>(buffer), size);
-    file->Close();
   }
   return bytes_written;
 }

@@ -1603,41 +1603,53 @@ TEST_F(WvCdmExtendedDurationTest, MaxUsageEntryOfflineRecoveryTest) {
   std::string key_id;
   std::string client_auth;
   GetOfflineConfiguration(&key_id, &client_auth);
+  std::vector<CdmKeySetId> key_set_ids;
 
   // Download large number of offline licenses. If OEMCrypto returns
   // OEMCrypto_ERROR_INSUFFICIENT_RESOURCES when usage table is at capacity,
-  // licenses will be deleted internally to make space and we might
+  // licenses will be deleted internally to make space and we will
   // not encounter an error.
-  CdmResponseType response = NO_ERROR;
   for (size_t i = 0; i < 2000; ++i) {
     decryptor_.OpenSession(g_key_system, NULL, kDefaultCdmIdentifier, NULL,
                            &session_id_);
-    GenerateKeyRequest(key_id, kLicenseTypeOffline, &response);
-    if (response != KEY_MESSAGE) {
-      decryptor_.CloseSession(session_id_);
-      break;
-    }
-    VerifyKeyRequestResponse(kUatLicenseServer, client_auth, false, &response);
-    if (response != KEY_ADDED) {
-      decryptor_.CloseSession(session_id_);
-      break;
-    }
-    EXPECT_EQ(KEY_ADDED, response);
+    GenerateKeyRequest(kOfflineClip2PstInitData, kLicenseTypeOffline);
+    VerifyKeyRequestResponse(g_license_server, client_auth, false);
+
+    key_set_ids.push_back(key_set_id_);
+
     decryptor_.CloseSession(session_id_);
   }
 
-  // If we encountered an error, verify that on UsageTableHeader creation
-  // the usage entries will be deleted and that we can add new ones.
-  if (response != KEY_ADDED && response != KEY_MESSAGE) {
-    Provision();
-    for (size_t i = 0; i < 10; ++i) {
-      decryptor_.OpenSession(g_key_system, NULL, kDefaultCdmIdentifier, NULL,
-                             &session_id_);
-      GenerateKeyRequest(key_id, kLicenseTypeOffline);
-      VerifyKeyRequestResponse(kUatLicenseServer, client_auth, false);
-      decryptor_.CloseSession(session_id_);
+  uint32_t number_of_valid_offline_sessions = 0;
+  for (size_t i = 0; i < key_set_ids.size(); ++i) {
+    session_id_.clear();
+    decryptor_.OpenSession(g_key_system, NULL, kDefaultCdmIdentifier, NULL,
+                           &session_id_);
+    CdmResponseType result = decryptor_.RestoreKey(session_id_, key_set_ids[i]);
+
+    if (result == KEY_ADDED) {
+      ++number_of_valid_offline_sessions;
+
+      // Decrypt data
+      SubSampleInfo* data = &kEncryptedOfflineClip2SubSample;
+      std::vector<uint8_t> decrypt_buffer(data->encrypt_data.size());
+      CdmDecryptionParameters decryption_parameters(
+          &data->key_id, &data->encrypt_data.front(),
+          data->encrypt_data.size(), &data->iv,
+          data->block_offset, &decrypt_buffer[0]);
+      decryption_parameters.is_encrypted = data->is_encrypted;
+      decryption_parameters.is_secure = data->is_secure;
+      decryption_parameters.subsample_flags = data->subsample_flags;
+      EXPECT_EQ(NO_ERROR,
+                decryptor_.Decrypt(session_id_, data->validate_key_id,
+                                   decryption_parameters));
+
+      EXPECT_EQ(data->decrypt_data, decrypt_buffer);
     }
+    decryptor_.CloseSession(session_id_);
   }
+
+  EXPECT_GE(number_of_valid_offline_sessions, 200u);
 }
 
 }  // namespace wvcdm

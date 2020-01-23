@@ -56,7 +56,8 @@ CdmSession::CdmSession(FileSystem* file_system,
 CdmSession::~CdmSession() {
   if (usage_support_type_ == kUsageEntrySupport &&
       has_provider_session_token() &&
-      usage_table_header_ != NULL) {
+      usage_table_header_ != NULL &&
+      !is_release_) {
     UpdateUsageEntryInformation();
   }
 

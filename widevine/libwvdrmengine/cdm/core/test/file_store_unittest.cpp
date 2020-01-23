@@ -57,9 +57,8 @@ TEST_F(FileTest, OpenFile) {
   std::string path = test_vectors::kTestDir + kTestFileName;
   EXPECT_TRUE(file_system.Remove(path));
 
-  File* file = file_system.Open(path, FileSystem::kCreate);
+  std::unique_ptr<File> file = file_system.Open(path, FileSystem::kCreate);
   ASSERT_TRUE(file);
-  file->Close();
 
   EXPECT_TRUE(file_system.Exists(path));
 }
@@ -67,9 +66,8 @@ TEST_F(FileTest, OpenFile) {
 TEST_F(FileTest, RemoveDirAndFile) {
   std::string path = test_vectors::kTestDir + kTestFileName;
 
-  File* file = file_system.Open(path, FileSystem::kCreate);
+  std::unique_ptr<File> file = file_system.Open(path, FileSystem::kCreate);
   ASSERT_TRUE(file);
-  file->Close();
 
   EXPECT_TRUE(file_system.Exists(path));
   EXPECT_TRUE(file_system.Remove(path));
@@ -77,7 +75,6 @@ TEST_F(FileTest, RemoveDirAndFile) {
 
   file = file_system.Open(path, FileSystem::kCreate);
   ASSERT_TRUE(file);
-  file->Close();
 
   EXPECT_TRUE(file_system.Exists(path));
   RemoveTestDir();
@@ -91,12 +88,10 @@ TEST_F(FileTest, RemoveWildcardFiles) {
   std::string wildcard_path =
       test_vectors::kTestDir + kWildcard + kTestFileNameExt;
 
-  File* file = file_system.Open(path1, FileSystem::kCreate);
+  std::unique_ptr<File> file = file_system.Open(path1, FileSystem::kCreate);
   ASSERT_TRUE(file);
-  file->Close();
   file = file_system.Open(path2, FileSystem::kCreate);
   ASSERT_TRUE(file);
-  file->Close();
 
   EXPECT_TRUE(file_system.Exists(path1));
   EXPECT_TRUE(file_system.Exists(path2));
@@ -110,13 +105,13 @@ TEST_F(FileTest, FileSize) {
   file_system.Remove(path);
 
   std::string write_data = GenerateRandomData(600);
-  File* file = file_system.Open(path, FileSystem::kCreate);
+  size_t write_data_size = write_data.size();
+  std::unique_ptr<File> file = file_system.Open(path, FileSystem::kCreate);
   ASSERT_TRUE(file);
-  EXPECT_TRUE(file->Write(write_data.data(), write_data.size()));
-  file->Close();
+  EXPECT_EQ(file->Write(write_data.data(), write_data_size), write_data_size);
   EXPECT_TRUE(file_system.Exists(path));
 
-  EXPECT_EQ(static_cast<ssize_t>(write_data.size()),
+  EXPECT_EQ(static_cast<ssize_t>(write_data_size),
             file_system.FileSize(path));
 }
 
@@ -125,18 +120,18 @@ TEST_F(FileTest, WriteReadBinaryFile) {
   file_system.Remove(path);
 
   std::string write_data = GenerateRandomData(600);
-  File* file = file_system.Open(path, FileSystem::kCreate);
+  size_t write_data_size = write_data.size();
+  std::unique_ptr<File> file = file_system.Open(path, FileSystem::kCreate);
   ASSERT_TRUE(file);
-  EXPECT_TRUE(file->Write(write_data.data(), write_data.size()));
-  file->Close();
+  EXPECT_EQ(file->Write(write_data.data(),write_data_size), write_data_size);
   EXPECT_TRUE(file_system.Exists(path));
 
   std::string read_data;
   read_data.resize(file_system.FileSize(path));
+  size_t read_data_size = read_data.size();
   file = file_system.Open(path, FileSystem::kReadOnly);
   ASSERT_TRUE(file);
-  EXPECT_TRUE(file->Read(&read_data[0], read_data.size()));
-  file->Close();
+  EXPECT_EQ(file->Read(&read_data[0], read_data_size), read_data_size);
   EXPECT_EQ(write_data, read_data);
 }
 
@@ -149,15 +144,12 @@ TEST_F(FileTest, ListFiles) {
   std::string path3 = test_vectors::kTestDir + kTestFileName3;
   std::string path_dir = test_vectors::kTestDir;
 
-  File* file = file_system.Open(path1, FileSystem::kCreate);
+  std::unique_ptr<File> file = file_system.Open(path1, FileSystem::kCreate);
   ASSERT_TRUE(file);
-  file->Close();
   file = file_system.Open(path2, FileSystem::kCreate);
   ASSERT_TRUE(file);
-  file->Close();
   file = file_system.Open(path3, FileSystem::kCreate);
   ASSERT_TRUE(file);
-  file->Close();
 
   EXPECT_TRUE(file_system.Exists(path1));
   EXPECT_TRUE(file_system.Exists(path2));
@@ -167,7 +159,7 @@ TEST_F(FileTest, ListFiles) {
   EXPECT_FALSE(file_system.List(not_path, &names));
 
   // Valid path, but no way to return names.
-  EXPECT_FALSE(file_system.List(path_dir, NULL));
+  EXPECT_FALSE(file_system.List(path_dir, nullptr));
 
   // Valid path, valid return.
   EXPECT_TRUE(file_system.List(path_dir, &names));

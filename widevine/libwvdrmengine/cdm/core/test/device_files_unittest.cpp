@@ -2,9 +2,11 @@
 // source code may only be used and distributed under the Widevine Master
 // License Agreement.
 
-#include <string>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <memory>
+#include <string>
+
 #include "device_files.h"
 #include "file_store.h"
 #include "properties.h"
@@ -1955,12 +1957,11 @@ UsageTableTestInfo kUsageTableInfoTestData[] = {
 
 class MockFile : public File {
  public:
-  MockFile() : File(NULL) {}
-  ~MockFile() {}
+  MockFile() {}
+  ~MockFile() override {}
 
   MOCK_METHOD2(Read, ssize_t(char*, size_t));
   MOCK_METHOD2(Write, ssize_t(const char*, size_t));
-  MOCK_METHOD0(Close, void());
 };
 
 class MockFileSystem : public FileSystem {
@@ -1968,7 +1969,15 @@ class MockFileSystem : public FileSystem {
   MockFileSystem() {}
   ~MockFileSystem() {}
 
-  MOCK_METHOD2(Open, File*(const std::string&, int flags));
+  // Until gmock is updated to a version post-April 2017, we need this
+  // workaround to test functions that take or return smart pointers.
+  // See
+  // https://github.com/abseil/googletest/blob/master/googlemock/docs/CookBook.md#legacy-workarounds-for-move-only-types
+  std::unique_ptr<File> Open(const std::string& buffer, int flags) {
+    return std::unique_ptr<File>(DoOpen(buffer, flags));
+  }
+
+  MOCK_METHOD2(DoOpen, File*(const std::string&, int flags));
   MOCK_METHOD0(IsFactoryReset, bool());
 
   MOCK_METHOD1(Exists, bool(const std::string&));
@@ -1982,10 +1991,12 @@ class MockFileSystem : public FileSystem {
 // gmock methods
 using ::testing::_;
 using ::testing::AllOf;
+using ::testing::DoAll;
 using ::testing::Eq;
 using ::testing::Gt;
 using ::testing::HasSubstr;
 using ::testing::InSequence;
+using ::testing::InvokeWithoutArgs;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::ReturnArg;
@@ -2085,8 +2096,9 @@ MATCHER_P(ContainsAllElementsInVector, str_vector, "") {
   std::string data(arg, str_length + kProtobufEstimatedOverhead);
   bool all_entries_found = true;
   for (size_t i = 0; i < str_vector.size(); ++i) {
-    if (data.find(str_vector[i]) == std::string::npos)
+    if (data.find(str_vector[i]) == std::string::npos) {
       all_entries_found = false;
+    }
   }
   return all_entries_found;
 }
@@ -2159,15 +2171,15 @@ TEST_F(DeviceCertificateStoreTest, StoreCertificate) {
   std::string device_certificate_path =
       device_base_path_ + DeviceFiles::GetCertificateFileName();
 
-  MockFile file;
+  // Call to Open will return a unique_ptr, freeing this object.
+  MockFile* file = new MockFile();
   EXPECT_CALL(file_system,
-              Open(StrEq(device_certificate_path), IsCreateFileFlagSet()))
-      .WillOnce(Return(&file));
-  EXPECT_CALL(file, Write(Contains(certificate, wrapped_private_key, 0),
-                          Gt(certificate.size() + wrapped_private_key.size())))
+              DoOpen(StrEq(device_certificate_path), IsCreateFileFlagSet()))
+      .WillOnce(Return(file));
+  EXPECT_CALL(*file, Write(Contains(certificate, wrapped_private_key, 0),
+                           Gt(certificate.size() + wrapped_private_key.size())))
       .WillOnce(ReturnArg<1>());
-  EXPECT_CALL(file, Close()).Times(1);
-  EXPECT_CALL(file, Read(_, _)).Times(0);
+  EXPECT_CALL(*file, Read(_, _)).Times(0);
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
@@ -2181,18 +2193,18 @@ TEST_F(DeviceCertificateTest, DISABLED_ReadCertificate) {
       device_base_path_ + DeviceFiles::GetCertificateFileName();
   std::string data = a2bs_hex(kTestCertificateFileData);
 
-  MockFile file;
+  // Call to Open will return a unique_ptr, freeing this object.
+  MockFile* file = new MockFile();
   EXPECT_CALL(file_system, Exists(StrEq(device_certificate_path)))
       .WillOnce(Return(true));
   EXPECT_CALL(file_system, FileSize(StrEq(device_certificate_path)))
       .WillOnce(Return(data.size()));
-  EXPECT_CALL(file_system, Open(StrEq(device_certificate_path), _))
-      .WillOnce(Return(&file));
-  EXPECT_CALL(file, Read(NotNull(), Eq(data.size())))
+  EXPECT_CALL(file_system, DoOpen(StrEq(device_certificate_path), _))
+      .WillOnce(Return(file));
+  EXPECT_CALL(*file, Read(NotNull(), Eq(data.size())))
       .WillOnce(DoAll(SetArrayArgument<0>(data.begin(), data.end()),
                       Return(data.size())));
-  EXPECT_CALL(file, Close()).Times(1);
-  EXPECT_CALL(file, Write(_, _)).Times(0);
+  EXPECT_CALL(*file, Write(_, _)).Times(0);
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
@@ -2215,7 +2227,7 @@ TEST_F(DeviceCertificateTest, HasCertificate) {
   EXPECT_CALL(file_system, Exists(StrEq(device_certificate_path)))
       .WillOnce(Return(false))
       .WillOnce(Return(true));
-  EXPECT_CALL(file_system, Open(_, _)).Times(0);
+  EXPECT_CALL(file_system, DoOpen(_, _)).Times(0);
 
   DeviceFiles device_files(&file_system);
   ASSERT_TRUE(device_files.Init(kSecurityLevelL1));
@@ -2238,15 +2250,15 @@ TEST_P(DeviceFilesSecurityLevelTest, SecurityLevel) {
   std::string device_certificate_path =
       device_base_path + DeviceFiles::GetCertificateFileName();
 
-  MockFile file;
+  // Call to Open will return a unique_ptr, freeing this object.
+  MockFile* file = new MockFile();
   EXPECT_CALL(file_system,
-              Open(StrEq(device_certificate_path), IsCreateFileFlagSet()))
-      .WillOnce(Return(&file));
-  EXPECT_CALL(file, Write(Contains(certificate, wrapped_private_key, 0),
-                          Gt(certificate.size() + wrapped_private_key.size())))
+              DoOpen(StrEq(device_certificate_path), IsCreateFileFlagSet()))
+      .WillOnce(Return(file));
+  EXPECT_CALL(*file, Write(Contains(certificate, wrapped_private_key, 0),
+                           Gt(certificate.size() + wrapped_private_key.size())))
       .WillOnce(ReturnArg<1>());
-  EXPECT_CALL(file, Close()).Times(1);
-  EXPECT_CALL(file, Read(_, _)).Times(0);
+  EXPECT_CALL(*file, Read(_, _)).Times(0);
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(security_level));
@@ -2266,22 +2278,22 @@ TEST_P(DeviceFilesStoreTest, StoreLicense) {
   CdmAppParameterMap app_parameters =
       GetAppParameters(license_test_data[license_num].app_parameters);
 
-  MockFile file;
-  EXPECT_CALL(file_system, Open(StrEq(license_path), IsCreateFileFlagSet()))
-      .WillOnce(Return(&file));
+  // Call to Open will return a unique_ptr, freeing this object.
+  MockFile* file = new MockFile();
+  EXPECT_CALL(file_system, DoOpen(StrEq(license_path), IsCreateFileFlagSet()))
+      .WillOnce(Return(file));
   EXPECT_CALL(
-      file, Write(Contains(license_test_data[license_num].pssh_data,
-                           license_test_data[license_num].key_request,
-                           license_test_data[license_num].key_response,
-                           license_test_data[license_num].key_renewal_request,
-                           license_test_data[license_num].key_renewal_response,
-                           license_test_data[license_num].key_release_url,
-                           app_parameters,
-                           license_test_data[license_num].usage_entry),
-                  Gt(GetLicenseDataSize(license_test_data[license_num]))))
+      *file, Write(Contains(license_test_data[license_num].pssh_data,
+                            license_test_data[license_num].key_request,
+                            license_test_data[license_num].key_response,
+                            license_test_data[license_num].key_renewal_request,
+                            license_test_data[license_num].key_renewal_response,
+                            license_test_data[license_num].key_release_url,
+                            app_parameters,
+                            license_test_data[license_num].usage_entry),
+                   Gt(GetLicenseDataSize(license_test_data[license_num]))))
       .WillOnce(ReturnArg<1>());
-  EXPECT_CALL(file, Close()).Times(1);
-  EXPECT_CALL(file, Read(_, _)).Times(0);
+  EXPECT_CALL(*file, Read(_, _)).Times(0);
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
@@ -2305,7 +2317,6 @@ INSTANTIATE_TEST_CASE_P(StoreLicense, DeviceFilesStoreTest, ::testing::Bool());
 
 TEST_F(DeviceFilesTest, StoreLicenses) {
   MockFileSystem file_system;
-  MockFile file;
 
   for (size_t i = 0; i < kNumberOfLicenses; ++i) {
     std::string license_path = device_base_path_ +
@@ -2315,22 +2326,23 @@ TEST_F(DeviceFilesTest, StoreLicenses) {
     CdmAppParameterMap app_parameters =
         GetAppParameters(license_test_data[i].app_parameters);
 
-    EXPECT_CALL(file_system, Open(StrEq(license_path), IsCreateFileFlagSet()))
-        .WillOnce(Return(&file));
+    // Call to Open will return a unique_ptr, freeing this object.
+    MockFile* file = new MockFile();
+    EXPECT_CALL(file_system, DoOpen(StrEq(license_path), IsCreateFileFlagSet()))
+        .WillOnce(Return(file));
 
-    EXPECT_CALL(file, Write(Contains(license_test_data[i].pssh_data,
-                                     license_test_data[i].key_request,
-                                     license_test_data[i].key_response,
-                                     license_test_data[i].key_renewal_request,
-                                     license_test_data[i].key_renewal_response,
-                                     license_test_data[i].key_release_url,
-                                     app_parameters,
-                                     license_test_data[i].usage_entry),
-                            Gt(GetLicenseDataSize(license_test_data[i]))))
+    EXPECT_CALL(
+        *file, Write(Contains(license_test_data[i].pssh_data,
+                              license_test_data[i].key_request,
+                              license_test_data[i].key_response,
+                              license_test_data[i].key_renewal_request,
+                              license_test_data[i].key_renewal_response,
+                              license_test_data[i].key_release_url,
+                              app_parameters, license_test_data[i].usage_entry),
+                     Gt(GetLicenseDataSize(license_test_data[i]))))
         .WillOnce(ReturnArg<1>());
+    EXPECT_CALL(*file, Read(_, _)).Times(0);
   }
-  EXPECT_CALL(file, Close()).Times(kNumberOfLicenses);
-  EXPECT_CALL(file, Read(_, _)).Times(0);
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
@@ -2355,7 +2367,6 @@ TEST_F(DeviceFilesTest, StoreLicenses) {
 
 TEST_F(DeviceFilesTest, RetrieveLicenses) {
   MockFileSystem file_system;
-  MockFile file;
 
   for (size_t i = 0; i < kNumberOfLicenses; ++i) {
     std::string license_path = device_base_path_ +
@@ -2364,20 +2375,22 @@ TEST_F(DeviceFilesTest, RetrieveLicenses) {
 
     size_t size = license_test_data[i].file_data.size();
 
+    // Call to Open will return a unique_ptr, freeing this object.
+    MockFile* file = new MockFile();
+
     EXPECT_CALL(file_system, Exists(StrEq(license_path)))
         .WillOnce(Return(true));
     EXPECT_CALL(file_system, FileSize(StrEq(license_path)))
         .WillOnce(Return(size));
-    EXPECT_CALL(file_system, Open(StrEq(license_path), _))
-        .WillOnce(Return(&file));
-    EXPECT_CALL(file, Read(NotNull(), Eq(size)))
+    EXPECT_CALL(file_system, DoOpen(StrEq(license_path), _))
+        .WillOnce(Return(file));
+    EXPECT_CALL(*file, Read(NotNull(), Eq(size)))
         .WillOnce(
             DoAll(SetArrayArgument<0>(license_test_data[i].file_data.begin(),
                                       license_test_data[i].file_data.end()),
                   Return(size)));
+    EXPECT_CALL(*file, Write(_, _)).Times(0);
   }
-  EXPECT_CALL(file, Close()).Times(kNumberOfLicenses);
-  EXPECT_CALL(file, Write(_, _)).Times(0);
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
@@ -2434,19 +2447,19 @@ TEST_F(DeviceFilesTest, AppParametersBackwardCompatibility) {
 
   size_t size = test_data->file_data.size();
 
-  MockFile file;
+  // Call to Open will return a unique_ptr, freeing this object.
+  MockFile* file = new MockFile();
   EXPECT_CALL(file_system, Exists(StrEq(license_path))).WillOnce(Return(true));
   EXPECT_CALL(file_system, FileSize(StrEq(license_path)))
       .WillOnce(Return(size));
-  EXPECT_CALL(file_system, Open(StrEq(license_path), _))
-      .WillOnce(Return(&file));
-  EXPECT_CALL(file, Read(NotNull(), Eq(size)))
+  EXPECT_CALL(file_system, DoOpen(StrEq(license_path), _))
+      .WillOnce(Return(file));
+  EXPECT_CALL(*file, Read(NotNull(), Eq(size)))
       .WillOnce(DoAll(SetArrayArgument<0>(test_data->file_data.begin(),
                                           test_data->file_data.end()),
                       Return(size)));
 
-  EXPECT_CALL(file, Close()).Times(1);
-  EXPECT_CALL(file, Write(_, _)).Times(0);
+  EXPECT_CALL(*file, Write(_, _)).Times(0);
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
@@ -2489,52 +2502,35 @@ TEST_F(DeviceFilesTest, UpdateLicenseState) {
                              license_update_test_data[0].key_set_id +
                              DeviceFiles::GetLicenseFileNameExtension();
 
-  MockFile file;
-  EXPECT_CALL(file_system, Open(StrEq(license_path), IsCreateFileFlagSet()))
-      .Times(2)
-      .WillRepeatedly(Return(&file));
-  EXPECT_CALL(file, Write(IsStrEq(license_update_test_data[0].file_data),
-                          Eq(license_update_test_data[0].file_data.size())))
-      .WillOnce(ReturnArg<1>());
-  EXPECT_CALL(file, Write(IsStrEq(license_update_test_data[1].file_data),
-                          Eq(license_update_test_data[1].file_data.size())))
-      .WillOnce(ReturnArg<1>());
-  EXPECT_CALL(file, Close()).Times(2);
-  EXPECT_CALL(file, Read(_, _)).Times(0);
-
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
-  EXPECT_TRUE(device_files.StoreLicense(
-      license_update_test_data[0].key_set_id,
-      license_update_test_data[0].license_state,
-      license_update_test_data[0].pssh_data,
-      license_update_test_data[0].key_request,
-      license_update_test_data[0].key_response,
-      license_update_test_data[0].key_renewal_request,
-      license_update_test_data[0].key_renewal_response,
-      license_update_test_data[0].key_release_url,
-      license_update_test_data[0].playback_start_time,
-      license_update_test_data[0].last_playback_time,
-      license_update_test_data[0].grace_period_end_time,
-      GetAppParameters(license_test_data[0].app_parameters),
-      license_update_test_data[0].usage_entry,
-      license_update_test_data[0].usage_entry_number));
 
-  EXPECT_TRUE(device_files.StoreLicense(
-      license_update_test_data[0].key_set_id,
-      license_update_test_data[1].license_state,
-      license_update_test_data[0].pssh_data,
-      license_update_test_data[0].key_request,
-      license_update_test_data[0].key_response,
-      license_update_test_data[0].key_renewal_request,
-      license_update_test_data[0].key_renewal_response,
-      license_update_test_data[0].key_release_url,
-      license_update_test_data[0].playback_start_time,
-      license_update_test_data[0].last_playback_time,
-      license_update_test_data[0].grace_period_end_time,
-      GetAppParameters(license_test_data[0].app_parameters),
-      license_update_test_data[0].usage_entry,
-      license_update_test_data[0].usage_entry_number));
+  for (size_t i = 0; i < sizeof(license_update_test_data) / sizeof(LicenseInfo);
+       i++) {
+    // Call to Open will return a unique_ptr, freeing this object.
+    MockFile* file = new MockFile();
+    EXPECT_CALL(file_system, DoOpen(StrEq(license_path), IsCreateFileFlagSet()))
+        .WillOnce(Return(file));
+    EXPECT_CALL(*file, Write(IsStrEq(license_update_test_data[i].file_data),
+                             Eq(license_update_test_data[i].file_data.size())))
+        .WillOnce(ReturnArg<1>());
+    EXPECT_CALL(*file, Read(_, _)).Times(0);
+    EXPECT_TRUE(device_files.StoreLicense(
+        license_update_test_data[0].key_set_id,
+        license_update_test_data[i].license_state,
+        license_update_test_data[0].pssh_data,
+        license_update_test_data[0].key_request,
+        license_update_test_data[0].key_response,
+        license_update_test_data[0].key_renewal_request,
+        license_update_test_data[0].key_renewal_response,
+        license_update_test_data[0].key_release_url,
+        license_update_test_data[0].playback_start_time,
+        license_update_test_data[0].last_playback_time,
+        license_update_test_data[0].grace_period_end_time,
+        GetAppParameters(license_test_data[0].app_parameters),
+        license_update_test_data[0].usage_entry,
+        license_update_test_data[0].usage_entry_number));
+  }
 }
 
 TEST_F(DeviceFilesTest, DeleteLicense) {
@@ -2545,23 +2541,23 @@ TEST_F(DeviceFilesTest, DeleteLicense) {
 
   size_t size = license_test_data[0].file_data.size();
 
-  MockFile file;
+  // Call to Open will return a unique_ptr, freeing this object.
+  MockFile* file = new MockFile();
   EXPECT_CALL(file_system, Exists(StrEq(license_path)))
       .Times(2)
       .WillOnce(Return(true))
       .WillOnce(Return(false));
   EXPECT_CALL(file_system, FileSize(StrEq(license_path)))
       .WillOnce(Return(size));
-  EXPECT_CALL(file_system, Open(StrEq(license_path), _))
-      .WillOnce(Return(&file));
-  EXPECT_CALL(file, Read(NotNull(), Eq(size)))
+  EXPECT_CALL(file_system, DoOpen(StrEq(license_path), _))
+      .WillOnce(Return(file));
+  EXPECT_CALL(*file, Read(NotNull(), Eq(size)))
       .WillOnce(
           DoAll(SetArrayArgument<0>(license_test_data[0].file_data.begin(),
                                     license_test_data[0].file_data.end()),
                 Return(size)));
   EXPECT_CALL(file_system, Remove(StrEq(license_path))).WillOnce(Return(true));
-  EXPECT_CALL(file, Close()).Times(1);
-  EXPECT_CALL(file, Write(_, _)).Times(0);
+  EXPECT_CALL(*file, Write(_, _)).Times(0);
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
@@ -2609,7 +2605,7 @@ TEST_F(DeviceFilesTest, DeleteLicense) {
 TEST_F(DeviceFilesTest, ReserveLicenseIdsDoesNotUseFileSystem) {
   // Validate that ReserveLicenseIds does not touch the file system.
   MockFileSystem file_system;
-  EXPECT_CALL(file_system, Open(_, _)).Times(0);
+  EXPECT_CALL(file_system, DoOpen(_, _)).Times(0);
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
@@ -2624,7 +2620,6 @@ TEST_F(DeviceFilesTest, ReserveLicenseIdsDoesNotUseFileSystem) {
 
 TEST_F(DeviceFilesUsageInfoTest, ListNullParam) {
   MockFileSystem file_system;
-  MockFile file;
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
@@ -2633,7 +2628,6 @@ TEST_F(DeviceFilesUsageInfoTest, ListNullParam) {
 
 TEST_F(DeviceFilesUsageInfoTest, ListIdsNull) {
   MockFileSystem file_system;
-  MockFile file;
 
   std::string app_id = kUsageInfoTestData[0].app_id;
 
@@ -2644,7 +2638,6 @@ TEST_F(DeviceFilesUsageInfoTest, ListIdsNull) {
 
 TEST_F(DeviceFilesUsageInfoTest, ListUsageIds) {
   MockFileSystem file_system;
-  MockFile file;
 
   int index = 8;
   std::string app_id = kUsageInfoTestData[index].app_id;
@@ -2654,22 +2647,21 @@ TEST_F(DeviceFilesUsageInfoTest, ListUsageIds) {
   std::string file_data = (index < 0) ? kEmptyUsageInfoFileData
                                       : kUsageInfoTestData[index].file_data;
   if (index >= 0) {
+    // Call to Open will return a unique_ptr, freeing this object.
+    MockFile* file = new MockFile();
     EXPECT_CALL(file_system, Exists(StrEq(path)))
         .Times(2)
         .WillRepeatedly(Return(true));
     EXPECT_CALL(file_system, FileSize(StrEq(path)))
         .Times(2)
         .WillRepeatedly(Return(kUsageInfoTestData[index].file_data.size()));
-    EXPECT_CALL(file_system, Open(StrEq(path), _)).WillOnce(Return(&file));
-    EXPECT_CALL(file,
+    EXPECT_CALL(file_system, DoOpen(StrEq(path), _)).WillOnce(Return(file));
+    EXPECT_CALL(*file,
                 Read(NotNull(), Eq(kUsageInfoTestData[index].file_data.size())))
         .WillOnce(DoAll(SetArrayArgument<0>(file_data.begin(), file_data.end()),
                         Return(file_data.size())));
-    EXPECT_CALL(file, Close());
-  }
-  else {
-    EXPECT_CALL(file_system, Exists(StrEq(path)))
-        .WillOnce(Return(false));
+  } else {
+    EXPECT_CALL(file_system, Exists(StrEq(path))).WillOnce(Return(false));
   }
 
   DeviceFiles device_files(&file_system);
@@ -2700,7 +2692,6 @@ TEST_F(DeviceFilesUsageInfoTest, ListUsageIds) {
 
 TEST_P(DeviceFilesUsageInfoListTest, UsageInfoList) {
   MockFileSystem file_system;
-  MockFile file;
 
   int index = GetParam();
   std::vector<std::string> file_list;
@@ -2729,7 +2720,8 @@ INSTANTIATE_TEST_CASE_P(UsageInfo, DeviceFilesUsageInfoListTest,
 
 TEST_P(DeviceFilesUsageInfoTest, Store) {
   MockFileSystem file_system;
-  MockFile file;
+  // Call to Open will return a unique_ptr, freeing this object.
+  MockFile* file = new MockFile();
 
   int index = GetParam();
 
@@ -2761,11 +2753,10 @@ TEST_P(DeviceFilesUsageInfoTest, Store) {
     }
   }
 
-  EXPECT_CALL(file_system, Open(StrEq(path), _)).WillOnce(Return(&file));
-  EXPECT_CALL(file, Write(ContainsAllElementsInVector(usage_data_fields),
-                          Gt(usage_data_fields_length)))
+  EXPECT_CALL(file_system, DoOpen(StrEq(path), _)).WillOnce(Return(file));
+  EXPECT_CALL(*file, Write(ContainsAllElementsInVector(usage_data_fields),
+                           Gt(usage_data_fields_length)))
       .WillOnce(ReturnArg<1>());
-  EXPECT_CALL(file, Close());
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
@@ -2775,7 +2766,6 @@ TEST_P(DeviceFilesUsageInfoTest, Store) {
 
 TEST_P(DeviceFilesUsageInfoTest, Retrieve) {
   MockFileSystem file_system;
-  MockFile file;
 
   int index = GetParam();
 
@@ -2787,22 +2777,21 @@ TEST_P(DeviceFilesUsageInfoTest, Retrieve) {
   std::string file_data = (index < 0) ? kEmptyUsageInfoFileData
                                       : kUsageInfoTestData[index].file_data;
   if (index >= 0) {
+    // Call to Open will return a unique_ptr, freeing this object.
+    MockFile* file = new MockFile();
     EXPECT_CALL(file_system, Exists(StrEq(path)))
         .Times(2)
         .WillRepeatedly(Return(true));
     EXPECT_CALL(file_system, FileSize(StrEq(path)))
         .Times(2)
         .WillRepeatedly(Return(kUsageInfoTestData[index].file_data.size()));
-    EXPECT_CALL(file_system, Open(StrEq(path), _)).WillOnce(Return(&file));
-    EXPECT_CALL(file,
+    EXPECT_CALL(file_system, DoOpen(StrEq(path), _)).WillOnce(Return(file));
+    EXPECT_CALL(*file,
                 Read(NotNull(), Eq(kUsageInfoTestData[index].file_data.size())))
         .WillOnce(DoAll(SetArrayArgument<0>(file_data.begin(), file_data.end()),
                         Return(file_data.size())));
-    EXPECT_CALL(file, Close());
-  }
-  else {
-    EXPECT_CALL(file_system, Exists(StrEq(path)))
-        .WillOnce(Return(false));
+  } else {
+    EXPECT_CALL(file_system, Exists(StrEq(path))).WillOnce(Return(false));
   }
 
   std::vector<DeviceFiles::CdmUsageData> usage_data_list;
@@ -2838,7 +2827,6 @@ TEST_P(DeviceFilesUsageInfoTest, Retrieve) {
 
 TEST_P(DeviceFilesUsageInfoTest, ListKeySetIds) {
   MockFileSystem file_system;
-  MockFile file;
 
   int index = GetParam();
 
@@ -2850,22 +2838,21 @@ TEST_P(DeviceFilesUsageInfoTest, ListKeySetIds) {
   std::string file_data = (index < 0) ? kEmptyUsageInfoFileData
                                       : kUsageInfoTestData[index].file_data;
   if (index >= 0) {
+    // Call to Open will return a unique_ptr, freeing this object.
+    MockFile* file = new MockFile();
     EXPECT_CALL(file_system, Exists(StrEq(path)))
         .Times(2)
         .WillRepeatedly(Return(true));
     EXPECT_CALL(file_system, FileSize(StrEq(path)))
         .Times(2)
         .WillRepeatedly(Return(kUsageInfoTestData[index].file_data.size()));
-    EXPECT_CALL(file_system, Open(StrEq(path), _)).WillOnce(Return(&file));
-    EXPECT_CALL(file,
+    EXPECT_CALL(file_system, DoOpen(StrEq(path), _)).WillOnce(Return(file));
+    EXPECT_CALL(*file,
                 Read(NotNull(), Eq(kUsageInfoTestData[index].file_data.size())))
         .WillOnce(DoAll(SetArrayArgument<0>(file_data.begin(), file_data.end()),
                         Return(file_data.size())));
-    EXPECT_CALL(file, Close());
-  }
-  else {
-    EXPECT_CALL(file_system, Exists(StrEq(path)))
-        .WillOnce(Return(false));
+  } else {
+    EXPECT_CALL(file_system, Exists(StrEq(path))).WillOnce(Return(false));
   }
 
   DeviceFiles device_files(&file_system);
@@ -2891,7 +2878,6 @@ TEST_P(DeviceFilesUsageInfoTest, ListKeySetIds) {
 
 TEST_P(DeviceFilesUsageInfoTest, ListProviderSessionTokenIds) {
   MockFileSystem file_system;
-  MockFile file;
 
   int index = GetParam();
 
@@ -2903,22 +2889,21 @@ TEST_P(DeviceFilesUsageInfoTest, ListProviderSessionTokenIds) {
   std::string file_data = (index < 0) ? kEmptyUsageInfoFileData
                                       : kUsageInfoTestData[index].file_data;
   if (index >= 0) {
+    // Call to Open will return a unique_ptr, freeing this object.
+    MockFile* file = new MockFile();
     EXPECT_CALL(file_system, Exists(StrEq(path)))
         .Times(2)
         .WillRepeatedly(Return(true));
     EXPECT_CALL(file_system, FileSize(StrEq(path)))
         .Times(2)
         .WillRepeatedly(Return(kUsageInfoTestData[index].file_data.size()));
-    EXPECT_CALL(file_system, Open(StrEq(path), _)).WillOnce(Return(&file));
-    EXPECT_CALL(file,
+    EXPECT_CALL(file_system, DoOpen(StrEq(path), _)).WillOnce(Return(file));
+    EXPECT_CALL(*file,
                 Read(NotNull(), Eq(kUsageInfoTestData[index].file_data.size())))
         .WillOnce(DoAll(SetArrayArgument<0>(file_data.begin(), file_data.end()),
                         Return(file_data.size())));
-    EXPECT_CALL(file, Close());
-  }
-  else {
-    EXPECT_CALL(file_system, Exists(StrEq(path)))
-        .WillOnce(Return(false));
+  } else {
+    EXPECT_CALL(file_system, Exists(StrEq(path))).WillOnce(Return(false));
   }
 
   DeviceFiles device_files(&file_system);
@@ -2945,7 +2930,8 @@ TEST_P(DeviceFilesUsageInfoTest, ListProviderSessionTokenIds) {
 
 TEST_P(DeviceFilesUsageInfoTest, RetrieveByProviderSessionToken) {
   MockFileSystem file_system;
-  MockFile file;
+  // Call to Open will return a unique_ptr, freeing this object.
+  MockFile* file = new MockFile();
 
   int index = GetParam();
 
@@ -2968,11 +2954,10 @@ TEST_P(DeviceFilesUsageInfoTest, RetrieveByProviderSessionToken) {
   EXPECT_CALL(file_system, Exists(StrEq(path))).WillOnce(Return(true));
   EXPECT_CALL(file_system, FileSize(StrEq(path)))
       .WillOnce(Return(file_data.size()));
-  EXPECT_CALL(file_system, Open(StrEq(path), _)).WillOnce(Return(&file));
-  EXPECT_CALL(file, Read(NotNull(), Eq(file_data.size())))
+  EXPECT_CALL(file_system, DoOpen(StrEq(path), _)).WillOnce(Return(file));
+  EXPECT_CALL(*file, Read(NotNull(), Eq(file_data.size())))
       .WillOnce(DoAll(SetArrayArgument<0>(file_data.begin(), file_data.end()),
                       Return(file_data.size())));
-  EXPECT_CALL(file, Close());
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
@@ -3002,7 +2987,8 @@ TEST_P(DeviceFilesUsageInfoTest, RetrieveByProviderSessionToken) {
 
 TEST_P(DeviceFilesUsageInfoTest, UpdateUsageInfo) {
   MockFileSystem file_system;
-  MockFile file;
+  // Call to Open will return a unique_ptr, freeing this object.
+  MockFile* file = new MockFile();
 
   int index = GetParam();
 
@@ -3066,21 +3052,31 @@ TEST_P(DeviceFilesUsageInfoTest, UpdateUsageInfo) {
       .WillRepeatedly(Return(true));
   EXPECT_CALL(file_system, FileSize(StrEq(path)))
       .WillOnce(Return(file_data.size()));
-  EXPECT_CALL(file, Read(NotNull(), Eq(file_data.size())))
+  EXPECT_CALL(*file, Read(NotNull(), Eq(file_data.size())))
       .WillOnce(DoAll(SetArrayArgument<0>(file_data.begin(), file_data.end()),
                       Return(file_data.size())));
 
+  bool write_called = false;
   if (index < 0) {
-    EXPECT_CALL(file_system, Open(StrEq(path), _)).WillOnce(Return(&file));
-    EXPECT_CALL(file, Close());
+    EXPECT_CALL(file_system, DoOpen(StrEq(path), _)).WillOnce(Return(file));
   } else {
-    EXPECT_CALL(file_system, Open(StrEq(path), _))
+    MockFile* next_file = new MockFile();
+    EXPECT_CALL(file_system, DoOpen(StrEq(path), _))
         .Times(2)
-        .WillRepeatedly(Return(&file));
-    EXPECT_CALL(file, Write(ContainsAllElementsInVector(usage_data_fields),
-                            Gt(usage_data_fields_length)))
-        .WillOnce(ReturnArg<1>());
-    EXPECT_CALL(file, Close()).Times(2);
+        .WillOnce(Return(file))
+        .WillOnce(Return(next_file));
+    ON_CALL(*file, Write(ContainsAllElementsInVector(usage_data_fields),
+                         Gt(usage_data_fields_length)))
+        .WillByDefault(DoAll(InvokeWithoutArgs([&write_called]() -> void {
+                               write_called = true;
+                             }),
+                             ReturnArg<1>()));
+    ON_CALL(*next_file, Write(ContainsAllElementsInVector(usage_data_fields),
+                              Gt(usage_data_fields_length)))
+        .WillByDefault(DoAll(InvokeWithoutArgs([&write_called]() -> void {
+                               write_called = true;
+                             }),
+                             ReturnArg<1>()));
   }
 
   DeviceFiles device_files(&file_system);
@@ -3090,6 +3086,7 @@ TEST_P(DeviceFilesUsageInfoTest, UpdateUsageInfo) {
   EXPECT_EQ(expected_result,
             device_files.UpdateUsageInfo(file_name, provider_session_token,
                                          kUsageInfoUpdateTestData));
+  if (index >= 0) EXPECT_TRUE(write_called);
 }
 
 INSTANTIATE_TEST_CASE_P(UsageInfo, DeviceFilesUsageInfoTest,
@@ -3097,7 +3094,8 @@ INSTANTIATE_TEST_CASE_P(UsageInfo, DeviceFilesUsageInfoTest,
 
 TEST_P(DeviceFilesHlsAttributesTest, Read) {
   MockFileSystem file_system;
-  MockFile file;
+  // Call to Open will return a unique_ptr, freeing this object.
+  MockFile* file = new MockFile();
   HlsAttributesInfo* param = GetParam();
   std::string path = device_base_path_ + param->key_set_id +
                      DeviceFiles::GetHlsAttributesFileNameExtension();
@@ -3105,14 +3103,13 @@ TEST_P(DeviceFilesHlsAttributesTest, Read) {
   EXPECT_CALL(file_system, Exists(StrEq(path))).WillRepeatedly(Return(true));
   EXPECT_CALL(file_system, FileSize(StrEq(path)))
       .WillRepeatedly(Return(param->file_data.size()));
-  EXPECT_CALL(file_system, Open(StrEq(path), _)).WillOnce(Return(&file));
-  EXPECT_CALL(file, Read(NotNull(), Eq(param->file_data.size())))
+  EXPECT_CALL(file_system, DoOpen(StrEq(path), _)).WillOnce(Return(file));
+  EXPECT_CALL(*file, Read(NotNull(), Eq(param->file_data.size())))
       .WillOnce(DoAll(
           SetArrayArgument<0>(param->file_data.begin(), param->file_data.end()),
           Return(param->file_data.size())));
-  EXPECT_CALL(file, Close()).Times(1);
 
-  EXPECT_CALL(file, Write(_, _)).Times(0);
+  EXPECT_CALL(*file, Write(_, _)).Times(0);
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
@@ -3127,18 +3124,18 @@ TEST_P(DeviceFilesHlsAttributesTest, Read) {
 
 TEST_P(DeviceFilesHlsAttributesTest, Store) {
   MockFileSystem file_system;
-  MockFile file;
+  // Call to Open will return a unique_ptr, freeing this object.
+  MockFile* file = new MockFile();
   HlsAttributesInfo* param = GetParam();
   std::string path = device_base_path_ + param->key_set_id +
                      DeviceFiles::GetHlsAttributesFileNameExtension();
 
   EXPECT_CALL(file_system, Exists(StrEq(path))).WillRepeatedly(Return(true));
-  EXPECT_CALL(file_system, Open(StrEq(path), _)).WillOnce(Return(&file));
-  EXPECT_CALL(file, Write(Contains(param->media_segment_iv, 0),
-                          Gt(param->media_segment_iv.size())))
+  EXPECT_CALL(file_system, DoOpen(StrEq(path), _)).WillOnce(Return(file));
+  EXPECT_CALL(*file, Write(Contains(param->media_segment_iv, 0),
+                           Gt(param->media_segment_iv.size())))
       .WillOnce(ReturnArg<1>());
-  EXPECT_CALL(file, Read(_, _)).Times(0);
-  EXPECT_CALL(file, Close()).Times(1);
+  EXPECT_CALL(*file, Read(_, _)).Times(0);
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
@@ -3150,7 +3147,6 @@ TEST_P(DeviceFilesHlsAttributesTest, Store) {
 
 TEST_P(DeviceFilesHlsAttributesTest, Delete) {
   MockFileSystem file_system;
-  MockFile file;
   HlsAttributesInfo* param = GetParam();
   std::string path = device_base_path_ + param->key_set_id +
                      DeviceFiles::GetHlsAttributesFileNameExtension();
@@ -3168,7 +3164,8 @@ INSTANTIATE_TEST_CASE_P(HlsAttributes, DeviceFilesHlsAttributesTest,
 
 TEST_P(DeviceFilesUsageTableTest, Store) {
   MockFileSystem file_system;
-  MockFile file;
+  // Call to Open will return a unique_ptr, freeing this object.
+  MockFile* file = new MockFile();
   int index = GetParam();
 
   size_t entry_data_length = 0;
@@ -3188,12 +3185,11 @@ TEST_P(DeviceFilesUsageTableTest, Store) {
   std::string path = device_base_path_ + DeviceFiles::GetUsageTableFileName();
 
   EXPECT_CALL(file_system, Exists(StrEq(path))).WillRepeatedly(Return(true));
-  EXPECT_CALL(file_system, Open(StrEq(path), _)).WillOnce(Return(&file));
-  EXPECT_CALL(file, Write(ContainsAllElementsInVector(entry_data),
-                          Gt(entry_data_length)))
+  EXPECT_CALL(file_system, DoOpen(StrEq(path), _)).WillOnce(Return(file));
+  EXPECT_CALL(*file, Write(ContainsAllElementsInVector(entry_data),
+                           Gt(entry_data_length)))
       .WillOnce(ReturnArg<1>());
-  EXPECT_CALL(file, Read(_, _)).Times(0);
-  EXPECT_CALL(file, Close()).Times(1);
+  EXPECT_CALL(*file, Read(_, _)).Times(0);
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
@@ -3203,7 +3199,8 @@ TEST_P(DeviceFilesUsageTableTest, Store) {
 
 TEST_P(DeviceFilesUsageTableTest, Read) {
   MockFileSystem file_system;
-  MockFile file;
+  // Call to Open will return a unique_ptr, freeing this object.
+  MockFile* file = new MockFile();
   size_t index = GetParam();
 
   std::string path = device_base_path_ + DeviceFiles::GetUsageTableFileName();
@@ -3212,13 +3209,12 @@ TEST_P(DeviceFilesUsageTableTest, Read) {
   EXPECT_CALL(file_system, Exists(StrEq(path))).WillRepeatedly(Return(true));
   EXPECT_CALL(file_system, FileSize(StrEq(path)))
       .WillRepeatedly(Return(file_data.size()));
-  EXPECT_CALL(file_system, Open(StrEq(path), _)).WillOnce(Return(&file));
-  EXPECT_CALL(file, Read(NotNull(), Eq(file_data.size())))
+  EXPECT_CALL(file_system, DoOpen(StrEq(path), _)).WillOnce(Return(file));
+  EXPECT_CALL(*file, Read(NotNull(), Eq(file_data.size())))
       .WillOnce(DoAll(SetArrayArgument<0>(file_data.begin(), file_data.end()),
                       Return(file_data.size())));
-  EXPECT_CALL(file, Close()).Times(1);
 
-  EXPECT_CALL(file, Write(_, _)).Times(0);
+  EXPECT_CALL(*file, Write(_, _)).Times(0);
 
   DeviceFiles device_files(&file_system);
   EXPECT_TRUE(device_files.Init(kSecurityLevelL1));
