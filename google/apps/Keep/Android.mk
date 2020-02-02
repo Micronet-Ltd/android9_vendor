@@ -2,7 +2,7 @@
 # Keep
 LOCAL_PATH := $(call my-dir)
 
-my_archs := arm arm64 x86
+my_archs := arm arm64 x86 x86_64
 my_src_arch := $(call get-prebuilt-src-arch, $(my_archs))
 
 include $(CLEAR_VARS)

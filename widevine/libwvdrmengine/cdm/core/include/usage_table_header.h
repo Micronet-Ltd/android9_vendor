@@ -70,6 +70,14 @@ class UsageTableHeader {
                                       DeviceFiles* handle,
                                       metrics::CryptoMetrics* metrics);
 
+  // Test only method. This method emulates the behavior of DeleteEntry
+  // without actually invoking OEMCrypto (through CryptoSession)
+  // or storage (through DeviceFiles). It modifies internal data structures
+  // when DeleteEntry is mocked. This allows one to test methods that are
+  // dependent on DeleteEntry without having to set expectations
+  // for the objects that DeleteEntry depends on.
+  void DeleteEntryForTest(uint32_t usage_entry_number);
+
  private:
   CdmResponseType MoveEntry(uint32_t from /* usage entry number */,
                             const CdmUsageEntry& from_usage_entry,
@@ -117,6 +125,9 @@ class UsageTableHeader {
   Lock usage_table_header_lock_;
 
   metrics::CryptoMetrics alternate_crypto_metrics_;
+
+  // TODO(rfrias): Move to utility class
+  uint32_t GetRandomInRange(size_t upper_bound_inclusive);
 
   // Test related declarations
   friend class UsageTableHeaderTest;

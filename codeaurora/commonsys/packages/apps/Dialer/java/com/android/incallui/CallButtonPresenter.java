@@ -17,13 +17,17 @@
 package com.android.incallui;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.os.UserManagerCompat;
 import android.telecom.CallAudioState;
 import android.widget.Toast;
+
 import com.android.contacts.common.compat.CallCompat;
+import com.android.dialer.binary.aosp.AospDialerApplication;
 import com.android.dialer.common.Assert;
+import com.android.dialer.common.FragmentUtils;
 import com.android.dialer.common.LogUtil;
 import com.android.dialer.logging.DialerImpression;
 import com.android.dialer.logging.Logger;
@@ -36,6 +40,8 @@ import com.android.incallui.InCallPresenter.InCallStateListener;
 import com.android.incallui.InCallPresenter.IncomingCallListener;
 import com.android.incallui.audiomode.AudioModeProvider;
 import com.android.incallui.audiomode.AudioModeProvider.AudioModeListener;
+import com.android.incallui.audioroute.AudioRouteSelectorDialogFragment;
+import com.android.incallui.audioroute.AudioRouteSelectorDialogFragment.AudioRouteSelectorPresenter;
 import com.android.incallui.call.CallList;
 import com.android.incallui.call.DialerCall;
 import com.android.incallui.call.DialerCall.CameraDirection;
@@ -43,8 +49,10 @@ import com.android.incallui.call.TelecomAdapter;
 import com.android.incallui.incall.protocol.InCallButtonIds;
 import com.android.incallui.incall.protocol.InCallButtonUi;
 import com.android.incallui.incall.protocol.InCallButtonUiDelegate;
+import com.android.incallui.util.LovdreamCallUtil.CallBack;
 import com.android.incallui.videotech.utils.SessionModificationState;
 import com.android.incallui.videotech.utils.VideoUtils;
+
 import org.codeaurora.ims.utils.QtiImsExtUtils;
 
 /** Logic for call buttons. */
@@ -56,7 +64,7 @@ public class CallButtonPresenter
         InCallEventListener,
         CanAddCallListener,
         Listener,
-        InCallButtonUiDelegate {
+        InCallButtonUiDelegate ,CallBack{
 
   private static final String KEY_AUTOMATICALLY_MUTED = "incall_key_automatically_muted";
   private static final String KEY_PREVIOUS_MUTE_STATE = "incall_key_previous_mute_state";
@@ -131,6 +139,9 @@ public class CallButtonPresenter
     } else {
       mCall = null;
     }
+  //add by xxf
+    turnTotSpeaker();
+  //add by xxf
     updateUi(newState, mCall);
   }
 
@@ -197,14 +208,19 @@ public class CallButtonPresenter
 
     int newRoute;
     String INVALID_CALL_PARAM = "-1";
-    if (audioState.getRoute() == CallAudioState.ROUTE_SPEAKER) {
+    //add by xxf
+    boolean hasReceiver = AospDialerApplication.isHasReceiver();
+    int oldState = audioState.getRoute();
+    boolean isChange = true;
+    if (oldState== CallAudioState.ROUTE_SPEAKER && (hasReceiver|| isHeasSetAt())) {
+    //add by xxf
       newRoute = CallAudioState.ROUTE_WIRED_OR_EARPIECE;
       Logger.get(mContext)
           .logCallImpression(
               DialerImpression.Type.IN_CALL_SCREEN_TURN_ON_WIRED_OR_EARPIECE,
               (mCall != null) ? mCall.getUniqueCallId() : INVALID_CALL_PARAM,
               (mCall != null) ? mCall.getTimeAddedMs() : Long.parseLong(INVALID_CALL_PARAM));
-    } else {
+    }else {
       newRoute = CallAudioState.ROUTE_SPEAKER;
       Logger.get(mContext)
           .logCallImpression(
@@ -212,10 +228,42 @@ public class CallButtonPresenter
               (mCall != null) ? mCall.getUniqueCallId() : INVALID_CALL_PARAM,
               (mCall != null) ? mCall.getTimeAddedMs() : Long.parseLong(INVALID_CALL_PARAM));
     }
-
-    setAudioRoute(newRoute);
+    //add by xxf
+    isChange = oldState!=newRoute;
+    if(isChange) setAudioRoute(newRoute);
+    //add by xxf
   }
-
+  
+  //add by xxf
+	public  boolean isHeasSetAt(){
+		AudioManager am = (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
+		return am.isWiredHeadsetOn();
+	}
+	 public void turnTotSpeaker(){
+		 CallAudioState audioState = getCurrentAudioState();
+		 int startState = audioState.getRoute();
+		 boolean hasReceiver = AospDialerApplication.isHasReceiver();
+		 boolean btheadSetAt = audioState.getActiveBluetoothDevice()!=null;
+		 if(!hasReceiver){
+			 if(!(isHeasSetAt() || btheadSetAt)){
+				 if(startState!=CallAudioState.ROUTE_SPEAKER){
+					 setAudioRoute(CallAudioState.ROUTE_SPEAKER);
+				 }
+			 }
+		 }
+	 }
+	 public void turnTotHeadSet(){
+		 CallAudioState audioState = getCurrentAudioState();
+		 int startState = audioState.getRoute();
+		 if(isHeasSetAt()){
+			 if(startState==CallAudioState.ROUTE_SPEAKER){
+				 setAudioRoute(CallAudioState.ROUTE_WIRED_OR_EARPIECE);
+			 }
+		 }
+	 }
+	//add by xxf
+	
+	
   @Override
   public void muteClicked(boolean checked, boolean clickedByUser) {
     LogUtil.i(
@@ -588,4 +636,21 @@ public class CallButtonPresenter
     }
     return null;
   }
+
+  //add by xxf
+		@Override
+		public void headSetChanged(boolean isPlugin) {
+			if(isPlugin) turnTotHeadSet();
+			else turnTotSpeaker();
+		}
+		
+		@Override
+		public void BtHeadSetChanged(boolean isPlugin) {
+			if(isPlugin){
+				 TelecomAdapter.getInstance().setAudioRoute(CallAudioState.ROUTE_BLUETOOTH);
+			}
+			else turnTotSpeaker();
+
+		}
+		//add by xxf
 }

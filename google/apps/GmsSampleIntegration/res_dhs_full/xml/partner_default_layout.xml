@@ -4,7 +4,7 @@
   <!-- Hotseat (We use the screen as the position of the item in the hotseat) -->
   <!-- Dialer Messaging Calendar Contacts Camera -->
   <favorite container="-101" screen="0" x="0" y="0" packageName="org.codeaurora.dialer" className="com.android.dialer.app.DialtactsActivity"/>
-  <favorite container="-101" screen="1" x="1" y="0" packageName="com.android.mms" className="com.android.mms.ui.ConversationList"/>
+  <favorite container="-101" screen="1" x="1" y="0" packageName="com.google.android.apps.messaging" className="com.google.android.apps.messaging.ui.ConversationListActivity"/>
   <favorite container="-101" screen="2" x="2" y="0" packageName="com.google.android.calendar" className="com.android.calendar.event.LaunchInfoActivity"/>
   <favorite container="-101" screen="3" x="3" y="0" packageName="com.android.contacts" className="com.android.contacts.activities.PeopleActivity"/>
   <favorite container="-101" screen="4" x="4" y="0" packageName="org.codeaurora.snapcam" className="com.android.camera.CameraLauncher"/>
@@ -18,7 +18,7 @@
     <favorite packageName="com.google.android.apps.maps" className="com.google.android.maps.MapsActivity"/>
     <favorite packageName="com.google.android.youtube" className="com.google.android.youtube.app.honeycomb.Shell$HomeActivity"/>
     <favorite packageName="com.google.android.apps.docs" className="com.google.android.apps.docs.app.NewMainProxyActivity"/>
-    <favorite packageName="com.google.android.music" className="com.android.music.activitymanagement.TopLevelActivity"/>
+    <favorite packageName="com.google.android.apps.youtube.music" className="com.google.android.apps.youtube.music.activities.MusicActivity"/>
     <favorite packageName="com.google.android.videos" className="com.google.android.youtube.videos.EntryPoint"/>
     <favorite packageName="com.google.android.apps.tachyon" className="com.google.android.apps.tachyon.MainActivity"/>
     <favorite packageName="com.google.android.apps.photos" className="com.google.android.apps.photos.home.HomeActivity"/>

@@ -2,7 +2,7 @@
 # GoogleTTS
 LOCAL_PATH := $(call my-dir)
 
-my_archs := arm x86 arm64
+my_archs := arm x86 arm64 x86_64
 my_src_arch := $(call get-prebuilt-src-arch, $(my_archs))
 
 include $(CLEAR_VARS)

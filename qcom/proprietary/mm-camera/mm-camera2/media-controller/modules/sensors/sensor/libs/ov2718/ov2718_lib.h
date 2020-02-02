@@ -11,13 +11,15 @@
 #include "sensor_lib.h"
 #define SENSOR_MODEL "ov2718"
 /* this driver is for OV2718 2A chip version */
-#define MIN_GAIN (3.0)
-#define MAX_ANALOG_GAIN (32)
-#define MIN_DIGITAL_GAIN (1.0)
-#define MAX_DIGITAL_GAIN (1.0)
+#define MIN_GAIN (2.0)
+#define MAX_ANALOG_GAIN (8.0)
+#define MIN_DIGITAL_GAIN (1.09375)
+#define MAX_DIGITAL_GAIN (2.0)
 #define MAX_GAIN (MAX_ANALOG_GAIN * MAX_DIGITAL_GAIN)
-#define MAX_LINECOUNT 0xFFFA
+#define MAX_LINECOUNT 4608
 #define OV2718_MAX_DGAIN_DECIMATOR  256
+#define STG_DIGITAL_GAIN_LEF_ADDR      0x315a
+#define STG_DIGITAL_GAIN_SEF_ADDR      0x315c
 
 #define START_REG_ARRAY \
 { \
@@ -1897,6 +1899,8 @@
 	{0x3250, 0xF7, 0x00},\
 }
 
+#define RES1_REG_ARRAY 
+
 static sensor_lib_t sensor_lib_ptr =
 {
   .sensor_slave_info =
@@ -2023,7 +2027,7 @@ static sensor_lib_t sensor_lib_ptr =
     .output_format = SENSOR_BAYER,
     .connection_mode = SENSOR_MIPI_CSI,
     .raw_output = SENSOR_12_BIT_DIRECT,
-    .filter_arrangement = SENSOR_BGGR,
+    .filter_arrangement = SENSOR_BGGR, //SENSOR_GBRG
   },
   .output_reg_addr =
   {
@@ -2035,7 +2039,8 @@ static sensor_lib_t sensor_lib_ptr =
   .exp_gain_info =
   {
     .coarse_int_time_addr = 0x30b6,
-    .global_gain_addr = 0x315a,
+    .short_coarse_int_time_addr = 0x30b6,
+    .global_gain_addr = 0x30bb,
     .vert_offset = 4,
   },
   .aec_info =
@@ -2050,7 +2055,7 @@ static sensor_lib_t sensor_lib_ptr =
   .sensor_max_pipeline_frame_delay = 2,
   .sensor_property =
   {
-    .pix_size = 2.8,
+    .pix_size = 1.0,
     .sensing_method = SENSOR_SMETHOD_ONE_CHIP_COLOR_AREA_SENSOR,
     .crop_factor = 1.0,
   },

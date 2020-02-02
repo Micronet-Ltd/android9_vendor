@@ -4,10 +4,11 @@
 //
 // File - Platform independent interface for a File class
 //
-#ifndef WVCDM_CORE_FILE_STORE_H_
-#define WVCDM_CORE_FILE_STORE_H_
+#ifndef WVCDM_UTIL_FILE_STORE_H_
+#define WVCDM_UTIL_FILE_STORE_H_
 
 #include <unistd.h>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -18,18 +19,10 @@ namespace wvcdm {
 // File class. The implementation is platform dependent.
 class File {
  public:
-  virtual ssize_t Read(char* buffer, size_t bytes);
-  virtual ssize_t Write(const char* buffer, size_t bytes);
-  virtual void Close();
-
- protected:
-  class Impl;
-
-  File(Impl*);
-  virtual ~File();
-
- private:
-  Impl* impl_;
+  File() {}
+  virtual ~File() {}
+  virtual ssize_t Read(char* buffer, size_t bytes) = 0;
+  virtual ssize_t Write(const char* buffer, size_t bytes) = 0;
 
   friend class FileSystem;
   CORE_DISALLOW_COPY_AND_ASSIGN(File);
@@ -37,6 +30,10 @@ class File {
 
 class FileSystem {
  public:
+  FileSystem();
+  FileSystem(const std::string& origin, void* extra_data);
+  virtual ~FileSystem();
+
   class Impl;
 
   // defines as bit flag
@@ -47,11 +44,7 @@ class FileSystem {
     kTruncate = 4
   };
 
-  FileSystem();
-  FileSystem(const std::string& origin, void* extra_data);
-  virtual ~FileSystem();
-
-  virtual File* Open(const std::string& file_path, int flags);
+  virtual std::unique_ptr<File> Open(const std::string& file_path, int flags);
 
   virtual bool Exists(const std::string& file_path);
   virtual bool Remove(const std::string& file_path);
@@ -63,14 +56,14 @@ class FileSystem {
                     std::vector<std::string>* names);
 
   const std::string& origin() const { return origin_; }
-  void SetOrigin(const std::string& origin);
+  void set_origin(const std::string& origin);
 
   const std::string& identifier() const { return identifier_; }
-  void SetIdentifier(const std::string& identifier);
+  void set_identifier(const std::string& identifier);
   bool IsGlobal() const { return identifier_.empty(); }
 
  private:
-  Impl* impl_;
+  std::unique_ptr<FileSystem::Impl> impl_;
   std::string origin_;
   std::string identifier_;
 
@@ -79,4 +72,4 @@ class FileSystem {
 
 }  // namespace wvcdm
 
-#endif  // WVCDM_CORE_FILE_STORE_H_
+#endif  // WVCDM_UTIL_FILE_STORE_H_

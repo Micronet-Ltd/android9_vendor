@@ -13,6 +13,8 @@
 
 #include "level3_file_system.h"
 
+#include <memory>
+
 #include "file_store.h"
 
 namespace wvoec3 {
@@ -29,7 +31,7 @@ class OEMCrypto_Level3AndroidFileSystem : public OEMCrypto_Level3FileSystem {
 
  private:
   std::string base_path_;
-  wvcdm::FileSystem *file_system_;
+  std::unique_ptr<wvcdm::FileSystem> file_system_;
 };
 
 }  // namespace wvoec3

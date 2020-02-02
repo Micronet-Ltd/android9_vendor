@@ -74,9 +74,27 @@ bool UsageTableHeader::Init(CdmSecurityLevel security_level,
     if (status == NO_ERROR) {
       if (usage_entry_info_.size() > kMinUsageEntriesSupported) {
         uint32_t temporary_usage_entry_number;
-        CdmResponseType result = AddEntry(crypto_session, true,
-                                          kDummyKeySetId, kEmptyString,
-                                          &temporary_usage_entry_number);
+
+        // Create a new temporary usage entry, close the session and then
+        // try to delete it.
+        CdmResponseType result = NO_ERROR;
+        {
+          // |local_crypto_session| points to an object whose scope is this
+          // method or a test object whose scope is the lifetime of this class
+          scoped_ptr<CryptoSession> scoped_crypto_session;
+          CryptoSession* local_crypto_session = test_crypto_session_.get();
+          if (local_crypto_session == NULL) {
+            scoped_crypto_session.reset((new CryptoSession(metrics)));
+            local_crypto_session = scoped_crypto_session.get();
+          }
+
+          result = local_crypto_session->Open(requested_security_level_);
+          if (result == NO_ERROR) {
+            result = AddEntry(local_crypto_session, true,
+                              kDummyKeySetId, kEmptyString,
+                              &temporary_usage_entry_number);
+          }
+        }
         if (result == NO_ERROR) {
           result = DeleteEntry(temporary_usage_entry_number,
                                file_handle_.get(), metrics);
@@ -125,17 +143,20 @@ CdmResponseType UsageTableHeader::AddEntry(
   metrics::CryptoMetrics* metrics = crypto_session->GetCryptoMetrics();
   if (metrics == NULL) metrics = &alternate_crypto_metrics_;
 
-  uint32_t retry_count = 0;
-  CdmResponseType status = NO_ERROR;
-  do {
-    {
-      AutoLock auto_lock(usage_table_header_lock_);
-      status = crypto_session->CreateUsageEntry(usage_entry_number);
-    }
-    if (status == INSUFFICIENT_CRYPTO_RESOURCES_3)
-      DeleteEntry(retry_count, file_handle_.get(), metrics);
-  } while (status == INSUFFICIENT_CRYPTO_RESOURCES_3 &&
-           ++retry_count < kMaxCryptoRetries);
+  CdmResponseType status = crypto_session->CreateUsageEntry(usage_entry_number);
+
+  // If usage entry creation fails due to insufficient resources, release a
+  // random entry and try again.
+  for (uint32_t retry_count = 0;
+       retry_count < kMaxCryptoRetries &&
+           status == INSUFFICIENT_CRYPTO_RESOURCES_3;
+       ++retry_count) {
+    uint32_t entry_number_to_delete =
+        GetRandomInRange(usage_entry_info_.size());
+    DeleteEntry(entry_number_to_delete, file_handle_.get(), metrics);
+
+    status = crypto_session->CreateUsageEntry(usage_entry_number);
+  }
 
   if (status != NO_ERROR) return status;
 
@@ -189,17 +210,22 @@ CdmResponseType UsageTableHeader::LoadEntry(CryptoSession* crypto_session,
   metrics::CryptoMetrics* metrics = crypto_session->GetCryptoMetrics();
   if (metrics == NULL) metrics = &alternate_crypto_metrics_;
 
-  uint32_t retry_count = 0;
-  CdmResponseType status = NO_ERROR;
-  do {
-    {
-      AutoLock auto_lock(usage_table_header_lock_);
+  CdmResponseType status =
+      crypto_session->LoadUsageEntry(usage_entry_number, usage_entry);
+
+  // If loading a usage entry fails due to insufficient resources, release a
+  // random entry and try again.
+  for (uint32_t retry_count = 0;
+       retry_count < kMaxCryptoRetries &&
+           status == INSUFFICIENT_CRYPTO_RESOURCES_3;
+       ++retry_count) {
+    uint32_t entry_number_to_delete =
+        GetRandomInRange(usage_entry_info_.size());
+    if (usage_entry_number != entry_number_to_delete) {
+      DeleteEntry(entry_number_to_delete, file_handle_.get(), metrics);
       status = crypto_session->LoadUsageEntry(usage_entry_number, usage_entry);
     }
-    if (status == INSUFFICIENT_CRYPTO_RESOURCES_3)
-      DeleteEntry(retry_count, file_handle_.get(), metrics);
-  } while (status == INSUFFICIENT_CRYPTO_RESOURCES_3 &&
-           ++retry_count < kMaxCryptoRetries);
+  }
 
   return status;
 }
@@ -676,6 +702,11 @@ bool UsageTableHeader::UpgradeUsageInfoFromUsageTable(
   return NO_ERROR;
 }
 
+uint32_t UsageTableHeader::GetRandomInRange(size_t upper_bound_inclusive) {
+  if (upper_bound_inclusive == 0) return 0;
+  return rand() / (RAND_MAX / upper_bound_inclusive  + 1);
+}
+
 // TODO(fredgc): remove when b/65730828 is addressed
 bool UsageTableHeader::CreateDummyOldUsageEntry(CryptoSession* crypto_session) {
   return crypto_session->CreateOldUsageEntry(
@@ -686,6 +717,22 @@ bool UsageTableHeader::CreateDummyOldUsageEntry(CryptoSession* crypto_session) {
              kOldUsageEntryServerMacKey,
              kOldUsageEntryClientMacKey,
              kOldUsageEntryPoviderSessionToken);
+}
+
+// Test only method.
+void UsageTableHeader::DeleteEntryForTest(uint32_t usage_entry_number) {
+  LOGV("UsageTableHeader::DeleteEntryForTest: usage_entry_number: %d",
+       usage_entry_number);
+  if (usage_entry_number >= usage_entry_info_.size()) {
+    LOGE("UsageTableHeader::DeleteEntryForTest: usage entry number %d larger "
+         "than usage entry size %d", usage_entry_number,
+         usage_entry_info_.size());
+    return;
+  }
+  // Move last entry into deleted location and shrink usage entries
+  usage_entry_info_[usage_entry_number] =
+      usage_entry_info_[usage_entry_info_.size() - 1];
+  usage_entry_info_.resize(usage_entry_info_.size() - 1);
 }
 
 }  // namespace wvcdm

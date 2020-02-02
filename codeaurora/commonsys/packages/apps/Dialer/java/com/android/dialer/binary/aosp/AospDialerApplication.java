@@ -16,7 +16,9 @@
 
 package com.android.dialer.binary.aosp;
 
+import android.os.SystemProperties;
 import android.support.annotation.NonNull;
+
 import com.android.dialer.binary.common.DialerApplication;
 import com.android.dialer.inject.ContextModule;
 
@@ -25,6 +27,12 @@ import com.android.dialer.inject.ContextModule;
  * dependency on Google Play Services.
  */
 public class AospDialerApplication extends DialerApplication {
+	
+	//add by xxf
+	public static boolean isHasReceiver(){
+		return SystemProperties.getBoolean("persist.sys.has.receiver", true);
+	}
+	//add by xxf
 
   /** Returns a new instance of the root component for the AOSP Dialer. */
   @Override

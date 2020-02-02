@@ -8,6 +8,7 @@
     <string name="incoming_call_failed_low_battery">"由于电量过低，无法接听来电。"</string>
     <!-- Notification manager HD icon title. -->
     <string name="device_is_hd_capable">SIM <xliff:g id="card_number">%1$d</xliff:g>支持高清</string>
+    <string name="device_is_hd_capable1">支持高清</string>
     <!-- Notification manager VOLTE icon title. -->
     <string name="device_is_volte_capable">SIM <xliff:g id="card_number">%1$d</xliff:g>支持高清</string>
     <string name="call_hold_label">"保持通话："</string>

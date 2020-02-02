@@ -86,6 +86,7 @@ CdmEngine::CdmEngine(FileSystem* file_system, const std::string& spoid)
 }
 
 CdmEngine::~CdmEngine() {
+  usage_session_.reset();
   AutoLock lock(session_map_lock_);
   session_map_.Terminate();
 }

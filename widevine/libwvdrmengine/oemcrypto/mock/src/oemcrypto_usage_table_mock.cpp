@@ -649,7 +649,7 @@ bool UsageTable::SaveGenerationNumber() {
   // On a real implementation, you should NOT put the generation number in
   // a file in user space.  It should be stored in secure memory.
   std::string filename = path + "GenerationNumber.dat";
-  wvcdm::File* file = file_system->Open(
+  auto file = file_system->Open(
       filename, wvcdm::FileSystem::kCreate | wvcdm::FileSystem::kTruncate);
   if (!file) {
     LOGE("UsageTable: File open failed: %s", path.c_str());
@@ -657,7 +657,6 @@ bool UsageTable::SaveGenerationNumber() {
   }
   file->Write(reinterpret_cast<char*>(&master_generation_number_),
               sizeof(int64_t));
-  file->Close();
   return true;
 }
 
@@ -674,8 +673,8 @@ bool UsageTable::LoadGenerationNumber(bool or_make_new_one) {
   // On a real implementation, you should NOT put the generation number in
   // a file in user space.  It should be stored in secure memory.
   std::string filename = path + "GenerationNumber.dat";
-  wvcdm::File* file = file_system->Open(filename,
-                                        wvcdm::FileSystem::kReadOnly);
+  auto file = file_system->Open(filename,
+                                wvcdm::FileSystem::kReadOnly);
   if (!file) {
     if (or_make_new_one) {
       RAND_bytes(reinterpret_cast<uint8_t*>(&master_generation_number_),
@@ -688,7 +687,6 @@ bool UsageTable::LoadGenerationNumber(bool or_make_new_one) {
   }
   file->Read(reinterpret_cast<char*>(&master_generation_number_),
              sizeof(int64_t));
-  file->Close();
   return true;
 }
 

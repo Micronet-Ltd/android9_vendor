@@ -66,10 +66,10 @@ PRODUCT_PACKAGES += \
 
 # GMS comms suite
 PRODUCT_PACKAGES += \
-    CarrierServices 
+    CarrierServices \
+    Messages 
     #GoogleContacts 
-    #Messages
-    #GoogleDialer \
+    #GoogleDialer 
 
 # GMS optional application packages
 PRODUCT_PACKAGES += \
@@ -99,5 +99,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.opa.eligible_device=true \
     ro.setupwizard.mode=OPTIONAL \
+    ro.product.first_api_level=28 \
     setupwizard.feature.predeferred_enabled=false \
-    ro.com.google.gmsversion=9_201909
+    ro.com.google.gmsversion=9_201911

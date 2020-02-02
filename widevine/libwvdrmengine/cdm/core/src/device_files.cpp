@@ -1152,7 +1152,7 @@ bool DeviceFiles::StoreFileRaw(const std::string& name,
 
   path += name;
 
-  File* file =
+  auto file =
       file_system_->Open(path, FileSystem::kCreate | FileSystem::kTruncate);
   if (!file) {
     LOGW("DeviceFiles::StoreFileRaw: File open failed: %s", path.c_str());
@@ -1160,7 +1160,6 @@ bool DeviceFiles::StoreFileRaw(const std::string& name,
   }
 
   ssize_t bytes = file->Write(serialized_file.data(), serialized_file.size());
-  file->Close();
 
   if (bytes != static_cast<ssize_t>(serialized_file.size())) {
     LOGW(
@@ -1208,7 +1207,7 @@ bool DeviceFiles::RetrieveHashedFile(
     return false;
   }
 
-  File* file = file_system_->Open(path, FileSystem::kReadOnly);
+  auto file = file_system_->Open(path, FileSystem::kReadOnly);
   if (!file) {
     return false;
   }
@@ -1216,7 +1215,6 @@ bool DeviceFiles::RetrieveHashedFile(
   std::string serialized_hash_file;
   serialized_hash_file.resize(bytes);
   bytes = file->Read(&serialized_hash_file[0], serialized_hash_file.size());
-  file->Close();
 
   if (bytes != static_cast<ssize_t>(serialized_hash_file.size())) {
     LOGW("DeviceFiles::RetrieveHashedFile: read failed");
