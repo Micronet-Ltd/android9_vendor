@@ -6769,7 +6769,7 @@ endif
 # currently this is been defined as below but need to be modifed
 # based on security issues been addressed.
 ifeq ($(ENABLE_VENDOR_IMAGE), true)
-VENDOR_SECURITY_PATCH := "2019-12-05"
+VENDOR_SECURITY_PATCH := "2020-02-05"
 endif
 
 #interage widewine L3 by zzj start
