@@ -21,6 +21,8 @@
 
     <action android:category="com.android.settings.suggested.category.EMAIL" />
 
+    <action android:category="com.android.settings.suggested.category.LOCK_SCREEN_REDACTION" />
+
     <action android:category="com.android.settings.suggested.category.PAI"
             suw:lifecycle="default" />
 

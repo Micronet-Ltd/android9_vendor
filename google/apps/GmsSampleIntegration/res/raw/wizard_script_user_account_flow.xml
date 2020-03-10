@@ -34,6 +34,10 @@
     <WizardAction id="account_google_services"
         wizard:uri="intent:#Intent;action=com.google.android.setupwizard.GOOGLE_SERVICES;end" />
 
+    <!-- Show search selector screen [REQUIRED] -->
+    <WizardAction id="search_selector"
+                  wizard:uri="intent:#Intent;action=com.google.android.setupwizard.SELECT_SEARCH_ENGINE;end">
+    </WizardAction>
 
     <!-- Set up fingerprint [RECOMMENDED, CUSTOMIZABLE] -->
     <WizardAction id="fingerprint"

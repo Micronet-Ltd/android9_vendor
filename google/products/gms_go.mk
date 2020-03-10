@@ -55,6 +55,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     AssistantGo \
     Chrome \
+    DuoGo \
     GalleryGo \
     GMailGo \
     GoogleSearchGo \

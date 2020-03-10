@@ -52,6 +52,7 @@ PRODUCT_COPY_FILES += \
 
 # GMS mandatory application packages
 PRODUCT_PACKAGES += \
+    DuoGo \
     GalleryGo \
     GMailGo \
     LatinImeGoogleGo \
