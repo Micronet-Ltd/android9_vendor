@@ -2,7 +2,7 @@
 # Velvet
 LOCAL_PATH := $(call my-dir)
 
-my_archs := arm arm64 x86
+my_archs := arm arm64 x86 x86_64
 my_src_arch := $(call get-prebuilt-src-arch, $(my_archs))
 
 OFFLINE_LANG_PACK_FILE_LIST := $(patsubst $(LOCAL_PATH)/OfflineVoiceRecognitionLanguagePacks/%,%,$(shell find $(LOCAL_PATH)/OfflineVoiceRecognitionLanguagePacks -type f))
