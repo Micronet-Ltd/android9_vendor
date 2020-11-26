@@ -77,10 +77,6 @@
     <WizardAction id="esim_setup"
         wizard:uri="intent:#Intent;action=com.android.setupwizard.ESIM_SETUP;end" />
 
-    <!-- Show search selector screen [REQUIRED] -->
-    <WizardAction id="search_selector"
-                  wizard:uri="intent:#Intent;action=com.google.android.setupwizard.SELECT_SEARCH_ENGINE;end">
-    </WizardAction>
 
     <!-- Set up fingerprint [RECOMMENDED, CUSTOMIZABLE] -->
     <WizardAction id="fingerprint"

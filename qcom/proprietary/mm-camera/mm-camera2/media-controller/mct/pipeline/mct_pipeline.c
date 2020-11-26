@@ -60,7 +60,7 @@ static cam_dimension_t default_picture_sizes[] = {
   { 5312, 2988}, // 16 MP with 16:9 aspect ratio.
   { 4608, 3456}, // 16MP
   { 4160, 3120}, // 13M
-//  { 4000, 3000}, // 12MP
+  { 4000, 3000}, // 12MP
 #endif
 #ifdef CAMERA_FEATURE_LOW_RAM
   { 4208, 3120}, //Added for 8917go
@@ -71,7 +71,7 @@ static cam_dimension_t default_picture_sizes[] = {
 #ifdef CAMERA_FEATURE_LOW_RAM
   { 2400, 2400}, //Added for 8917go
 #else
- // { 2976, 2976},
+  { 2976, 2976},
 #endif
   { 2592, 1944}, // 5MP
   { 2688, 1512}, // 4MP wide
@@ -80,25 +80,25 @@ static cam_dimension_t default_picture_sizes[] = {
   { 1600, 1200}, // 2MP UXGA
   { 1440, 1080}, // Wide HD
   { 1280, 960},  // 1.3MP UXGA
-//  { 1280, 768},  // WXGA
+  { 1280, 768},  // WXGA
   { 1280, 720},  // HD720
   { 1200, 1200},
   { 1024, 768},  // 1MP XGA
   { 800, 600},   // SVGA
   { 864, 480},   // FWVGA
-//  { 800, 480},   // WVGA
+  { 800, 480},   // WVGA
   { 720, 480},   // 480p
   { 640, 480},   // VGA
   { 640, 360},
-//  { 480, 640},   // Portrait VGA for VT App
+  { 480, 640},   // Portrait VGA for VT App
   { 480, 360},   // HVGA for HFR support
   { 480, 320},   // HVGA
   { 352, 288},   // CIF
   { 320, 240},   // QVGA
-//  { 240, 320},   // Portrait QVGA for VT App
+  { 240, 320},   // Portrait QVGA for VT App
   { 176, 144},   // QCIF
   { 160, 120},
-//  { 144, 176}    // Portrait QCIF for VT App
+  { 144, 176}    // Portrait QCIF for VT App
 };
 
 static cam_dimension_t default_liveshot_sizes[] = {

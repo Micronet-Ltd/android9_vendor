@@ -1831,7 +1831,7 @@ LOCAL_MULTILIB      := 32
 LOCAL_MODULE_OWNER  := qcom
 LOCAL_MODULE_TAGS   := optional
 LOCAL_SRC_FILES     := ../../.././target/product/msm8953_64/system/lib/com.qualcomm.qti.wifidisplayhal@1.0.so
-LOCAL_MODULE_PATH   := $(PRODUCT_OUT)/vendor/lib
+LOCAL_MODULE_PATH   := $(PRODUCT_OUT)/system/lib
 include $(BUILD_PREBUILT)
 endif
 
@@ -2951,15 +2951,15 @@ LOCAL_MODULE_PATH   := $(PRODUCT_OUT)/$(TARGET_COPY_OUT_VENDOR)/bin
 LOCAL_PROPRIETARY_MODULE := true
 include $(BUILD_PREBUILT)
 
-#include $(CLEAR_VARS)
-#LOCAL_MODULE        := StoreKeybox
-#LOCAL_MODULE_OWNER  := qcom
-#LOCAL_MODULE_TAGS   := optional
-#LOCAL_MODULE_CLASS  := EXECUTABLES
-#LOCAL_SRC_FILES     := ../../.././target/product/msm8953_64/vendor/bin/StoreKeybox
-#LOCAL_MODULE_PATH   := $(PRODUCT_OUT)/$(TARGET_COPY_OUT_VENDOR)/bin
-#LOCAL_PROPRIETARY_MODULE := true
-#include $(BUILD_PREBUILT)
+include $(CLEAR_VARS)
+LOCAL_MODULE        := StoreKeybox
+LOCAL_MODULE_OWNER  := qcom
+LOCAL_MODULE_TAGS   := optional
+LOCAL_MODULE_CLASS  := EXECUTABLES
+LOCAL_SRC_FILES     := ../../.././target/product/msm8953_64/vendor/bin/StoreKeybox
+LOCAL_MODULE_PATH   := $(PRODUCT_OUT)/$(TARGET_COPY_OUT_VENDOR)/bin
+LOCAL_PROPRIETARY_MODULE := true
+include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE        := tftp_server
@@ -4743,18 +4743,18 @@ LOCAL_MODULE_PATH   := $(PRODUCT_OUT)/$(TARGET_COPY_OUT_VENDOR)/lib64
 LOCAL_PROPRIETARY_MODULE := true
 include $(BUILD_PREBUILT)
 
-#include $(CLEAR_VARS)
-#LOCAL_MODULE        := liboemcrypto
-#LOCAL_MODULE_CLASS  := SHARED_LIBRARIES
-#LOCAL_MODULE_SUFFIX := .so
-#LOCAL_STRIP_MODULE  := false
-#LOCAL_MULTILIB      := 64
-#LOCAL_MODULE_OWNER  := qcom
-#LOCAL_MODULE_TAGS   := optional
-#LOCAL_SRC_FILES     := ../../.././target/product/msm8953_64/vendor/lib64/liboemcrypto.so
-#LOCAL_MODULE_PATH   := $(PRODUCT_OUT)/$(TARGET_COPY_OUT_VENDOR)/lib64
-#LOCAL_PROPRIETARY_MODULE := true
-#include $(BUILD_PREBUILT)
+include $(CLEAR_VARS)
+LOCAL_MODULE        := liboemcrypto
+LOCAL_MODULE_CLASS  := SHARED_LIBRARIES
+LOCAL_MODULE_SUFFIX := .so
+LOCAL_STRIP_MODULE  := false
+LOCAL_MULTILIB      := 64
+LOCAL_MODULE_OWNER  := qcom
+LOCAL_MODULE_TAGS   := optional
+LOCAL_SRC_FILES     := ../../.././target/product/msm8953_64/vendor/lib64/liboemcrypto.so
+LOCAL_MODULE_PATH   := $(PRODUCT_OUT)/$(TARGET_COPY_OUT_VENDOR)/lib64
+LOCAL_PROPRIETARY_MODULE := true
+include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE        := libOmxAlacDecSw
@@ -7125,18 +7125,18 @@ LOCAL_MODULE_PATH   := $(PRODUCT_OUT)/$(TARGET_COPY_OUT_VENDOR)/lib
 LOCAL_PROPRIETARY_MODULE := true
 include $(BUILD_PREBUILT)
 
-#include $(CLEAR_VARS)
-#LOCAL_MODULE        := liboemcrypto
-#LOCAL_MODULE_CLASS  := SHARED_LIBRARIES
-#LOCAL_MODULE_SUFFIX := .so
-#LOCAL_STRIP_MODULE  := false
-#LOCAL_MULTILIB      := 32
-#LOCAL_MODULE_OWNER  := qcom
-#LOCAL_MODULE_TAGS   := optional
-#LOCAL_SRC_FILES     := ../../.././target/product/msm8953_64/vendor/lib/liboemcrypto.so
-#LOCAL_MODULE_PATH   := $(PRODUCT_OUT)/$(TARGET_COPY_OUT_VENDOR)/lib
-#LOCAL_PROPRIETARY_MODULE := true
-#include $(BUILD_PREBUILT)
+include $(CLEAR_VARS)
+LOCAL_MODULE        := liboemcrypto
+LOCAL_MODULE_CLASS  := SHARED_LIBRARIES
+LOCAL_MODULE_SUFFIX := .so
+LOCAL_STRIP_MODULE  := false
+LOCAL_MULTILIB      := 32
+LOCAL_MODULE_OWNER  := qcom
+LOCAL_MODULE_TAGS   := optional
+LOCAL_SRC_FILES     := ../../.././target/product/msm8953_64/vendor/lib/liboemcrypto.so
+LOCAL_MODULE_PATH   := $(PRODUCT_OUT)/$(TARGET_COPY_OUT_VENDOR)/lib
+LOCAL_PROPRIETARY_MODULE := true
+include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE        := libOmxAlacDecSw

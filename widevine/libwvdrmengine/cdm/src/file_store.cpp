@@ -14,8 +14,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <cstring>
-#include <memory>
 
 #include "file_utils.h"
 #include "log.h"
@@ -62,70 +60,65 @@ std::string GetFileNameForIdentifier(const std::string path,
 }
 }  // namespace
 
-class FileImpl : public File {
+class File::Impl {
  public:
-  FileImpl(FILE* file, const std::string& file_path)
+  Impl(FILE* file, const std::string& file_path)
       : file_(file), file_path_(file_path) {}
-
-  void FlushFile() {
-    fflush(file_);
-    fsync(fileno(file_));
-  }
-
-  ~FileImpl() {
-    if (file_) {
-      FlushFile();
-      fclose(file_);
-      file_ = nullptr;
-    }
-  }
-
-  ssize_t Read(char* buffer, size_t bytes) override {
-    if (!buffer) {
-      LOGW("File::Read: buffer is empty");
-      return -1;
-    }
-    if (!file_) {
-      LOGW("File::Read: file not open");
-      return -1;
-    }
-    size_t len = fread(buffer, sizeof(char), bytes, file_);
-    if (len != bytes) {
-      LOGW("File::Read: fread failed: %d, %s", errno, strerror(errno));
-    }
-    return len;
-  }
-
-  ssize_t Write(const char* buffer, size_t bytes) override {
-    if (!buffer) {
-      LOGW("File::Write: buffer is empty");
-      return -1;
-    }
-    if (!file_) {
-      LOGW("File::Write: file not open");
-      return -1;
-    }
-    size_t len = fwrite(buffer, sizeof(char), bytes, file_);
-    if (len != bytes) {
-      LOGW("File::Write: fwrite failed: %d, %s", errno, strerror(errno));
-    }
-    FlushFile();
-    return len;
-  }
+  virtual ~Impl() {}
 
   FILE* file_;
   std::string file_path_;
 };
 
+File::File(Impl* impl) : impl_(impl) {}
+
+File::~File() {
+  Close();
+  delete impl_;
+}
+
+void File::Close() {
+  if (impl_ && impl_->file_) {
+    fflush(impl_->file_);
+    fsync(fileno(impl_->file_));
+    fclose(impl_->file_);
+    impl_->file_ = NULL;
+  }
+}
+
+ssize_t File::Read(char* buffer, size_t bytes) {
+  if (impl_ && impl_->file_) {
+    size_t len = fread(buffer, sizeof(char), bytes, impl_->file_);
+    if (len == 0) {
+      LOGW("File::Read: fread failed: %d", errno);
+    }
+    return len;
+  }
+  LOGW("File::Read: file not open");
+  return -1;
+}
+
+ssize_t File::Write(const char* buffer, size_t bytes) {
+  if (impl_ && impl_->file_) {
+    size_t len = fwrite(buffer, sizeof(char), bytes, impl_->file_);
+    if (len == 0) {
+      LOGW("File::Write: fwrite failed: %d", errno);
+    }
+    return len;
+  }
+  LOGW("File::Write: file not open");
+  return -1;
+}
+
 class FileSystem::Impl {};
 
-FileSystem::FileSystem() : FileSystem(EMPTY_ORIGIN, nullptr) {}
+FileSystem::FileSystem() : FileSystem(EMPTY_ORIGIN, NULL) {}
 FileSystem::FileSystem(const std::string& origin, void* /* extra_data */)
     : origin_(origin) {}
 
 FileSystem::~FileSystem() {}
 
-std::unique_ptr<File> FileSystem::Open(const std::string& in_name, int flags) {
+File* FileSystem::Open(const std::string& in_name, int flags) {
   std::string open_flags;
 
   std::string name = GetFileNameForIdentifier(in_name, identifier_);
@@ -153,11 +146,11 @@ std::unique_ptr<File> FileSystem::Open(const std::string& in_name, int flags) {
   FILE* file = fopen(name.c_str(), open_flags.c_str());
   umask(old_mask);
   if (!file) {
-    LOGW("File::Open: fopen failed: %d, %s", errno, strerror(errno));
-    return nullptr;
+    LOGW("File::Open: fopen failed: %d", errno);
+    return NULL;
   }
 
-  return std::unique_ptr<File>(new FileImpl(file, name));
+  return new File(new File::Impl(file, name));
 }
 
 bool FileSystem::Exists(const std::string& path) {
@@ -182,9 +175,9 @@ bool FileSystem::List(const std::string& path,
   return FileUtils::List(GetFileNameForIdentifier(path, origin_), filenames);
 }
 
-void FileSystem::set_origin(const std::string& origin) { origin_ = origin; }
+void FileSystem::SetOrigin(const std::string& origin) { origin_ = origin; }
 
-void FileSystem::set_identifier(const std::string& identifier) {
+void FileSystem::SetIdentifier(const std::string& identifier) {
   identifier_ = identifier;
 }
 

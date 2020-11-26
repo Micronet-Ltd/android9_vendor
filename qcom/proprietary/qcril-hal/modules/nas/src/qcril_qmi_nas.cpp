@@ -20949,14 +20949,6 @@ void qcril_qmi_nas_start_advanced_scan
             nas_cached_info.is_adv_nw_scan = TRUE;
             NAS_CACHE_UNLOCK();
         }
-
-        if (ril_req_res == RIL_E_OPERATION_NOT_ALLOWED
-            || ril_req_res == RIL_E_DEVICE_IN_USE
-            || ril_req_res == NONE
-            || ril_req_res == RIL_E_MODEM_ERR)
-        {
-            ril_req_res = RIL_E_REQUEST_NOT_SUPPORTED;
-        }
     } while(FALSE);
 
     qcril_default_request_resp_params( instance_id, params_ptr->t, params_ptr->event_id, ril_req_res, &resp );

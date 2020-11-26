@@ -31,8 +31,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
-
-import com.android.dialer.binary.aosp.AospDialerApplication;
 import com.android.dialer.common.FragmentUtils;
 import com.android.dialer.common.LogUtil;
 
@@ -105,12 +103,6 @@ public class AudioRouteSelectorDialogFragment extends BottomSheetDialogFragment 
   }
 
   private void initItem(TextView item, final int itemRoute, CallAudioState audioState) {
-	  //add by xxf
-	  if(CallAudioState.ROUTE_EARPIECE==itemRoute &&(!AospDialerApplication.isHasReceiver())){
-		  item.setVisibility(View.GONE);
-		  return;
-	  }
-	//add by xxf
     int selectedColor = getResources().getColor(R.color.dialer_theme_color);
     if ((audioState.getSupportedRouteMask() & itemRoute) == 0) {
       item.setVisibility(View.GONE);

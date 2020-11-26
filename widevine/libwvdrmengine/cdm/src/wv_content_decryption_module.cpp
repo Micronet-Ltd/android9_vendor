@@ -310,14 +310,10 @@ CdmResponseType WvContentDecryptionModule::Decrypt(
         cdm_engine->FindSessionForKey(*parameters.key_id, &local_session_id);
     cdm_engine->GetMetrics()->cdm_engine_find_session_for_key_.Increment(
         status);
-    if (!status) {
-      // key does not need to be loaded if clear lead/frame has a
-      // single subsample. It does in all other cases.
-      if (parameters.is_encrypted ||
-          !(parameters.subsample_flags & OEMCrypto_FirstSubsample) ||
-          !(parameters.subsample_flags & OEMCrypto_LastSubsample)) {
-        return KEY_NOT_FOUND_IN_SESSION;
-      }
+    if (!status && parameters.is_encrypted) {
+      LOGE("WvContentDecryptionModule::Decrypt: unable to find session: %s",
+           session_id.c_str());
+      return KEY_NOT_FOUND_IN_SESSION;
     }
   }
   CdmResponseType sts;
@@ -372,9 +368,9 @@ CdmEngine* WvContentDecryptionModule::EnsureCdmForIdentifier(
     // origin provided by the app and an identifier that uniquely identifies
     // this CDM. We concatenate all pieces of the CdmIdentifier in order to
     // create an ID that is unique to that identifier.
-    cdms_[identifier].file_system.set_origin(identifier.origin);
-    cdms_[identifier].file_system.set_identifier(identifier.spoid +
-                                                 identifier.origin);
+    cdms_[identifier].file_system.SetOrigin(identifier.origin);
+    cdms_[identifier].file_system.SetIdentifier(identifier.spoid +
+                                                identifier.origin);
 
     // Set the app package name for use by metrics.
     cdms_[identifier].cdm_engine->GetMetrics()->SetAppPackageName(

@@ -400,11 +400,12 @@ class WatchDog {
     wvcdm::FileSystem file_system;
     std::string filename = FailureFilename();
     if (!file_system.Exists(filename)) return;
-    auto file = file_system.Open(filename, file_system.kReadOnly);
+    wvcdm::File* file = file_system.Open(filename, file_system.kReadOnly);
     if (file) {
       uint32_t flag = 0;
       ssize_t size = sizeof(flag);
       ssize_t size_read = file->Read(reinterpret_cast<char*>(&flag), size);
+      file->Close();
       file_system.Remove(filename);
       if (size == size_read && flag) {
         LOGE("Previous L3 Init failed.");
@@ -420,8 +421,8 @@ class WatchDog {
     wvcdm::FileSystem file_system;
     std::string filename = FailureFilename();
     LOGD("failure filename = %s", filename.c_str());
-    auto file =
-        file_system.Open(filename, file_system.kCreate | file_system.kTruncate);
+    wvcdm::File* file = file_system.Open(
+        filename, file_system.kCreate | file_system.kTruncate);
     if (!file) {
       LOGE("Could not create file %s", filename.c_str());
       return;
@@ -429,6 +430,7 @@ class WatchDog {
     uint32_t flag = 0x6261640a;  // bad
     ssize_t size = sizeof(flag);
     ssize_t size_written = file->Write(reinterpret_cast<char*>(&flag), size);
+    file->Close();
     if (size != size_written) {
       LOGE("Wrote %d bytes, not %d, to file %s", size_written, size,
            filename.c_str());
@@ -750,7 +752,7 @@ class Adapter {
               OEMCrypto_INITIALIZED_USING_L3_COULD_NOT_OPEN_FACTORY_KEYBOX);
       return false;
     }
-    auto file = file_system.Open(filename, file_system.kReadOnly);
+    wvcdm::File* file = file_system.Open(filename, file_system.kReadOnly);
     if (!file) {
       LOGW("Could not open %s. Falling Back to L3.", filename.c_str());
       level1_.Terminate();
@@ -761,6 +763,7 @@ class Adapter {
     }
     std::vector<uint8_t> keybox(size);
     ssize_t size_read = file->Read(reinterpret_cast<char*>(&keybox[0]), size);
+    file->Close();
     if (level1_.InstallKeybox(&keybox[0], size_read) != OEMCrypto_SUCCESS) {
       LOGE("Could NOT install keybox from %s. Falling Back to L3.",
            filename.c_str());

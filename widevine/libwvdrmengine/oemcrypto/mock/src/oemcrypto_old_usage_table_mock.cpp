@@ -59,7 +59,7 @@ OldUsageTable::OldUsageTable(CryptoEngine *ce) {
 
   // Load saved table.
   wvcdm::FileSystem* file_system = ce->file_system();
-  std::unique_ptr<wvcdm::File> file;
+  wvcdm::File *file;
   std::string path;
   // Note: this path is OK for a real implementation, but using security level 1
   // would be better.
@@ -90,6 +90,7 @@ OldUsageTable::OldUsageTable(CryptoEngine *ce) {
     return;
   }
   file->Read(reinterpret_cast<char *>(&encrypted_buffer[0]), file_size);
+  file->Close();
 
   // Verify the signature of the usage table file.
 
@@ -140,6 +141,7 @@ OldUsageTable::OldUsageTable(CryptoEngine *ce) {
     return;
   }
   file->Read(reinterpret_cast<char *>(&generation_), sizeof(int64_t));
+  file->Close();
   if (stored_table->generation == generation_ + 1) {
     if (LogCategoryEnabled(kLoggingTraceUsageTable)) {
       LOGW("OldUsageTable: File is one generation old.  Acceptable rollback.");

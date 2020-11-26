@@ -33,7 +33,6 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-
 import com.android.dialer.common.Assert;
 import com.android.dialer.common.LogUtil;
 import com.android.dialer.compat.ActivityCompat;
@@ -55,7 +54,6 @@ import com.android.incallui.incall.protocol.InCallButtonUiDelegateFactory;
 import com.android.incallui.incall.protocol.InCallScreen;
 import com.android.incallui.incall.protocol.InCallScreenDelegate;
 import com.android.incallui.incall.protocol.InCallScreenDelegateFactory;
-import com.android.incallui.util.LovdreamCallUtil;
 import com.android.incallui.video.bindings.VideoBindings;
 import com.android.incallui.video.protocol.VideoCallScreen;
 import com.android.incallui.video.protocol.VideoCallScreenDelegate;
@@ -90,10 +88,6 @@ public class InCallActivity extends TransactionSafeFragmentActivity
   private boolean touchDownWhenPseudoScreenOff;
   private boolean isInShowMainInCallFragment;
   private boolean needDismissPendingDialogs;
-  
-  //add by xxf
-  LovdreamCallUtil mCallUtil;
-  //add by xxf
 
   public InCallActivity() {
     common = new InCallActivityCommon(this);
@@ -126,10 +120,6 @@ public class InCallActivity extends TransactionSafeFragmentActivity
       didShowInCallScreen = icicle.getBoolean(DID_SHOW_IN_CALL_SCREEN_KEY);
       didShowVideoCallScreen = icicle.getBoolean(DID_SHOW_VIDEO_CALL_SCREEN_KEY);
     }
-    
-    Context context = this;
-    mCallUtil =LovdreamCallUtil.getCallUtil().registerHeadSetBroadcast(context);
-    
 
     common.onCreate(icicle);
 
@@ -199,7 +189,6 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     LogUtil.i("InCallActivity.onDestroy", "");
     super.onDestroy();
     common.onDestroy();
-    mCallUtil.unRegisterHeadSetBroadcast(this);
   }
 
   @Override
@@ -500,9 +489,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
 
   @Override
   public InCallButtonUiDelegate newInCallButtonUiDelegate() {
-	  CallButtonPresenter presenter  = new CallButtonPresenter(this);
-	  mCallUtil.setCallBack(presenter);
-    return presenter;
+    return new CallButtonPresenter(this);
   }
 
   @Override

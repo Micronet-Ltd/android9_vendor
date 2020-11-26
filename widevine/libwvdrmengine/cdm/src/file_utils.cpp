@@ -12,7 +12,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <cstring>
 
 #include "file_store.h"
 #include "log.h"
@@ -29,7 +28,7 @@ bool FileUtils::Exists(const std::string& path) {
   struct stat buf;
   int res = stat(path.c_str(), &buf) == 0;
   if (!res) {
-    LOGV("File::Exists: stat failed: %d, %s", errno, strerror(errno));
+    LOGV("File::Exists: stat failed: %d", errno);
   }
   return res;
 }
@@ -54,7 +53,7 @@ bool FileUtils::Remove(const std::string& path) {
       closedir(dir);
     }
     if (rmdir(path.c_str())) {
-      LOGW("File::Remove: rmdir failed: %d, %s", errno, strerror(errno));
+      LOGW("File::Remove: rmdir failed: %d", errno);
       return false;
     }
     return true;
@@ -63,7 +62,7 @@ bool FileUtils::Remove(const std::string& path) {
     if (wildcard_pos == std::string::npos) {
       // Handle file deletion
       if (unlink(path.c_str()) && (errno != ENOENT)) {
-        LOGW("File::Remove: unlink failed: %d, %s", errno, strerror(errno));
+        LOGW("File::Remove: unlink failed: %d", errno);
         return false;
       }
     } else {
@@ -107,22 +106,19 @@ bool FileUtils::Remove(const std::string& path) {
 bool FileUtils::Copy(const std::string& src, const std::string& dest) {
   struct stat stat_buf;
   if (stat(src.c_str(), &stat_buf)) {
-    LOGV("File::Copy: file %s stat error: %d, %s", src.c_str(), errno,
-         strerror(errno));
+    LOGV("File::Copy: file %s stat error: %d", src.c_str(), errno);
     return false;
   }
 
   int fd_src = open(src.c_str(), O_RDONLY);
   if (fd_src < 0) {
-    LOGW("File::Copy: unable to open file %s: %d, %s", src.c_str(), errno,
-         strerror(errno));
+    LOGW("File::Copy: unable to open file %s: %d", src.c_str(), errno);
     return false;
   }
 
   int fd_dest = open(dest.c_str(), O_WRONLY | O_CREAT, stat_buf.st_mode);
   if (fd_dest < 0) {
-    LOGW("File::Copy: unable to open file %s: %d, %s", dest.c_str(), errno,
-         strerror(errno));
+    LOGW("File::Copy: unable to open file %s: %d", dest.c_str(), errno);
     close(fd_src);
     return false;
   }
@@ -130,8 +126,8 @@ bool FileUtils::Copy(const std::string& src, const std::string& dest) {
   off_t offset = 0;
   bool status = true;
   if (sendfile(fd_dest, fd_src, &offset, stat_buf.st_size) < 0) {
-    LOGV("File::Copy: unable to copy %s to %s: %d, %s", src.c_str(),
-         dest.c_str(), errno, strerror(errno));
+    LOGV("File::Copy: unable to copy %s to %s: %d", src.c_str(), dest.c_str(),
+         errno);
     status = false;
   }
 
@@ -147,15 +143,13 @@ bool FileUtils::List(const std::string& path, std::vector<std::string>* files) {
   }
 
   if (!FileUtils::Exists(path)) {
-    LOGV("File::List: path %s does not exist: %d, %s", path.c_str(), errno,
-         strerror(errno));
+    LOGV("File::List: path %s does not exist: %d", path.c_str(), errno);
     return false;
   }
 
   DIR* dir = opendir(path.c_str());
   if (dir == NULL) {
-    LOGW("File::List: unable to open directory %s: %d, %s", path.c_str(), errno,
-         strerror(errno));
+    LOGW("File::List: unable to open directory %s: %d", path.c_str(), errno);
     return false;
   }
 
@@ -199,8 +193,7 @@ bool FileUtils::CreateDirectory(const std::string& path_in) {
     path[pos] = '\0';
     if (mkdir(path.c_str(), 0700) != 0) {
       if (errno != EEXIST) {
-        LOGW("File::CreateDirectory: mkdir failed: %d, %s\n", errno,
-             strerror(errno));
+        LOGW("File::CreateDirectory: mkdir failed: %d\n", errno);
         return false;
       }
     }
@@ -211,8 +204,7 @@ bool FileUtils::CreateDirectory(const std::string& path_in) {
   if (path[size - 1] != kDirectoryDelimiter) {
     if (mkdir(path.c_str(), 0700) != 0) {
       if (errno != EEXIST) {
-        LOGW("File::CreateDirectory: mkdir failed: %d, %s\n", errno,
-             strerror(errno));
+        LOGW("File::CreateDirectory: mkdir failed: %d\n", errno);
         return false;
       }
     }

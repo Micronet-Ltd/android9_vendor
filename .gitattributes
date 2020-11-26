@@ -32,6 +32,7 @@ google/apps/GoogleContacts/*.apk filter=lfs diff=lfs merge=lfs -text
 google/apps/Hangouts/*.apk filter=lfs diff=lfs merge=lfs -text
 google/apps/SetupWizard/*.apk filter=lfs diff=lfs merge=lfs -text
 google/apps/Keep/*.apk filter=lfs diff=lfs merge=lfs -text
+google/apps_go/*.apk filter=lfs diff=lfs merge=lfs -text
 google/apps_go/GoogleSearchGo/*.apk filter=lfs diff=lfs merge=lfs -text
 google/apps_go/YouTubeGo/*.apk filter=lfs diff=lfs merge=lfs -text
 google/apps_go/GmsCoreGo/*.apk filter=lfs diff=lfs merge=lfs -text

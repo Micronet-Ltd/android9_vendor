@@ -115,39 +115,6 @@ SubSampleInfo clear_sub_sample = {
     wvcdm::a2b_hex("f6f4b1e600a5b67813ed2bded913ba9f"), 0,
     OEMCrypto_FirstSubsample | OEMCrypto_LastSubsample};
 
-SubSampleInfo clear_sub_samples[2] = {
-  // block 0, key SD, encrypted, 128b
-  { true, 1, true, false, false,
-    wvcdm::a2bs_hex("371EA35E1A985D75D198A7F41020DC23"),
-    wvcdm::a2b_hex(
-        "217ce9bde99bd91e9733a1a00b9b557ac3a433dc92633546156817fae26b6e1c"
-        "942ac20a89ff79f4c2f25fba99d6a44618a8c0420b27d54e3da17b77c9d43cca"
-        "595d259a1e4a8b6d7744cd98c5d3f921adc252eb7d8af6b916044b676a574747"
-        "8df21fdc42f166880d97a2225cd5c9ea5e7b752f4cf81bbdbe98e542ee10e1c6"),
-    wvcdm::a2b_hex(
-        "217ce9bde99bd91e9733a1a00b9b557ac3a433dc92633546156817fae26b6e1c"
-        "942ac20a89ff79f4c2f25fba99d6a44618a8c0420b27d54e3da17b77c9d43cca"
-        "595d259a1e4a8b6d7744cd98c5d3f921adc252eb7d8af6b916044b676a574747"
-        "8df21fdc42f166880d97a2225cd5c9ea5e7b752f4cf81bbdbe98e542ee10e1c6"),
-    wvcdm::a2b_hex("f6f4b1e600a5b67813ed2bded913ba9f"), 0,
-    OEMCrypto_FirstSubsample},
-  // block 1, key SD, encrypted, 128b
-  { true, 1, true, false, false,
-    wvcdm::a2bs_hex("371EA35E1A985D75D198A7F41020DC23"),
-    wvcdm::a2b_hex(
-        "ad868a6ac55c10d564fc23b8acff407daaf4ed2743520e02cda9680d9ea88e91"
-        "029359c4cf5906b6ab5bf60fbb3f1a1c7c59acfc7e4fb4ad8e623c04d503a3dd"
-        "4884604c8da8a53ce33db9ff8f1c5bb6bb97f37b39906bf41596555c1bcce9ed"
-        "08a899cd760ff0899a1170c2f224b9c52997a0785b7fe170805fd3e8b1127659"),
-    wvcdm::a2b_hex(
-        "ad868a6ac55c10d564fc23b8acff407daaf4ed2743520e02cda9680d9ea88e91"
-        "029359c4cf5906b6ab5bf60fbb3f1a1c7c59acfc7e4fb4ad8e623c04d503a3dd"
-        "4884604c8da8a53ce33db9ff8f1c5bb6bb97f37b39906bf41596555c1bcce9ed"
-        "08a899cd760ff0899a1170c2f224b9c52997a0785b7fe170805fd3e8b1127659"),
-    wvcdm::a2b_hex("f6f4b1e600a5b67813ed2bded913ba9f"), 0,
-    OEMCrypto_LastSubsample}
-};
-
 SubSampleInfo clear_sub_sample_no_key = {
     false, 1, false, false, false,
     wvcdm::a2bs_hex("77777777777777777777777777777777"),
@@ -3378,7 +3345,7 @@ TEST_F(WvCdmRequestLicenseTest, RemoveCorruptedUsageInfoTest) {
   ssize_t file_size =
       file_system.FileSize(usage_info_not_empty_app_id_file_name);
   EXPECT_LT(4, file_size);
-  std::unique_ptr<File> file =
+  File* file =
       file_system.Open(usage_info_not_empty_app_id_file_name,
                        FileSystem::kReadOnly);
   EXPECT_TRUE(NULL != file);
@@ -3386,6 +3353,7 @@ TEST_F(WvCdmRequestLicenseTest, RemoveCorruptedUsageInfoTest) {
   file_data.resize(file_size);
   ssize_t bytes = file->Read(&file_data[0], file_data.size());
   EXPECT_EQ(file_size, bytes);
+  file->Close();
 
   // Corrupt the hash of the usage info file with non-empty app id and write
   // it back out
@@ -3395,6 +3363,7 @@ TEST_F(WvCdmRequestLicenseTest, RemoveCorruptedUsageInfoTest) {
   EXPECT_TRUE(NULL != file);
   bytes = file->Write(file_data.data(), file_data.size());
   EXPECT_EQ(file_size, bytes);
+  file->Close();
 
   EXPECT_EQ(
       NO_ERROR,
@@ -3423,6 +3392,7 @@ TEST_F(WvCdmRequestLicenseTest, RemoveCorruptedUsageInfoTest) {
   file_data.resize(file_size);
   bytes = file->Read(&file_data[0], file_data.size());
   EXPECT_EQ(file_size, bytes);
+  file->Close();
 
   // Corrupt the hash of the usage info file with empty app id and write it
   // back out
@@ -3432,6 +3402,7 @@ TEST_F(WvCdmRequestLicenseTest, RemoveCorruptedUsageInfoTest) {
   EXPECT_TRUE(NULL != file);
   bytes = file->Write(file_data.data(), file_data.size());
   EXPECT_EQ(file_size, bytes);
+  file->Close();
 
   EXPECT_EQ(
       NO_ERROR,
@@ -3524,7 +3495,7 @@ TEST_F(WvCdmRequestLicenseTest, RemoveCorruptedUsageInfoTest2) {
   ssize_t file_size =
       file_system.FileSize(usage_info_not_empty_app_id_file_name);
   EXPECT_LT(4, file_size);
-  std::unique_ptr<File> file =
+  File* file =
       file_system.Open(usage_info_not_empty_app_id_file_name,
                        FileSystem::kReadOnly);
   EXPECT_TRUE(NULL != file);
@@ -3532,6 +3503,7 @@ TEST_F(WvCdmRequestLicenseTest, RemoveCorruptedUsageInfoTest2) {
   file_data.resize(file_size);
   ssize_t bytes = file->Read(&file_data[0], file_data.size());
   EXPECT_EQ(file_size, bytes);
+  file->Close();
 
   video_widevine_client::sdk::HashedFile hash_file;
 
@@ -3549,6 +3521,7 @@ TEST_F(WvCdmRequestLicenseTest, RemoveCorruptedUsageInfoTest2) {
   EXPECT_TRUE(NULL != file);
   bytes = file->Write(file_data.data(), file_data.size());
   EXPECT_EQ(file_size, bytes);
+  file->Close();
 
   EXPECT_EQ(
       NO_ERROR,
@@ -3577,6 +3550,7 @@ TEST_F(WvCdmRequestLicenseTest, RemoveCorruptedUsageInfoTest2) {
   file_data.resize(file_size);
   bytes = file->Read(&file_data[0], file_data.size());
   EXPECT_EQ(file_size, bytes);
+  file->Close();
 
   EXPECT_TRUE(hash_file.ParseFromString(file_data));
   pos = file_data.find(hash_file.hash());
@@ -3592,6 +3566,7 @@ TEST_F(WvCdmRequestLicenseTest, RemoveCorruptedUsageInfoTest2) {
   EXPECT_TRUE(NULL != file);
   bytes = file->Write(file_data.data(), file_data.size());
   EXPECT_EQ(file_size, bytes);
+  file->Close();
 
   EXPECT_EQ(
       NO_ERROR,
@@ -3818,13 +3793,14 @@ TEST_F(WvCdmRequestLicenseTest, UsageRecoveryTest) {
   // Read in usage info file
   ssize_t file_size = file_system.FileSize(usage_info_file_name);
   EXPECT_LT(4, file_size);
-  std::unique_ptr<File> file =
+  File* file =
       file_system.Open(usage_info_file_name, FileSystem::kReadOnly);
   EXPECT_TRUE(NULL != file);
   std::string file_data;
   file_data.resize(file_size);
   ssize_t bytes = file->Read(&file_data[0], file_data.size());
   EXPECT_EQ(file_size, bytes);
+  file->Close();
 
   // Corrupt the hash of the usage info file and write it back out
   memset(&file_data[0]+bytes-4, 0, 4);
@@ -3833,6 +3809,7 @@ TEST_F(WvCdmRequestLicenseTest, UsageRecoveryTest) {
   EXPECT_TRUE(NULL != file);
   bytes = file->Write(file_data.data(), file_data.size());
   EXPECT_EQ(file_size, bytes);
+  file->Close();
 
   // Fetch a second usage license, this should fail as the usage table is
   // corrupt
@@ -4743,13 +4720,10 @@ TEST_P(WvCdmSessionSharingNoKeyTest, DecryptionTest) {
   decryption_parameters.is_secure = data->is_secure;
   decryption_parameters.subsample_flags = data->subsample_flags;
 
-  bool can_decrypt = !data->is_encrypted &&
-      data->subsample_flags & OEMCrypto_FirstSubsample &&
-      data->subsample_flags & OEMCrypto_LastSubsample;
-  EXPECT_EQ(can_decrypt ? NO_ERROR : KEY_NOT_FOUND_IN_SESSION,
-            decryptor_.Decrypt(gp_session_id_2, data->validate_key_id,
-                               decryption_parameters));
-  if (can_decrypt) {
+    EXPECT_EQ(data->is_encrypted ? KEY_NOT_FOUND_IN_SESSION : NO_ERROR,
+              decryptor_.Decrypt(gp_session_id_2, data->validate_key_id,
+                                 decryption_parameters));
+  if (!data->is_encrypted) {
     EXPECT_TRUE(std::equal(data->decrypt_data.begin(), data->decrypt_data.end(),
                            decrypt_buffer.begin()));
   }
@@ -4760,8 +4734,6 @@ TEST_P(WvCdmSessionSharingNoKeyTest, DecryptionTest) {
 
 INSTANTIATE_TEST_CASE_P(Cdm, WvCdmSessionSharingNoKeyTest,
                         ::testing::Values(&clear_sub_sample,
-                                          &clear_sub_samples[0],
-                                          &clear_sub_samples[1],
                                           &clear_sub_sample_no_key,
                                           &single_encrypted_sub_sample));
 

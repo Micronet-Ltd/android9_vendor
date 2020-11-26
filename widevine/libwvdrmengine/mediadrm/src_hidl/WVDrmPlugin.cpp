@@ -671,9 +671,7 @@ Return<void> WVDrmPlugin::getSecureStop(
     _hidl_cb(Status::BAD_VALUE, SecureStop());
     return Void();
   }
-
   const std::vector<uint8_t> id = toVector(secureStopId);
-  std::vector<uint8_t> cdmStopVec;
   SecureStop secureStop;
 
   CdmIdentifier identifier;
@@ -689,6 +687,7 @@ Return<void> WVDrmPlugin::getSecureStop(
       mPropertySet.app_id(), cdmSsId, identifier, &cdmUsageInfo);
 
   if (isCdmResponseTypeSuccess(res)) {
+    std::vector<uint8_t> cdmStopVec;
     for (CdmUsageInfo::const_iterator iter = cdmUsageInfo.begin();
          iter != cdmUsageInfo.end();
          ++iter) {

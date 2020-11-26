@@ -52,7 +52,6 @@ PRODUCT_COPY_FILES += \
 
 # GMS mandatory application packages
 PRODUCT_PACKAGES += \
-    DuoGo \
     GalleryGo \
     GMailGo \
     LatinImeGoogleGo \
@@ -86,4 +85,4 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.opa.eligible_device=true \
     ro.setupwizard.mode=OPTIONAL \
     setupwizard.feature.predeferred_enabled=false \
-    ro.com.google.gmsversion=9_201911.go
+    ro.com.google.gmsversion=9_201909.go

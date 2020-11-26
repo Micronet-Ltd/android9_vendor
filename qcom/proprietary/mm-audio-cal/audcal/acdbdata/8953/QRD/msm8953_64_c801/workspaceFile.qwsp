@@ -1,12 +1,12 @@
-﻿<WorkSpace_Data WSVersID="Badger_3" ToolPlugin="QACT">
+<WorkSpace_Data WSVersID="Badger_3">
   <ACDBFile_Paths>
-    <ACDBFile_Paths path="QRD_Bluetooth_cal.acdb" />
-    <ACDBFile_Paths path="QRD_General_cal.acdb" />
-    <ACDBFile_Paths path="QRD_Global_cal.acdb" />
-    <ACDBFile_Paths path="QRD_Handset_cal.acdb" />
-    <ACDBFile_Paths path="QRD_Hdmi_cal.acdb" />
-    <ACDBFile_Paths path="QRD_Headset_cal.acdb" />
-    <ACDBFile_Paths path="QRD_Speaker_cal.acdb" />
+    <ACDBFile_Paths path="Bluetooth_cal.acdb" />
+    <ACDBFile_Paths path="General_cal.acdb" />
+    <ACDBFile_Paths path="Global_cal.acdb" />
+    <ACDBFile_Paths path="Handset_cal.acdb" />
+    <ACDBFile_Paths path="Hdmi_cal.acdb" />
+    <ACDBFile_Paths path="Headset_cal.acdb" />
+    <ACDBFile_Paths path="Speaker_cal.acdb" />
   </ACDBFile_Paths>
   <OpenDSP MajorMinor="1_0">
     <AREA_LIST>
@@ -103,12 +103,8 @@
         <Block name="AUDIO_MFC" ID="0x00010912" type="BOTH" />
       </TOPOLOGY>
     </TOPOLOGY_LIST>
-    <BLOCK_LIST>
-      <Block name="AUDIO_SRS_TRUMEDIA" ID="0x10005010" version="0" type="RX" dataView_ID="0xFFFF0001" />
-    </BLOCK_LIST>
-    <AB_VIEW_LIST>
-      <AB_VIEW dataView_ID="0xFFFF0001" name="AUDIO_SRS_TRUMEDIA" NewAdded="true" />
-    </AB_VIEW_LIST>
+    <BLOCK_LIST />
+    <AB_VIEW_LIST />
     <INTERFACE_LIST />
   </OpenDSP>
   <GUI_Data />

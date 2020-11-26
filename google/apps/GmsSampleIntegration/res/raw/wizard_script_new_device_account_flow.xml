@@ -51,10 +51,6 @@
     <WizardAction id="esim_setup"
         wizard:uri="intent:#Intent;action=com.android.setupwizard.ESIM_SETUP;end" />
 
-    <!-- Show search selector screen [REQUIRED] -->
-    <WizardAction id="search_selector"
-                  wizard:uri="intent:#Intent;action=com.google.android.setupwizard.SELECT_SEARCH_ENGINE;end">
-    </WizardAction>
 
     <!-- Set up fingerprint [RECOMMENDED, CUSTOMIZABLE] -->
     <WizardAction id="fingerprint"
@@ -63,15 +59,6 @@
     <!-- Set screen lock options [RECOMMENDED, CUSTOMIZABLE] -->
     <WizardAction id="lock_screen"
         wizard:uri="intent:#Intent;action=com.google.android.setupwizard.LOCK_SCREEN;end" />
-
-
-    <!-- Allow user to exit setupwizard early [RECOMMENDED] -->
-    <WizardAction id="decision_point"
-        wizard:uri="intent:#Intent;action=com.google.android.setupwizard.HALFWAY_DECISION;end">
-        <result wizard:name="skip"
-            wizard:resultCode="1"
-            wizard:action="select_pai" />
-    </WizardAction>
 
 
     <!-- Common set of customization steps [RECOMMENDED] -->

@@ -2,7 +2,7 @@
 # Velvet
 LOCAL_PATH := $(call my-dir)
 
-my_archs := arm arm64 x86 x86_64
+my_archs := arm arm64 x86
 my_src_arch := $(call get-prebuilt-src-arch, $(my_archs))
 
 OFFLINE_LANG_PACK_FILE_LIST := $(patsubst $(LOCAL_PATH)/OfflineVoiceRecognitionLanguagePacks/%,%,$(shell find $(LOCAL_PATH)/OfflineVoiceRecognitionLanguagePacks -type f))
@@ -28,7 +28,6 @@ LOCAL_BUILT_MODULE_STEM := package.apk
 LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
 LOCAL_PRIVILEGED_MODULE := true
 LOCAL_CERTIFICATE := PRESIGNED
-DONT_UNCOMPRESS_PRIV_APPS_DEXS := true
 LOCAL_OVERRIDES_PACKAGES := QuickSearchBox
 ifeq ($(my_src_arch),arm)
 LOCAL_DPI_VARIANTS := xhdpi hdpi mdpi

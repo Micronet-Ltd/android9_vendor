@@ -48,29 +48,7 @@
         <result wizard:name="dpm_user_complete"
             wizard:resultCode="111"
             wizard:action="check_user_unlock_dpm_user_complete" />
-        <result wizard:name="work_setup_interrupted_qr_scan"
-            wizard:resultCode="114"
-            wizard:action="work_setup_interrupted_qr_scan" />
-        <result wizard:name="work_setup_interrupted_consumer_flow"
-            wizard:resultCode="115"
-            wizard:action="work_setup_interrupted_consumer_flow" />
         <result wizard:action="check_user_unlock" />
-    </WizardAction>
-
-    <WizardAction id="work_setup_interrupted_qr_scan"
-        wizard:uri="intent:#Intent;action=com.google.android.setupwizard.WORK_SETUP_INTERRUPTED;end">
-        <result wizard:name="continue_start_qr_scan"
-            wizard:resultCode="1"
-            wizard:action="check_user_unlock_qr" />
-        <result wizard:action="factory_reset" />
-    </WizardAction>
-
-    <WizardAction id="work_setup_interrupted_consumer_flow"
-        wizard:uri="intent:#Intent;action=com.google.android.setupwizard.WORK_SETUP_INTERRUPTED;end">
-        <result wizard:name="continue_start_consumer_flow"
-            wizard:resultCode="1"
-            wizard:action="check_user_unlock" />
-        <result wizard:action="factory_reset" />
     </WizardAction>
 
     <WizardAction id="check_user_unlock_qr"

@@ -11,7 +11,6 @@
 
     <!-- Notification manager HD icon title. -->
     <string name="device_is_hd_capable">SIM <xliff:g id="card_number">%1$d</xliff:g> is HD capable</string>
-    <string name="device_is_hd_capable1">HD capable</string>
     <!-- Notification manager HD icon's header app name. -->
     <string name="hd_icon_header_app_name">\u0020</string>
     <!-- Notification manager VOLTE icon title. -->

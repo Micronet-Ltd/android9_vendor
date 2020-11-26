@@ -47,18 +47,6 @@ const CdmUsageEntryInfo kUsageEntryInfoOfflineLicense3 = {
     .storage_type = kStorageLicense,
     .key_set_id = "offline_key_set_3",
     .usage_info_file_name = ""};
-const CdmUsageEntryInfo kUsageEntryInfoOfflineLicense4 = {
-    .storage_type = kStorageLicense,
-    .key_set_id = "offline_key_set_4",
-    .usage_info_file_name = ""};
-const CdmUsageEntryInfo kUsageEntryInfoOfflineLicense5 = {
-    .storage_type = kStorageLicense,
-    .key_set_id = "offline_key_set_5",
-    .usage_info_file_name = ""};
-const CdmUsageEntryInfo kUsageEntryInfoOfflineLicense6 = {
-    .storage_type = kStorageLicense,
-    .key_set_id = "offline_key_set_6",
-    .usage_info_file_name = ""};
 const CdmUsageEntryInfo kUsageEntryInfoSecureStop1 = {
     .storage_type = kStorageUsageInfo,
     .key_set_id = "secure_stop_key_set_1",
@@ -71,14 +59,6 @@ const CdmUsageEntryInfo kUsageEntryInfoSecureStop3 = {
     .storage_type = kStorageUsageInfo,
     .key_set_id = "secure_stop_key_set_3",
     .usage_info_file_name = "usage_info_file_3"};
-const CdmUsageEntryInfo kUsageEntryInfoSecureStop4 = {
-    .storage_type = kStorageUsageInfo,
-    .key_set_id = "secure_stop_key_set_4",
-    .usage_info_file_name = "usage_info_file_4"};
-const CdmUsageEntryInfo kUsageEntryInfoSecureStop5 = {
-    .storage_type = kStorageUsageInfo,
-    .key_set_id = "secure_stop_key_set_5",
-    .usage_info_file_name = "usage_info_file_5"};
 const CdmUsageEntryInfo kUsageEntryInfoStorageTypeUnknown = {
     .storage_type = kStorageTypeUnknown,
     .key_set_id = "",
@@ -164,36 +144,31 @@ void InitVectorConstants() {
   kUsageEntryInfoVector.push_back(kUsageEntryInfoStorageTypeUnknown);
 
   k10UsageEntryInfoVector.clear();
-  k10UsageEntryInfoVector.push_back(kUsageEntryInfoOfflineLicense1);
-  k10UsageEntryInfoVector.push_back(kUsageEntryInfoSecureStop1);
-  k10UsageEntryInfoVector.push_back(kUsageEntryInfoOfflineLicense2);
-  k10UsageEntryInfoVector.push_back(kUsageEntryInfoSecureStop2);
-  k10UsageEntryInfoVector.push_back(kUsageEntryInfoOfflineLicense3);
-  k10UsageEntryInfoVector.push_back(kUsageEntryInfoSecureStop3);
-  k10UsageEntryInfoVector.push_back(kUsageEntryInfoOfflineLicense4);
-  k10UsageEntryInfoVector.push_back(kUsageEntryInfoSecureStop4);
-  k10UsageEntryInfoVector.push_back(kUsageEntryInfoOfflineLicense5);
-  k10UsageEntryInfoVector.push_back(kUsageEntryInfoSecureStop5);
-
   k201UsageEntryInfoVector.clear();
+  const CdmUsageEntryInfo* usage_entry_info =
+      &kUsageEntryInfoStorageTypeUnknown;
   for (size_t i = 0; i < 201; ++i) {
     switch (i % 4) {
       case 0:
-        k201UsageEntryInfoVector.push_back(kUsageEntryInfoOfflineLicense1);
+        usage_entry_info = &kUsageEntryInfoOfflineLicense1;
         break;
       case 1:
-        k201UsageEntryInfoVector.push_back(kUsageEntryInfoSecureStop1);
+        usage_entry_info = &kUsageEntryInfoSecureStop1;
         break;
       case 2:
-        k201UsageEntryInfoVector.push_back(kUsageEntryInfoOfflineLicense2);
+        usage_entry_info = &kUsageEntryInfoOfflineLicense2;
         break;
       case 3:
-        k201UsageEntryInfoVector.push_back(kUsageEntryInfoSecureStop2);
+        usage_entry_info = &kUsageEntryInfoSecureStop2;
         break;
       default:
-        k201UsageEntryInfoVector.push_back(kUsageEntryInfoStorageTypeUnknown);
+        usage_entry_info = &kUsageEntryInfoStorageTypeUnknown;
         break;
     }
+    if (i < 10) {
+      k10UsageEntryInfoVector.push_back(*usage_entry_info);
+    }
+    k201UsageEntryInfoVector.push_back(*usage_entry_info);
   }
 
   kUsageInfoFileList.clear();
@@ -267,25 +242,13 @@ class MockCryptoSession : public CryptoSession {
                CdmResponseType(uint32_t, CdmUsageTableHeader*));
 };
 
-// Partial mock of the UsageTableHeader. This is to test when dependency
-// exist on internal methods which would require complex expectations
-class MockUsageTableHeader : public UsageTableHeader {
-   public:
-    MockUsageTableHeader() : UsageTableHeader() {}
-    MOCK_METHOD3(DeleteEntry, CdmResponseType(uint32_t, DeviceFiles*,
-                                              metrics::CryptoMetrics*));
-};
-
 }  // namespace
 
 // gmock methods
 using ::testing::_;
-using ::testing::AtMost;
 using ::testing::ElementsAreArray;
-using ::testing::Invoke;
 using ::testing::NotNull;
 using ::testing::Return;
-using ::testing::SaveArg;
 using ::testing::SetArgPointee;
 using ::testing::SizeIs;
 using ::testing::StrEq;
@@ -298,12 +261,6 @@ class UsageTableHeaderTest : public ::testing::Test {
     InitVectorConstants();
   }
 
-  // Useful when UsageTableHeader is mocked
-  void DeleteEntry(uint32_t usage_entry_number, DeviceFiles*,
-                   metrics::CryptoMetrics*) {
-    usage_table_header_->DeleteEntryForTest(usage_entry_number);
-  }
-
  protected:
   virtual void SetUp() {
     // UsageTableHeader will take ownership of the pointer
@@ -314,27 +271,6 @@ class UsageTableHeaderTest : public ::testing::Test {
     // usage_table_header_ object takes ownership of these objects
     usage_table_header_->SetDeviceFiles(device_files_);
     usage_table_header_->SetCryptoSession(crypto_session_);
-  }
-
-  // UsageTableHeaderTest maintains ownership of returned pointer
-  MockUsageTableHeader* SetUpMock() {
-    // Release non-mocked usage table header
-    if (usage_table_header_ != NULL) {
-      delete usage_table_header_;
-      usage_table_header_ = NULL;
-    }
-
-    // Create new mock objects if using MockUsageTableHeader
-    device_files_ = new MockDeviceFiles();
-    crypto_session_ = new MockCryptoSession(&crypto_metrics_);
-    MockUsageTableHeader* mock_usage_table_header = new MockUsageTableHeader();
-
-    // mock_usage_table_header_ object takes ownership of these objects
-    mock_usage_table_header->SetDeviceFiles(device_files_);
-    mock_usage_table_header->SetCryptoSession(crypto_session_);
-
-    usage_table_header_ = mock_usage_table_header;
-    return mock_usage_table_header;
   }
 
   virtual void TearDown() {
@@ -350,6 +286,7 @@ class UsageTableHeaderTest : public ::testing::Test {
                         Return(true)));
     EXPECT_CALL(*crypto_session_, LoadUsageTableHeader(usage_table_header))
         .WillOnce(Return(NO_ERROR));
+
     EXPECT_TRUE(usage_table_header_->Init(security_level, crypto_session_));
   }
 
@@ -484,11 +421,6 @@ TEST_P(UsageTableHeaderInitializationTest,
       .WillOnce(DoAll(SetArgPointee<0>(kUsageTableHeader),
                       SetArgPointee<1>(k201UsageEntryInfoVector),
                           Return(true)));
-
-  SecurityLevel security_level =
-      (GetParam() == kSecurityLevelL3) ? kLevel3 : kLevelDefault;
-  EXPECT_CALL(*crypto_session_,
-              Open(security_level)).WillOnce(Return(NO_ERROR));
   EXPECT_CALL(*crypto_session_, LoadUsageTableHeader(kUsageTableHeader))
       .WillOnce(Return(NO_ERROR));
   EXPECT_CALL(*crypto_session_, CreateUsageTableHeader(NotNull()))
@@ -526,7 +458,6 @@ TEST_P(UsageTableHeaderInitializationTest,
           DoAll(SetArgPointee<0>(kEmptyUsageTableHeader), Return(NO_ERROR)));
   EXPECT_CALL(*device_files_, DeleteAllLicenses()).WillOnce(Return(true));
   EXPECT_CALL(*device_files_, DeleteAllUsageInfo()).WillOnce(Return(true));
-  EXPECT_CALL(*device_files_, DeleteUsageTableInfo()).WillOnce(Return(true));
   EXPECT_CALL(*device_files_, StoreUsageTableInfo(kEmptyUsageTableHeader,
                                                   kEmptyUsageEntryInfoVector))
       .WillOnce(Return(true));
@@ -544,9 +475,7 @@ TEST_P(UsageTableHeaderInitializationTest,
   SecurityLevel security_level =
       (GetParam() == kSecurityLevelL3) ? kLevel3 : kLevelDefault;
   EXPECT_CALL(*crypto_session_,
-              Open(security_level))
-      .Times(2)
-      .WillRepeatedly(Return(NO_ERROR));
+              Open(security_level)).WillOnce(Return(NO_ERROR));
   EXPECT_CALL(
       *crypto_session_,
       ShrinkUsageTableHeader(usage_entries_202.size() - 1, NotNull()))
@@ -581,9 +510,7 @@ TEST_P(UsageTableHeaderInitializationTest,
       (GetParam() == kSecurityLevelL3) ? kLevel3 : kLevelDefault;
 
   EXPECT_CALL(*crypto_session_,
-              Open(security_level))
-      .Times(2)
-      .WillRepeatedly(Return(NO_ERROR));
+              Open(security_level)).WillOnce(Return(NO_ERROR));
   EXPECT_CALL(
       *crypto_session_,
       ShrinkUsageTableHeader(usage_entries_202.size() - 1, NotNull()))
@@ -735,176 +662,588 @@ TEST_F(UsageTableHeaderTest, AddEntry_SkipUsageEntries) {
 
 TEST_F(UsageTableHeaderTest,
        AddEntry_CreateUsageEntryFailsOnce_SucceedsSecondTime) {
-  // Initialize and setup
-  MockUsageTableHeader* mock_usage_table_header = SetUpMock();
   Init(kSecurityLevelL1, kUsageTableHeader, k10UsageEntryInfoVector);
   std::vector<CdmUsageEntryInfo> usage_entry_info_vector_at_start =
       k10UsageEntryInfoVector;
 
-  uint32_t usage_entry_number_first_to_be_deleted;  // randomly choosen
-  std::vector<CdmUsageEntryInfo> final_usage_entries;
+  uint32_t usage_entry_number_to_be_deleted = 0;
+  CdmUsageEntryInfo usage_entry_to_be_deleted =
+      usage_entry_info_vector_at_start[usage_entry_number_to_be_deleted];
+  uint32_t usage_entry_number_to_be_moved =
+      usage_entry_info_vector_at_start.size() - 1;
+  CdmUsageEntryInfo usage_entry_to_be_moved =
+      usage_entry_info_vector_at_start[usage_entry_number_to_be_moved];
 
-  uint32_t expected_usage_entry_number = k10UsageEntryInfoVector.size() - 1;
+  // The last entry is moved to the entry to be deleted (0)
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_move =
+      usage_entry_info_vector_at_start;
+  usage_entry_info_vector_after_move[usage_entry_number_to_be_deleted] =
+      usage_entry_info_vector_at_start[usage_entry_number_to_be_moved];
 
-  // Setup expectations
-  EXPECT_CALL(*mock_usage_table_header,
-              DeleteEntry(_, device_files_, NotNull()))
-      .WillOnce(DoAll(SaveArg<0>(&usage_entry_number_first_to_be_deleted),
-                      Invoke(this, &UsageTableHeaderTest::DeleteEntry),
-                      Return(NO_ERROR)));
+  // The entries are then shrunk by 1
+  std::vector<CdmUsageEntryInfo> shrunk_usage_entry_info_vector =
+      usage_entry_info_vector_after_move;
+  shrunk_usage_entry_info_vector.resize(
+      shrunk_usage_entry_info_vector.size() - 1);
 
+  // The new entry is then added to the end
+  uint32_t expect_usage_entry_number = k10UsageEntryInfoVector.size() - 1;
+  std::vector<CdmUsageEntryInfo> expect_usage_entry_info_vector =
+      shrunk_usage_entry_info_vector;
+  expect_usage_entry_info_vector.push_back(kUsageEntryInfoOfflineLicense3);
+
+  // Expectations for AddEntry
   EXPECT_CALL(*crypto_session_, CreateUsageEntry(NotNull()))
       .WillOnce(Return(INSUFFICIENT_CRYPTO_RESOURCES_3))
       .WillOnce(
-          DoAll(SetArgPointee<0>(expected_usage_entry_number),
-                Return(NO_ERROR)));
+          DoAll(SetArgPointee<0>(expect_usage_entry_number), Return(NO_ERROR)));
 
-  EXPECT_CALL(*device_files_, StoreUsageTableInfo(kUsageTableHeader, _))
-      .WillOnce(DoAll(SaveArg<1>(&final_usage_entries), Return(true)));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kAnotherUsageTableHeader,
+                  ElementsAreArray(expect_usage_entry_info_vector)))
+      .WillOnce(Return(true));
 
-  // Now invoke the method under test
+  // Expectations for StoreEntry (DeleteEntry->MoveEntry)
+  EXPECT_CALL(*device_files_,
+      DeleteUsageInfo(usage_entry_to_be_moved.usage_info_file_name,
+                      kProviderSessionToken))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+      StoreUsageInfo(kProviderSessionToken, kKeyRequest, kKeyResponse,
+                     usage_entry_to_be_moved.usage_info_file_name,
+                     usage_entry_to_be_moved.key_set_id, kAnotherUsageEntry,
+                     usage_entry_number_to_be_deleted))
+      .WillOnce(Return(true));
+
+  // Expectations for Shrink (DeleteEntry)
+  EXPECT_CALL(
+      *crypto_session_,
+      ShrinkUsageTableHeader(shrunk_usage_entry_info_vector.size(), NotNull()))
+      .WillOnce(
+          DoAll(SetArgPointee<1>(kAnotherUsageTableHeader), Return(NO_ERROR)));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kAnotherUsageTableHeader,
+                  ElementsAreArray(shrunk_usage_entry_info_vector)))
+      .WillOnce(Return(true));
+
+  // Expectations for MoveEntry (DeleteEntry)
+  EXPECT_CALL(*crypto_session_, Open(kLevelDefault))
+      .Times(2)
+      .WillRepeatedly(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              LoadUsageEntry(usage_entry_number_to_be_moved,
+                             kUsageEntry))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              MoveUsageEntry(usage_entry_number_to_be_deleted))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_, UpdateUsageEntry(NotNull(), NotNull()))
+      .WillOnce(DoAll(SetArgPointee<0>(kAnotherUsageTableHeader),
+                      SetArgPointee<1>(kAnotherUsageEntry), Return(NO_ERROR)));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kAnotherUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_move)))
+      .WillOnce(Return(true));
+
+  // Expectations for GetEntry (DeleteEntry)
+  EXPECT_CALL(*device_files_,
+      RetrieveUsageInfoByKeySetId(
+          usage_entry_to_be_moved.usage_info_file_name,
+          usage_entry_to_be_moved.key_set_id, NotNull(), NotNull(),
+          NotNull(), NotNull(), NotNull()))
+      .Times(2)
+      .WillRepeatedly(DoAll(
+          SetArgPointee<2>(kProviderSessionToken),
+          SetArgPointee<3>(kKeyRequest), SetArgPointee<4>(kKeyResponse),
+          SetArgPointee<5>(kUsageEntry),
+          SetArgPointee<6>(usage_entry_number_to_be_moved), Return(true)));
+
   uint32_t usage_entry_number;
   EXPECT_EQ(NO_ERROR,
-            mock_usage_table_header->AddEntry(
+            usage_table_header_->AddEntry(
                 crypto_session_,
-                kUsageEntryInfoOfflineLicense6.storage_type == kStorageLicense,
-                kUsageEntryInfoOfflineLicense6.key_set_id,
-                kUsageEntryInfoOfflineLicense6.usage_info_file_name,
+                kUsageEntryInfoOfflineLicense3.storage_type == kStorageLicense,
+                kUsageEntryInfoOfflineLicense3.key_set_id,
+                kUsageEntryInfoOfflineLicense3.usage_info_file_name,
                 &usage_entry_number));
-
-  // Verify added/deleted usage entry number and entries
-  EXPECT_EQ(expected_usage_entry_number, usage_entry_number);
-
-  EXPECT_LE(0u, usage_entry_number_first_to_be_deleted);
-  EXPECT_LE(usage_entry_number_first_to_be_deleted,
-            usage_entry_info_vector_at_start.size() - 1);
-
-  std::vector<CdmUsageEntryInfo> expected_usage_entries =
-      usage_entry_info_vector_at_start;
-  expected_usage_entries[usage_entry_number_first_to_be_deleted] =
-      expected_usage_entries[expected_usage_entries.size() - 1];
-  expected_usage_entries.resize(expected_usage_entries.size() - 1);
-  expected_usage_entries.push_back(kUsageEntryInfoOfflineLicense6);
-
-  EXPECT_EQ(expected_usage_entries, final_usage_entries);
+  EXPECT_EQ(expect_usage_entry_number, usage_entry_number);
 }
 
 TEST_F(UsageTableHeaderTest,
        AddEntry_CreateUsageEntryFailsTwice_SucceedsThirdTime) {
-  // Initialize and setup
-  MockUsageTableHeader* mock_usage_table_header = SetUpMock();
   Init(kSecurityLevelL1, kUsageTableHeader, k10UsageEntryInfoVector);
+
+  // Initial usage entry info
   std::vector<CdmUsageEntryInfo> usage_entry_info_vector_at_start =
       k10UsageEntryInfoVector;
 
-  uint32_t usage_entry_number_first_to_be_deleted;  // randomly choosen
-  uint32_t usage_entry_number_second_to_be_deleted;  // randomly choosen
-  std::vector<CdmUsageEntryInfo> final_usage_entries;
+  // usage entry info after first move
+  uint32_t usage_entry_number_first_to_be_deleted = 0;
+  uint32_t usage_entry_number_first_to_be_moved =
+      usage_entry_info_vector_at_start.size() - 1;
 
-  uint32_t expected_usage_entry_number = k10UsageEntryInfoVector.size() - 2;
+  // The last entry is moved to the first entry to be deleted
+  CdmUsageEntryInfo usage_entry_first_to_be_moved =
+      usage_entry_info_vector_at_start[usage_entry_number_first_to_be_moved];
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_first_move =
+      usage_entry_info_vector_at_start;
+  usage_entry_info_vector_after_first_move[
+      usage_entry_number_first_to_be_deleted] =
+          usage_entry_first_to_be_moved;
 
-  // Setup expectations
-  EXPECT_CALL(*mock_usage_table_header,
-              DeleteEntry(_, device_files_, NotNull()))
-      .WillOnce(DoAll(SaveArg<0>(&usage_entry_number_first_to_be_deleted),
-                      Invoke(this, &UsageTableHeaderTest::DeleteEntry),
-                      Return(NO_ERROR)))
-      .WillOnce(DoAll(SaveArg<0>(&usage_entry_number_second_to_be_deleted),
-                      Invoke(this, &UsageTableHeaderTest::DeleteEntry),
-                      Return(NO_ERROR)));
+  // The entries are then shrunk by 1
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_first_shrink =
+      usage_entry_info_vector_after_first_move;
+  usage_entry_info_vector_after_first_shrink.resize(
+      usage_entry_info_vector_after_first_shrink.size() - 1);
 
+  // usage entry info after second move
+  uint32_t usage_entry_number_second_to_be_deleted = 1;
+  uint32_t usage_entry_number_second_to_be_moved =
+      usage_entry_info_vector_after_first_shrink.size() - 1;
+
+  // The last entry is moved to the second entry to be deleted
+  CdmUsageEntryInfo usage_entry_second_to_be_moved =
+      usage_entry_info_vector_after_first_shrink[
+          usage_entry_number_second_to_be_moved];
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_second_move =
+      usage_entry_info_vector_after_first_shrink;
+  usage_entry_info_vector_after_second_move[
+      usage_entry_number_second_to_be_deleted] = usage_entry_second_to_be_moved;
+
+  // The entries are then shrunk by 1
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_second_shrink =
+      usage_entry_info_vector_after_second_move;
+  usage_entry_info_vector_after_second_shrink.resize(
+      usage_entry_info_vector_after_second_shrink.size() - 1);
+
+  // The new entry is then added to the end
+  uint32_t expect_usage_entry_number =
+      usage_entry_info_vector_after_second_shrink.size();
+  std::vector<CdmUsageEntryInfo> expect_usage_entry_info_vector =
+      usage_entry_info_vector_after_second_shrink;
+  expect_usage_entry_info_vector.push_back(kUsageEntryInfoOfflineLicense3);
+
+  // Expectations for AddEntry
   EXPECT_CALL(*crypto_session_, CreateUsageEntry(NotNull()))
       .WillOnce(Return(INSUFFICIENT_CRYPTO_RESOURCES_3))
       .WillOnce(Return(INSUFFICIENT_CRYPTO_RESOURCES_3))
       .WillOnce(
-          DoAll(SetArgPointee<0>(expected_usage_entry_number),
+          DoAll(SetArgPointee<0>(expect_usage_entry_number), Return(NO_ERROR)));
+
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kYetAnotherUsageTableHeader,
+                  ElementsAreArray(expect_usage_entry_info_vector)))
+      .WillOnce(Return(true));
+
+  // Expectations for StoreEntry (DeleteEntry->MoveEntry)
+  EXPECT_CALL(*device_files_,
+      DeleteUsageInfo(usage_entry_first_to_be_moved.usage_info_file_name,
+                      kProviderSessionToken))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+      StoreUsageInfo(kProviderSessionToken, kKeyRequest, kKeyResponse,
+                     usage_entry_first_to_be_moved.usage_info_file_name,
+                     usage_entry_first_to_be_moved.key_set_id,
+                     kAnotherUsageEntry,
+                     usage_entry_number_first_to_be_deleted))
+      .WillOnce(Return(true));
+
+  EXPECT_TRUE(device_files_->StoreLicense(
+      usage_entry_second_to_be_moved.key_set_id,
+      kActiveLicenseState, kPsshData, kKeyRequest, kKeyResponse,
+      kKeyRenewalRequest, kKeyRenewalResponse, kReleaseServerUrl,
+      kPlaybackStartTime, kPlaybackStartTime + kPlaybackDuration,
+      kGracePeriodEndTime, kEmptyAppParameters, kYetAnotherUsageEntry,
+      usage_entry_number_second_to_be_moved));
+
+  DeviceFiles::LicenseState license_state = DeviceFiles::kLicenseStateUnknown;
+  CdmInitData pssh_data;
+  CdmKeyMessage key_request;
+  CdmKeyResponse key_response;
+  CdmKeyMessage key_renewal_request;
+  CdmKeyResponse key_renewal_response;
+  std::string release_server_url;
+  int64_t playback_start_time;
+  int64_t last_playback_time;
+  int64_t grace_period_end_time;
+  CdmAppParameterMap app_parameters;
+  CdmUsageEntry usage_entry;
+  uint32_t usage_entry_number = ~0;
+
+  EXPECT_TRUE(device_files_->RetrieveLicense(
+      usage_entry_second_to_be_moved.key_set_id, &license_state, &pssh_data,
+      &key_request, &key_response, &key_renewal_request, &key_renewal_response,
+      &release_server_url, &playback_start_time, &last_playback_time,
+      &grace_period_end_time, &app_parameters, &usage_entry,
+      &usage_entry_number));
+  EXPECT_EQ(kActiveLicenseState, license_state);
+  EXPECT_EQ(kPsshData, pssh_data);
+  EXPECT_EQ(kKeyRequest, key_request);
+  EXPECT_EQ(kKeyResponse, key_response);
+  EXPECT_EQ(kKeyRenewalRequest, key_renewal_request);
+  EXPECT_EQ(kKeyRenewalResponse, key_renewal_response);
+  EXPECT_EQ(kReleaseServerUrl, release_server_url);
+  EXPECT_EQ(kPlaybackStartTime, playback_start_time);
+  EXPECT_EQ(kPlaybackStartTime + kPlaybackDuration, last_playback_time);
+  EXPECT_EQ(kGracePeriodEndTime, grace_period_end_time);
+  EXPECT_EQ(kEmptyAppParameters.size(), app_parameters.size());
+  EXPECT_EQ(kYetAnotherUsageEntry, usage_entry);
+  EXPECT_EQ(usage_entry_number_second_to_be_moved, usage_entry_number);
+
+  // Expectations for Shrink (DeleteEntry)
+  EXPECT_CALL(
+      *crypto_session_,
+      ShrinkUsageTableHeader(
+          usage_entry_info_vector_after_first_shrink.size(), NotNull()))
+      .WillOnce(
+          DoAll(SetArgPointee<1>(kAnotherUsageTableHeader), Return(NO_ERROR)));
+  EXPECT_CALL(
+      *crypto_session_,
+      ShrinkUsageTableHeader(
+          usage_entry_info_vector_after_second_shrink.size(), NotNull()))
+      .WillOnce(
+          DoAll(SetArgPointee<1>(kYetAnotherUsageTableHeader),
                 Return(NO_ERROR)));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kAnotherUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_first_shrink)))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kYetAnotherUsageTableHeader,
+                  ElementsAreArray(
+                      usage_entry_info_vector_after_second_shrink)))
+      .WillOnce(Return(true));
 
-  EXPECT_CALL(*device_files_, StoreUsageTableInfo(kUsageTableHeader, _))
-      .WillOnce(DoAll(SaveArg<1>(&final_usage_entries), Return(true)));
+  // Expectations for MoveEntry (DeleteEntry)
+  EXPECT_CALL(*crypto_session_, Open(kLevelDefault))
+      .Times(4)
+      .WillRepeatedly(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              LoadUsageEntry(usage_entry_number_first_to_be_moved,
+                             kUsageEntry))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              LoadUsageEntry(usage_entry_number_second_to_be_moved,
+                             kYetAnotherUsageEntry))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              MoveUsageEntry(usage_entry_number_first_to_be_deleted))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              MoveUsageEntry(usage_entry_number_second_to_be_deleted))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_, UpdateUsageEntry(NotNull(), NotNull()))
+      .WillOnce(DoAll(SetArgPointee<0>(kAnotherUsageTableHeader),
+                      SetArgPointee<1>(kAnotherUsageEntry), Return(NO_ERROR)))
+      .WillOnce(DoAll(SetArgPointee<0>(kYetAnotherUsageTableHeader),
+                      SetArgPointee<1>(kYetAnotherUsageEntry),
+                      Return(NO_ERROR)));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kAnotherUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_first_move)))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kYetAnotherUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_second_move)))
+      .WillOnce(Return(true));
 
-  // Now invoke the method under test
-  uint32_t usage_entry_number;
+  // Expectations for GetEntry (DeleteEntry)
+  EXPECT_CALL(*device_files_,
+      RetrieveUsageInfoByKeySetId(
+          usage_entry_first_to_be_moved.usage_info_file_name,
+          usage_entry_first_to_be_moved.key_set_id, NotNull(), NotNull(),
+          NotNull(), NotNull(), NotNull()))
+      .Times(2)
+      .WillRepeatedly(DoAll(
+          SetArgPointee<2>(kProviderSessionToken),
+          SetArgPointee<3>(kKeyRequest), SetArgPointee<4>(kKeyResponse),
+          SetArgPointee<5>(kUsageEntry),
+          SetArgPointee<6>(usage_entry_number_first_to_be_moved),
+          Return(true)));
+
   EXPECT_EQ(NO_ERROR,
-            mock_usage_table_header->AddEntry(
+            usage_table_header_->AddEntry(
                 crypto_session_,
-                kUsageEntryInfoOfflineLicense6.storage_type == kStorageLicense,
-                kUsageEntryInfoOfflineLicense6.key_set_id,
-                kUsageEntryInfoOfflineLicense6.usage_info_file_name,
+                kUsageEntryInfoOfflineLicense3.storage_type == kStorageLicense,
+                kUsageEntryInfoOfflineLicense3.key_set_id,
+                kUsageEntryInfoOfflineLicense3.usage_info_file_name,
                 &usage_entry_number));
-
-  // Verify added/deleted usage entry number and entries
-  EXPECT_EQ(expected_usage_entry_number, usage_entry_number);
-
-  EXPECT_LE(0u, usage_entry_number_first_to_be_deleted);
-  EXPECT_LE(usage_entry_number_first_to_be_deleted,
-            usage_entry_info_vector_at_start.size() - 1);
-  EXPECT_LE(0u, usage_entry_number_second_to_be_deleted);
-  EXPECT_LE(usage_entry_number_second_to_be_deleted,
-            usage_entry_info_vector_at_start.size() - 1);
-
-  std::vector<CdmUsageEntryInfo> expected_usage_entries =
-      usage_entry_info_vector_at_start;
-  expected_usage_entries[usage_entry_number_first_to_be_deleted] =
-      expected_usage_entries[expected_usage_entries.size() - 1];
-  expected_usage_entries.resize(expected_usage_entries.size() - 1);
-  expected_usage_entries[usage_entry_number_second_to_be_deleted] =
-      expected_usage_entries[expected_usage_entries.size() - 1];
-  expected_usage_entries.resize(expected_usage_entries.size() - 1);
-  expected_usage_entries.push_back(kUsageEntryInfoOfflineLicense6);
-
-  EXPECT_EQ(expected_usage_entries, final_usage_entries);
+  EXPECT_EQ(expect_usage_entry_number, usage_entry_number);
 }
 
 TEST_F(UsageTableHeaderTest, AddEntry_CreateUsageEntryFailsThrice) {
-  // Initialize and setup
-  MockUsageTableHeader* mock_usage_table_header = SetUpMock();
   Init(kSecurityLevelL1, kUsageTableHeader, k10UsageEntryInfoVector);
+
+  // Initial usage entry info
   std::vector<CdmUsageEntryInfo> usage_entry_info_vector_at_start =
       k10UsageEntryInfoVector;
 
-  uint32_t usage_entry_number_first_to_be_deleted;   // randomly choosen
-  uint32_t usage_entry_number_second_to_be_deleted;  // randomly choosen
-  uint32_t usage_entry_number_third_to_be_deleted;   // randomly choosen
-  std::vector<CdmUsageEntryInfo> final_usage_entries;
+  // usage entry info after first move
+  uint32_t usage_entry_number_first_to_be_deleted = 0;
+  uint32_t usage_entry_number_first_to_be_moved =
+      usage_entry_info_vector_at_start.size() - 1;
 
-  // Setup expectations
-  EXPECT_CALL(*mock_usage_table_header,
-              DeleteEntry(_, device_files_, NotNull()))
-      .WillOnce(DoAll(SaveArg<0>(&usage_entry_number_first_to_be_deleted),
-                      Invoke(this, &UsageTableHeaderTest::DeleteEntry),
-                      Return(NO_ERROR)))
-      .WillOnce(DoAll(SaveArg<0>(&usage_entry_number_second_to_be_deleted),
-                      Invoke(this, &UsageTableHeaderTest::DeleteEntry),
-                      Return(NO_ERROR)))
-      .WillOnce(DoAll(SaveArg<0>(&usage_entry_number_third_to_be_deleted),
-                      Invoke(this, &UsageTableHeaderTest::DeleteEntry),
-                      Return(NO_ERROR)));
+  // The last entry is moved to the first entry to be deleted
+  CdmUsageEntryInfo usage_entry_first_to_be_moved =
+      usage_entry_info_vector_at_start[usage_entry_number_first_to_be_moved];
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_first_move =
+      usage_entry_info_vector_at_start;
+  usage_entry_info_vector_after_first_move[
+      usage_entry_number_first_to_be_deleted] =
+          usage_entry_first_to_be_moved;
 
+  // The entries are then shrunk by 1
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_first_shrink =
+      usage_entry_info_vector_after_first_move;
+  usage_entry_info_vector_after_first_shrink.resize(
+      usage_entry_info_vector_after_first_shrink.size() - 1);
+
+  // usage entry info after second move
+  uint32_t usage_entry_number_second_to_be_deleted = 1;
+  uint32_t usage_entry_number_second_to_be_moved =
+      usage_entry_info_vector_after_first_shrink.size() - 1;
+
+  // The last entry is moved to the second entry to be deleted
+  CdmUsageEntryInfo usage_entry_second_to_be_moved =
+      usage_entry_info_vector_after_first_shrink[
+          usage_entry_number_second_to_be_moved];
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_second_move =
+      usage_entry_info_vector_after_first_shrink;
+  usage_entry_info_vector_after_second_move[
+      usage_entry_number_second_to_be_deleted] = usage_entry_second_to_be_moved;
+
+  // The entries are then shrunk by 1
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_second_shrink =
+      usage_entry_info_vector_after_second_move;
+  usage_entry_info_vector_after_second_shrink.resize(
+      usage_entry_info_vector_after_second_shrink.size() - 1);
+
+  // usage entry info after third move
+  uint32_t usage_entry_number_third_to_be_deleted = 2;
+  uint32_t usage_entry_number_third_to_be_moved =
+      usage_entry_info_vector_after_second_shrink.size() - 1;
+
+  // The last entry is moved to the third entry to be deleted
+  CdmUsageEntryInfo usage_entry_third_to_be_moved =
+      usage_entry_info_vector_after_second_shrink[
+          usage_entry_number_third_to_be_moved];
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_third_move =
+      usage_entry_info_vector_after_second_shrink;
+  usage_entry_info_vector_after_third_move[
+      usage_entry_number_third_to_be_deleted] = usage_entry_third_to_be_moved;
+
+  // The entries are then shrunk by 1
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_third_shrink =
+      usage_entry_info_vector_after_third_move;
+  usage_entry_info_vector_after_third_shrink.resize(
+      usage_entry_info_vector_after_third_shrink.size() - 1);
+
+  // Expected results after the third failure
+  std::vector<CdmUsageEntryInfo> expect_usage_entry_info_vector =
+      usage_entry_info_vector_after_third_shrink;
+
+  // Expectations for AddEntry
   EXPECT_CALL(*crypto_session_, CreateUsageEntry(NotNull()))
-      .Times(4)
+      .Times(3)
       .WillRepeatedly(Return(INSUFFICIENT_CRYPTO_RESOURCES_3));
 
-  // Now invoke the method under test
-  uint32_t usage_entry_number;
-  EXPECT_EQ(INSUFFICIENT_CRYPTO_RESOURCES_3,
-            mock_usage_table_header->AddEntry(
-                crypto_session_,
-                kUsageEntryInfoOfflineLicense6.storage_type == kStorageLicense,
-                kUsageEntryInfoOfflineLicense6.key_set_id,
-                kUsageEntryInfoOfflineLicense6.usage_info_file_name,
-                &usage_entry_number));
+  // Expectations for StoreEntry (DeleteEntry->MoveEntry)
+  EXPECT_CALL(*device_files_,
+      DeleteUsageInfo(usage_entry_first_to_be_moved.usage_info_file_name,
+                      kProviderSessionToken))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+      DeleteUsageInfo(usage_entry_third_to_be_moved.usage_info_file_name,
+                      kProviderSessionToken))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+      StoreUsageInfo(kProviderSessionToken, kKeyRequest, kKeyResponse,
+                     usage_entry_first_to_be_moved.usage_info_file_name,
+                     usage_entry_first_to_be_moved.key_set_id,
+                     kAnotherUsageEntry,
+                     usage_entry_number_first_to_be_deleted))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+      StoreUsageInfo(kProviderSessionToken, kKeyRequest, kKeyResponse,
+                     usage_entry_third_to_be_moved.usage_info_file_name,
+                     usage_entry_third_to_be_moved.key_set_id,
+                     kOneMoreUsageEntry,
+                     usage_entry_number_third_to_be_deleted))
+      .WillOnce(Return(true));
 
-  // Verify deleted usage entry number and entries
-  EXPECT_LE(0u, usage_entry_number_first_to_be_deleted);
-  EXPECT_LE(usage_entry_number_first_to_be_deleted,
-            usage_entry_info_vector_at_start.size() - 1);
-  EXPECT_LE(0u, usage_entry_number_second_to_be_deleted);
-  EXPECT_LE(usage_entry_number_second_to_be_deleted,
-            usage_entry_info_vector_at_start.size() - 1);
-  EXPECT_LE(0u, usage_entry_number_third_to_be_deleted);
-  EXPECT_LE(usage_entry_number_third_to_be_deleted,
-            usage_entry_info_vector_at_start.size() - 1);
+  EXPECT_TRUE(device_files_->StoreLicense(
+      usage_entry_second_to_be_moved.key_set_id,
+      kActiveLicenseState, kPsshData, kKeyRequest, kKeyResponse,
+      kKeyRenewalRequest, kKeyRenewalResponse, kReleaseServerUrl,
+      kPlaybackStartTime, kPlaybackStartTime + kPlaybackDuration,
+      kGracePeriodEndTime, kEmptyAppParameters, kYetAnotherUsageEntry,
+      usage_entry_number_second_to_be_moved));
+
+  DeviceFiles::LicenseState license_state = DeviceFiles::kLicenseStateUnknown;
+  CdmInitData pssh_data;
+  CdmKeyMessage key_request;
+  CdmKeyResponse key_response;
+  CdmKeyMessage key_renewal_request;
+  CdmKeyResponse key_renewal_response;
+  std::string release_server_url;
+  int64_t playback_start_time;
+  int64_t last_playback_time;
+  int64_t grace_period_end_time;
+  CdmAppParameterMap app_parameters;
+  CdmUsageEntry usage_entry;
+  uint32_t usage_entry_number = ~0;
+
+  EXPECT_TRUE(device_files_->RetrieveLicense(
+      usage_entry_second_to_be_moved.key_set_id, &license_state, &pssh_data,
+      &key_request, &key_response, &key_renewal_request, &key_renewal_response,
+      &release_server_url, &playback_start_time, &last_playback_time,
+      &grace_period_end_time, &app_parameters, &usage_entry,
+      &usage_entry_number));
+  EXPECT_EQ(kActiveLicenseState, license_state);
+  EXPECT_EQ(kPsshData, pssh_data);
+  EXPECT_EQ(kKeyRequest, key_request);
+  EXPECT_EQ(kKeyResponse, key_response);
+  EXPECT_EQ(kKeyRenewalRequest, key_renewal_request);
+  EXPECT_EQ(kKeyRenewalResponse, key_renewal_response);
+  EXPECT_EQ(kReleaseServerUrl, release_server_url);
+  EXPECT_EQ(kPlaybackStartTime, playback_start_time);
+  EXPECT_EQ(kPlaybackStartTime + kPlaybackDuration, last_playback_time);
+  EXPECT_EQ(kGracePeriodEndTime, grace_period_end_time);
+  EXPECT_EQ(kEmptyAppParameters.size(), app_parameters.size());
+  EXPECT_EQ(kYetAnotherUsageEntry, usage_entry);
+  EXPECT_EQ(usage_entry_number_second_to_be_moved, usage_entry_number);
+
+  // Expectations for Shrink (DeleteEntry)
+  EXPECT_CALL(
+      *crypto_session_,
+      ShrinkUsageTableHeader(
+          usage_entry_info_vector_after_first_shrink.size(), NotNull()))
+      .WillOnce(
+          DoAll(SetArgPointee<1>(kAnotherUsageTableHeader), Return(NO_ERROR)));
+  EXPECT_CALL(
+      *crypto_session_,
+      ShrinkUsageTableHeader(
+          usage_entry_info_vector_after_second_shrink.size(), NotNull()))
+      .WillOnce(
+          DoAll(SetArgPointee<1>(kYetAnotherUsageTableHeader),
+                Return(NO_ERROR)));
+  EXPECT_CALL(
+      *crypto_session_,
+      ShrinkUsageTableHeader(
+          usage_entry_info_vector_after_third_shrink.size(), NotNull()))
+      .WillOnce(
+          DoAll(SetArgPointee<1>(kOneMoreUsageTableHeader),
+                Return(NO_ERROR)));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kAnotherUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_first_shrink)))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kYetAnotherUsageTableHeader,
+                  ElementsAreArray(
+                      usage_entry_info_vector_after_second_shrink)))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kOneMoreUsageTableHeader,
+                  ElementsAreArray(
+                      usage_entry_info_vector_after_third_shrink)))
+      .WillOnce(Return(true));
+
+  // Expectations for MoveEntry (DeleteEntry)
+  EXPECT_CALL(*crypto_session_, Open(kLevelDefault))
+      .Times(6)
+      .WillRepeatedly(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              LoadUsageEntry(usage_entry_number_first_to_be_moved,
+                             kUsageEntry))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              LoadUsageEntry(usage_entry_number_second_to_be_moved,
+                             kYetAnotherUsageEntry))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              LoadUsageEntry(usage_entry_number_third_to_be_moved,
+                             kOneMoreUsageEntry))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              MoveUsageEntry(usage_entry_number_first_to_be_deleted))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              MoveUsageEntry(usage_entry_number_second_to_be_deleted))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              MoveUsageEntry(usage_entry_number_third_to_be_deleted))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_, UpdateUsageEntry(NotNull(), NotNull()))
+      .WillOnce(DoAll(SetArgPointee<0>(kAnotherUsageTableHeader),
+                      SetArgPointee<1>(kAnotherUsageEntry), Return(NO_ERROR)))
+      .WillOnce(DoAll(SetArgPointee<0>(kYetAnotherUsageTableHeader),
+                      SetArgPointee<1>(kYetAnotherUsageEntry),
+                      Return(NO_ERROR)))
+      .WillOnce(DoAll(SetArgPointee<0>(kOneMoreUsageTableHeader),
+                      SetArgPointee<1>(kOneMoreUsageEntry),
+                      Return(NO_ERROR)));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kAnotherUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_first_move)))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kYetAnotherUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_second_move)))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kOneMoreUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_third_move)))
+      .WillOnce(Return(true));
+
+  // Expectations for GetEntry (DeleteEntry)
+  EXPECT_CALL(*device_files_,
+      RetrieveUsageInfoByKeySetId(
+          usage_entry_first_to_be_moved.usage_info_file_name,
+          usage_entry_first_to_be_moved.key_set_id, NotNull(), NotNull(),
+          NotNull(), NotNull(), NotNull()))
+      .Times(2)
+      .WillRepeatedly(DoAll(
+          SetArgPointee<2>(kProviderSessionToken),
+          SetArgPointee<3>(kKeyRequest), SetArgPointee<4>(kKeyResponse),
+          SetArgPointee<5>(kUsageEntry),
+          SetArgPointee<6>(usage_entry_number_first_to_be_moved),
+          Return(true)));
+  EXPECT_CALL(*device_files_,
+      RetrieveUsageInfoByKeySetId(
+          usage_entry_third_to_be_moved.usage_info_file_name,
+          usage_entry_third_to_be_moved.key_set_id, NotNull(), NotNull(),
+          NotNull(), NotNull(), NotNull()))
+      .Times(2)
+      .WillRepeatedly(DoAll(
+          SetArgPointee<2>(kProviderSessionToken),
+          SetArgPointee<3>(kKeyRequest), SetArgPointee<4>(kKeyResponse),
+          SetArgPointee<5>(kOneMoreUsageEntry),
+          SetArgPointee<6>(usage_entry_number_third_to_be_moved),
+          Return(true)));
+
+  EXPECT_EQ(INSUFFICIENT_CRYPTO_RESOURCES_3,
+            usage_table_header_->AddEntry(
+                crypto_session_,
+                kUsageEntryInfoOfflineLicense3.storage_type == kStorageLicense,
+                kUsageEntryInfoOfflineLicense3.key_set_id,
+                kUsageEntryInfoOfflineLicense3.usage_info_file_name,
+                &usage_entry_number));
 }
 
 TEST_F(UsageTableHeaderTest, LoadEntry_InvalidEntryNumber) {
@@ -970,94 +1309,565 @@ TEST_F(UsageTableHeaderTest, UpdateEntry) {
 
 TEST_F(UsageTableHeaderTest,
        LoadEntry_LoadUsageEntryFailsOnce_SucceedsSecondTime) {
-  // Initialize and setup
-  MockUsageTableHeader* mock_usage_table_header = SetUpMock();
   Init(kSecurityLevelL1, kUsageTableHeader, k10UsageEntryInfoVector);
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_at_start =
+      k10UsageEntryInfoVector;
 
-  uint32_t usage_entry_number_to_load = rand() /
-      (RAND_MAX / k10UsageEntryInfoVector.size() + 1);
-  CdmUsageEntry usage_entry_to_load = kUsageEntry;
+  uint32_t usage_entry_number_to_load = 5;
 
-  // Setup expectations
-  EXPECT_CALL(*mock_usage_table_header,
-              DeleteEntry(_, device_files_, NotNull()))
-      .Times(AtMost(1))
-      .WillRepeatedly(
-          DoAll(Invoke(this, &UsageTableHeaderTest::DeleteEntry),
-                Return(NO_ERROR)));
+  uint32_t usage_entry_number_to_be_deleted = 0;
+  CdmUsageEntryInfo usage_entry_to_be_deleted =
+      usage_entry_info_vector_at_start[usage_entry_number_to_be_deleted];
+  uint32_t usage_entry_number_to_be_moved =
+      usage_entry_info_vector_at_start.size() - 1;
+  CdmUsageEntryInfo usage_entry_to_be_moved =
+      usage_entry_info_vector_at_start[usage_entry_number_to_be_moved];
 
-  EXPECT_CALL(*crypto_session_,
-              LoadUsageEntry(usage_entry_number_to_load, usage_entry_to_load))
+  // The last entry is moved to the entry to be deleted (0)
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_move =
+      usage_entry_info_vector_at_start;
+  usage_entry_info_vector_after_move[usage_entry_number_to_be_deleted] =
+      usage_entry_info_vector_at_start[usage_entry_number_to_be_moved];
+
+  // The entries are then shrunk by 1
+  std::vector<CdmUsageEntryInfo> shrunk_usage_entry_info_vector =
+      usage_entry_info_vector_after_move;
+  shrunk_usage_entry_info_vector.resize(
+      shrunk_usage_entry_info_vector.size() - 1);
+
+  // Expectations for LoadEntry
+  std::vector<CdmUsageEntryInfo> expect_usage_entry_info_vector =
+      shrunk_usage_entry_info_vector;
+
+  EXPECT_CALL(*crypto_session_, LoadUsageEntry(usage_entry_number_to_load,
+                                               kAndAnotherUsageEntry))
       .WillOnce(Return(INSUFFICIENT_CRYPTO_RESOURCES_3))
       .WillOnce(Return(NO_ERROR));
 
-  // Now invoke the method under test
+  // Expectations for StoreEntry (DeleteEntry->MoveEntry)
+  EXPECT_CALL(*device_files_,
+      DeleteUsageInfo(usage_entry_to_be_moved.usage_info_file_name,
+                      kProviderSessionToken))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+      StoreUsageInfo(kProviderSessionToken, kKeyRequest, kKeyResponse,
+                     usage_entry_to_be_moved.usage_info_file_name,
+                     usage_entry_to_be_moved.key_set_id, kAnotherUsageEntry,
+                     usage_entry_number_to_be_deleted))
+      .WillOnce(Return(true));
+
+  // Expectations for Shrink (DeleteEntry)
+  EXPECT_CALL(
+      *crypto_session_,
+      ShrinkUsageTableHeader(shrunk_usage_entry_info_vector.size(), NotNull()))
+      .WillOnce(
+          DoAll(SetArgPointee<1>(kAnotherUsageTableHeader), Return(NO_ERROR)));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kAnotherUsageTableHeader,
+                  ElementsAreArray(shrunk_usage_entry_info_vector)))
+      .WillOnce(Return(true));
+
+  // Expectations for MoveEntry (DeleteEntry)
+  EXPECT_CALL(*crypto_session_, Open(kLevelDefault))
+      .Times(2)
+      .WillRepeatedly(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              LoadUsageEntry(usage_entry_number_to_be_moved,
+                             kUsageEntry))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              MoveUsageEntry(usage_entry_number_to_be_deleted))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_, UpdateUsageEntry(NotNull(), NotNull()))
+      .WillOnce(DoAll(SetArgPointee<0>(kAnotherUsageTableHeader),
+                      SetArgPointee<1>(kAnotherUsageEntry), Return(NO_ERROR)));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kAnotherUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_move)))
+      .WillOnce(Return(true));
+
+  // Expectations for GetEntry (DeleteEntry)
+  EXPECT_CALL(*device_files_,
+      RetrieveUsageInfoByKeySetId(
+          usage_entry_to_be_moved.usage_info_file_name,
+          usage_entry_to_be_moved.key_set_id, NotNull(), NotNull(),
+          NotNull(), NotNull(), NotNull()))
+      .Times(2)
+      .WillRepeatedly(DoAll(
+          SetArgPointee<2>(kProviderSessionToken),
+          SetArgPointee<3>(kKeyRequest), SetArgPointee<4>(kKeyResponse),
+          SetArgPointee<5>(kUsageEntry),
+          SetArgPointee<6>(usage_entry_number_to_be_moved), Return(true)));
+
   EXPECT_EQ(NO_ERROR,
-            mock_usage_table_header->LoadEntry(
+            usage_table_header_->LoadEntry(
                 crypto_session_,
-                usage_entry_to_load,
+                kAndAnotherUsageEntry,
                 usage_entry_number_to_load));
 }
 
 TEST_F(UsageTableHeaderTest,
        LoadEntry_LoadUsageEntryFailsTwice_SucceedsThirdTime) {
-  // Initialize and setup
-  MockUsageTableHeader* mock_usage_table_header = SetUpMock();
   Init(kSecurityLevelL1, kUsageTableHeader, k10UsageEntryInfoVector);
 
-  uint32_t usage_entry_number_to_load = rand() /
-      (RAND_MAX / k10UsageEntryInfoVector.size() + 1);
-  CdmUsageEntry usage_entry_to_load = kUsageEntry;
+  // Initial usage entry info
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_at_start =
+      k10UsageEntryInfoVector;
 
-  // Setup expectations
-  EXPECT_CALL(*mock_usage_table_header,
-              DeleteEntry(_, device_files_, NotNull()))
-      .Times(AtMost(2))
-      .WillRepeatedly(
-          DoAll(Invoke(this, &UsageTableHeaderTest::DeleteEntry),
-                Return(NO_ERROR)));
+  uint32_t usage_entry_number_to_load = 5;
 
-  EXPECT_CALL(*crypto_session_,
-              LoadUsageEntry(usage_entry_number_to_load, usage_entry_to_load))
+  // usage entry info after first move
+  uint32_t usage_entry_number_first_to_be_deleted = 0;
+  uint32_t usage_entry_number_first_to_be_moved =
+      usage_entry_info_vector_at_start.size() - 1;
+
+  // The last entry is moved to the first entry to be deleted
+  CdmUsageEntryInfo usage_entry_first_to_be_moved =
+      usage_entry_info_vector_at_start[usage_entry_number_first_to_be_moved];
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_first_move =
+      usage_entry_info_vector_at_start;
+  usage_entry_info_vector_after_first_move[
+      usage_entry_number_first_to_be_deleted] =
+          usage_entry_first_to_be_moved;
+
+  // The entries are then shrunk by 1
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_first_shrink =
+      usage_entry_info_vector_after_first_move;
+  usage_entry_info_vector_after_first_shrink.resize(
+      usage_entry_info_vector_after_first_shrink.size() - 1);
+
+  // usage entry info after second move
+  uint32_t usage_entry_number_second_to_be_deleted = 1;
+  uint32_t usage_entry_number_second_to_be_moved =
+      usage_entry_info_vector_after_first_shrink.size() - 1;
+
+  // The last entry is moved to the second entry to be deleted
+  CdmUsageEntryInfo usage_entry_second_to_be_moved =
+      usage_entry_info_vector_after_first_shrink[
+          usage_entry_number_second_to_be_moved];
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_second_move =
+      usage_entry_info_vector_after_first_shrink;
+  usage_entry_info_vector_after_second_move[
+      usage_entry_number_second_to_be_deleted] = usage_entry_second_to_be_moved;
+
+  // The entries are then shrunk by 1
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_second_shrink =
+      usage_entry_info_vector_after_second_move;
+  usage_entry_info_vector_after_second_shrink.resize(
+      usage_entry_info_vector_after_second_shrink.size() - 1);
+
+  // Expectations for LoadEntry
+  std::vector<CdmUsageEntryInfo> expect_usage_entry_info_vector =
+      usage_entry_info_vector_after_second_shrink;
+
+  EXPECT_CALL(*crypto_session_, LoadUsageEntry(usage_entry_number_to_load,
+                                               kAndAnotherUsageEntry))
       .WillOnce(Return(INSUFFICIENT_CRYPTO_RESOURCES_3))
       .WillOnce(Return(INSUFFICIENT_CRYPTO_RESOURCES_3))
       .WillOnce(Return(NO_ERROR));
 
-  // Now invoke the method under test
+  // Expectations for StoreEntry (DeleteEntry->MoveEntry)
+  EXPECT_CALL(*device_files_,
+      DeleteUsageInfo(usage_entry_first_to_be_moved.usage_info_file_name,
+                      kProviderSessionToken))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+      StoreUsageInfo(kProviderSessionToken, kKeyRequest, kKeyResponse,
+                     usage_entry_first_to_be_moved.usage_info_file_name,
+                     usage_entry_first_to_be_moved.key_set_id,
+                     kAnotherUsageEntry,
+                     usage_entry_number_first_to_be_deleted))
+      .WillOnce(Return(true));
+
+  EXPECT_TRUE(device_files_->StoreLicense(
+      usage_entry_second_to_be_moved.key_set_id,
+      kActiveLicenseState, kPsshData, kKeyRequest, kKeyResponse,
+      kKeyRenewalRequest, kKeyRenewalResponse, kReleaseServerUrl,
+      kPlaybackStartTime, kPlaybackStartTime + kPlaybackDuration,
+      kGracePeriodEndTime, kEmptyAppParameters, kYetAnotherUsageEntry,
+      usage_entry_number_second_to_be_moved));
+
+  DeviceFiles::LicenseState license_state = DeviceFiles::kLicenseStateUnknown;
+  CdmInitData pssh_data;
+  CdmKeyMessage key_request;
+  CdmKeyResponse key_response;
+  CdmKeyMessage key_renewal_request;
+  CdmKeyResponse key_renewal_response;
+  std::string release_server_url;
+  int64_t playback_start_time;
+  int64_t last_playback_time;
+  int64_t grace_period_end_time;
+  CdmAppParameterMap app_parameters;
+  CdmUsageEntry usage_entry;
+  uint32_t usage_entry_number = ~0;
+
+  EXPECT_TRUE(device_files_->RetrieveLicense(
+      usage_entry_second_to_be_moved.key_set_id, &license_state, &pssh_data,
+      &key_request, &key_response, &key_renewal_request, &key_renewal_response,
+      &release_server_url, &playback_start_time, &last_playback_time,
+      &grace_period_end_time, &app_parameters, &usage_entry,
+      &usage_entry_number));
+  EXPECT_EQ(kActiveLicenseState, license_state);
+  EXPECT_EQ(kPsshData, pssh_data);
+  EXPECT_EQ(kKeyRequest, key_request);
+  EXPECT_EQ(kKeyResponse, key_response);
+  EXPECT_EQ(kKeyRenewalRequest, key_renewal_request);
+  EXPECT_EQ(kKeyRenewalResponse, key_renewal_response);
+  EXPECT_EQ(kReleaseServerUrl, release_server_url);
+  EXPECT_EQ(kPlaybackStartTime, playback_start_time);
+  EXPECT_EQ(kPlaybackStartTime + kPlaybackDuration, last_playback_time);
+  EXPECT_EQ(kGracePeriodEndTime, grace_period_end_time);
+  EXPECT_EQ(kEmptyAppParameters.size(), app_parameters.size());
+  EXPECT_EQ(kYetAnotherUsageEntry, usage_entry);
+  EXPECT_EQ(usage_entry_number_second_to_be_moved, usage_entry_number);
+
+  // Expectations for Shrink (DeleteEntry)
+  EXPECT_CALL(
+      *crypto_session_,
+      ShrinkUsageTableHeader(
+          usage_entry_info_vector_after_first_shrink.size(), NotNull()))
+      .WillOnce(
+          DoAll(SetArgPointee<1>(kAnotherUsageTableHeader), Return(NO_ERROR)));
+  EXPECT_CALL(
+      *crypto_session_,
+      ShrinkUsageTableHeader(
+          usage_entry_info_vector_after_second_shrink.size(), NotNull()))
+      .WillOnce(
+          DoAll(SetArgPointee<1>(kYetAnotherUsageTableHeader),
+                Return(NO_ERROR)));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kAnotherUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_first_shrink)))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kYetAnotherUsageTableHeader,
+                  ElementsAreArray(
+                      usage_entry_info_vector_after_second_shrink)))
+      .WillOnce(Return(true));
+
+  // Expectations for MoveEntry (DeleteEntry)
+  EXPECT_CALL(*crypto_session_, Open(kLevelDefault))
+      .Times(4)
+      .WillRepeatedly(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              LoadUsageEntry(usage_entry_number_first_to_be_moved,
+                             kUsageEntry))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              LoadUsageEntry(usage_entry_number_second_to_be_moved,
+                             kYetAnotherUsageEntry))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              MoveUsageEntry(usage_entry_number_first_to_be_deleted))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              MoveUsageEntry(usage_entry_number_second_to_be_deleted))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_, UpdateUsageEntry(NotNull(), NotNull()))
+      .WillOnce(DoAll(SetArgPointee<0>(kAnotherUsageTableHeader),
+                      SetArgPointee<1>(kAnotherUsageEntry), Return(NO_ERROR)))
+      .WillOnce(DoAll(SetArgPointee<0>(kYetAnotherUsageTableHeader),
+                      SetArgPointee<1>(kYetAnotherUsageEntry),
+                      Return(NO_ERROR)));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kAnotherUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_first_move)))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kYetAnotherUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_second_move)))
+      .WillOnce(Return(true));
+
+  // Expectations for GetEntry (DeleteEntry)
+  EXPECT_CALL(*device_files_,
+      RetrieveUsageInfoByKeySetId(
+          usage_entry_first_to_be_moved.usage_info_file_name,
+          usage_entry_first_to_be_moved.key_set_id, NotNull(), NotNull(),
+          NotNull(), NotNull(), NotNull()))
+      .Times(2)
+      .WillRepeatedly(DoAll(
+          SetArgPointee<2>(kProviderSessionToken),
+          SetArgPointee<3>(kKeyRequest), SetArgPointee<4>(kKeyResponse),
+          SetArgPointee<5>(kUsageEntry),
+          SetArgPointee<6>(usage_entry_number_first_to_be_moved),
+          Return(true)));
+
   EXPECT_EQ(NO_ERROR,
-            mock_usage_table_header->LoadEntry(
+            usage_table_header_->LoadEntry(
                 crypto_session_,
-                usage_entry_to_load,
+                kAndAnotherUsageEntry,
                 usage_entry_number_to_load));
 }
 
 TEST_F(UsageTableHeaderTest, LoadEntry_LoadUsageEntryFailsThrice) {
-  // Initialize and setup
-  MockUsageTableHeader* mock_usage_table_header = SetUpMock();
   Init(kSecurityLevelL1, kUsageTableHeader, k10UsageEntryInfoVector);
 
-  uint32_t usage_entry_number_to_load = rand() /
-      (RAND_MAX / k10UsageEntryInfoVector.size() + 1);
-  CdmUsageEntry usage_entry_to_load = kUsageEntry;
+  // Initial usage entry info
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_at_start =
+      k10UsageEntryInfoVector;
 
-  // Setup expectations
-  EXPECT_CALL(*mock_usage_table_header,
-              DeleteEntry(_, device_files_, NotNull()))
-      .Times(AtMost(3))
-      .WillRepeatedly(
-          DoAll(Invoke(this, &UsageTableHeaderTest::DeleteEntry),
-                Return(NO_ERROR)));
+  uint32_t usage_entry_number_to_load = 5;
 
-  EXPECT_CALL(*crypto_session_,
-              LoadUsageEntry(usage_entry_number_to_load, usage_entry_to_load))
-      .Times(AtMost(4))
+  // usage entry info after first move
+  uint32_t usage_entry_number_first_to_be_deleted = 0;
+  uint32_t usage_entry_number_first_to_be_moved =
+      usage_entry_info_vector_at_start.size() - 1;
+
+  // The last entry is moved to the first entry to be deleted
+  CdmUsageEntryInfo usage_entry_first_to_be_moved =
+      usage_entry_info_vector_at_start[usage_entry_number_first_to_be_moved];
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_first_move =
+      usage_entry_info_vector_at_start;
+  usage_entry_info_vector_after_first_move[
+      usage_entry_number_first_to_be_deleted] =
+          usage_entry_first_to_be_moved;
+
+  // The entries are then shrunk by 1
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_first_shrink =
+      usage_entry_info_vector_after_first_move;
+  usage_entry_info_vector_after_first_shrink.resize(
+      usage_entry_info_vector_after_first_shrink.size() - 1);
+
+  // usage entry info after second move
+  uint32_t usage_entry_number_second_to_be_deleted = 1;
+  uint32_t usage_entry_number_second_to_be_moved =
+      usage_entry_info_vector_after_first_shrink.size() - 1;
+
+  // The last entry is moved to the second entry to be deleted
+  CdmUsageEntryInfo usage_entry_second_to_be_moved =
+      usage_entry_info_vector_after_first_shrink[
+          usage_entry_number_second_to_be_moved];
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_second_move =
+      usage_entry_info_vector_after_first_shrink;
+  usage_entry_info_vector_after_second_move[
+      usage_entry_number_second_to_be_deleted] = usage_entry_second_to_be_moved;
+
+  // The entries are then shrunk by 1
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_second_shrink =
+      usage_entry_info_vector_after_second_move;
+  usage_entry_info_vector_after_second_shrink.resize(
+      usage_entry_info_vector_after_second_shrink.size() - 1);
+
+  // usage entry info after third move
+  uint32_t usage_entry_number_third_to_be_deleted = 2;
+  uint32_t usage_entry_number_third_to_be_moved =
+      usage_entry_info_vector_after_second_shrink.size() - 1;
+
+  // The last entry is moved to the third entry to be deleted
+  CdmUsageEntryInfo usage_entry_third_to_be_moved =
+      usage_entry_info_vector_after_second_shrink[
+          usage_entry_number_third_to_be_moved];
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_third_move =
+      usage_entry_info_vector_after_second_shrink;
+  usage_entry_info_vector_after_third_move[
+      usage_entry_number_third_to_be_deleted] = usage_entry_third_to_be_moved;
+
+  // The entries are then shrunk by 1
+  std::vector<CdmUsageEntryInfo> usage_entry_info_vector_after_third_shrink =
+      usage_entry_info_vector_after_third_move;
+  usage_entry_info_vector_after_third_shrink.resize(
+      usage_entry_info_vector_after_third_shrink.size() - 1);
+
+  // Expectations for LoadEntry
+  std::vector<CdmUsageEntryInfo> expect_usage_entry_info_vector =
+      usage_entry_info_vector_after_third_shrink;
+
+  EXPECT_CALL(*crypto_session_, LoadUsageEntry(usage_entry_number_to_load,
+                                               kAndAnotherUsageEntry))
+      .Times(3)
       .WillRepeatedly(Return(INSUFFICIENT_CRYPTO_RESOURCES_3));
 
-  // Now invoke the method under test
+  // Expectations for StoreEntry (DeleteEntry->MoveEntry)
+  EXPECT_CALL(*device_files_,
+      DeleteUsageInfo(usage_entry_first_to_be_moved.usage_info_file_name,
+                      kProviderSessionToken))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+      DeleteUsageInfo(usage_entry_third_to_be_moved.usage_info_file_name,
+                      kProviderSessionToken))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+      StoreUsageInfo(kProviderSessionToken, kKeyRequest, kKeyResponse,
+                     usage_entry_first_to_be_moved.usage_info_file_name,
+                     usage_entry_first_to_be_moved.key_set_id,
+                     kAnotherUsageEntry,
+                     usage_entry_number_first_to_be_deleted))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+      StoreUsageInfo(kProviderSessionToken, kKeyRequest, kKeyResponse,
+                     usage_entry_third_to_be_moved.usage_info_file_name,
+                     usage_entry_third_to_be_moved.key_set_id,
+                     kOneMoreUsageEntry,
+                     usage_entry_number_third_to_be_deleted))
+      .WillOnce(Return(true));
+
+  EXPECT_TRUE(device_files_->StoreLicense(
+      usage_entry_second_to_be_moved.key_set_id,
+      kActiveLicenseState, kPsshData, kKeyRequest, kKeyResponse,
+      kKeyRenewalRequest, kKeyRenewalResponse, kReleaseServerUrl,
+      kPlaybackStartTime, kPlaybackStartTime + kPlaybackDuration,
+      kGracePeriodEndTime, kEmptyAppParameters, kYetAnotherUsageEntry,
+      usage_entry_number_second_to_be_moved));
+
+  DeviceFiles::LicenseState license_state = DeviceFiles::kLicenseStateUnknown;
+  CdmInitData pssh_data;
+  CdmKeyMessage key_request;
+  CdmKeyResponse key_response;
+  CdmKeyMessage key_renewal_request;
+  CdmKeyResponse key_renewal_response;
+  std::string release_server_url;
+  int64_t playback_start_time;
+  int64_t last_playback_time;
+  int64_t grace_period_end_time;
+  CdmAppParameterMap app_parameters;
+  CdmUsageEntry usage_entry;
+  uint32_t usage_entry_number = ~0;
+
+  EXPECT_TRUE(device_files_->RetrieveLicense(
+      usage_entry_second_to_be_moved.key_set_id, &license_state, &pssh_data,
+      &key_request, &key_response, &key_renewal_request, &key_renewal_response,
+      &release_server_url, &playback_start_time, &last_playback_time,
+      &grace_period_end_time, &app_parameters, &usage_entry,
+      &usage_entry_number));
+  EXPECT_EQ(kActiveLicenseState, license_state);
+  EXPECT_EQ(kPsshData, pssh_data);
+  EXPECT_EQ(kKeyRequest, key_request);
+  EXPECT_EQ(kKeyResponse, key_response);
+  EXPECT_EQ(kKeyRenewalRequest, key_renewal_request);
+  EXPECT_EQ(kKeyRenewalResponse, key_renewal_response);
+  EXPECT_EQ(kReleaseServerUrl, release_server_url);
+  EXPECT_EQ(kPlaybackStartTime, playback_start_time);
+  EXPECT_EQ(kPlaybackStartTime + kPlaybackDuration, last_playback_time);
+  EXPECT_EQ(kGracePeriodEndTime, grace_period_end_time);
+  EXPECT_EQ(kEmptyAppParameters.size(), app_parameters.size());
+  EXPECT_EQ(kYetAnotherUsageEntry, usage_entry);
+  EXPECT_EQ(usage_entry_number_second_to_be_moved, usage_entry_number);
+
+  // Expectations for Shrink (DeleteEntry)
+  EXPECT_CALL(
+      *crypto_session_,
+      ShrinkUsageTableHeader(
+          usage_entry_info_vector_after_first_shrink.size(), NotNull()))
+      .WillOnce(
+          DoAll(SetArgPointee<1>(kAnotherUsageTableHeader), Return(NO_ERROR)));
+  EXPECT_CALL(
+      *crypto_session_,
+      ShrinkUsageTableHeader(
+          usage_entry_info_vector_after_second_shrink.size(), NotNull()))
+      .WillOnce(
+          DoAll(SetArgPointee<1>(kYetAnotherUsageTableHeader),
+                Return(NO_ERROR)));
+  EXPECT_CALL(
+      *crypto_session_,
+      ShrinkUsageTableHeader(
+          usage_entry_info_vector_after_third_shrink.size(), NotNull()))
+      .WillOnce(
+          DoAll(SetArgPointee<1>(kOneMoreUsageTableHeader),
+                Return(NO_ERROR)));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kAnotherUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_first_shrink)))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kYetAnotherUsageTableHeader,
+                  ElementsAreArray(
+                      usage_entry_info_vector_after_second_shrink)))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kOneMoreUsageTableHeader,
+                  ElementsAreArray(
+                      usage_entry_info_vector_after_third_shrink)))
+      .WillOnce(Return(true));
+
+  // Expectations for MoveEntry (DeleteEntry)
+  EXPECT_CALL(*crypto_session_, Open(kLevelDefault))
+      .Times(6)
+      .WillRepeatedly(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              LoadUsageEntry(usage_entry_number_first_to_be_moved,
+                             kUsageEntry))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              LoadUsageEntry(usage_entry_number_second_to_be_moved,
+                             kYetAnotherUsageEntry))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              LoadUsageEntry(usage_entry_number_third_to_be_moved,
+                             kOneMoreUsageEntry))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              MoveUsageEntry(usage_entry_number_first_to_be_deleted))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              MoveUsageEntry(usage_entry_number_second_to_be_deleted))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_,
+              MoveUsageEntry(usage_entry_number_third_to_be_deleted))
+      .WillOnce(Return(NO_ERROR));
+  EXPECT_CALL(*crypto_session_, UpdateUsageEntry(NotNull(), NotNull()))
+      .WillOnce(DoAll(SetArgPointee<0>(kAnotherUsageTableHeader),
+                      SetArgPointee<1>(kAnotherUsageEntry), Return(NO_ERROR)))
+      .WillOnce(DoAll(SetArgPointee<0>(kYetAnotherUsageTableHeader),
+                      SetArgPointee<1>(kYetAnotherUsageEntry),
+                      Return(NO_ERROR)))
+      .WillOnce(DoAll(SetArgPointee<0>(kOneMoreUsageTableHeader),
+                      SetArgPointee<1>(kOneMoreUsageEntry),
+                      Return(NO_ERROR)));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kAnotherUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_first_move)))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kYetAnotherUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_second_move)))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*device_files_,
+              StoreUsageTableInfo(
+                  kOneMoreUsageTableHeader,
+                  ElementsAreArray(usage_entry_info_vector_after_third_move)))
+      .WillOnce(Return(true));
+
+  // Expectations for GetEntry (DeleteEntry)
+  EXPECT_CALL(*device_files_,
+      RetrieveUsageInfoByKeySetId(
+          usage_entry_first_to_be_moved.usage_info_file_name,
+          usage_entry_first_to_be_moved.key_set_id, NotNull(), NotNull(),
+          NotNull(), NotNull(), NotNull()))
+      .Times(2)
+      .WillRepeatedly(DoAll(
+          SetArgPointee<2>(kProviderSessionToken),
+          SetArgPointee<3>(kKeyRequest), SetArgPointee<4>(kKeyResponse),
+          SetArgPointee<5>(kUsageEntry),
+          SetArgPointee<6>(usage_entry_number_first_to_be_moved),
+          Return(true)));
+  EXPECT_CALL(*device_files_,
+      RetrieveUsageInfoByKeySetId(
+          usage_entry_third_to_be_moved.usage_info_file_name,
+          usage_entry_third_to_be_moved.key_set_id, NotNull(), NotNull(),
+          NotNull(), NotNull(), NotNull()))
+      .Times(2)
+      .WillRepeatedly(DoAll(
+          SetArgPointee<2>(kProviderSessionToken),
+          SetArgPointee<3>(kKeyRequest), SetArgPointee<4>(kKeyResponse),
+          SetArgPointee<5>(kOneMoreUsageEntry),
+          SetArgPointee<6>(usage_entry_number_third_to_be_moved),
+          Return(true)));
+
   EXPECT_EQ(INSUFFICIENT_CRYPTO_RESOURCES_3,
-            mock_usage_table_header->LoadEntry(
+            usage_table_header_->LoadEntry(
                 crypto_session_,
-                usage_entry_to_load,
+                kAndAnotherUsageEntry,
                 usage_entry_number_to_load));
 }
 
@@ -2294,7 +3104,6 @@ TEST_F(UsageTableHeaderTest, StaleHeader) {
           DoAll(SetArgPointee<0>(kEmptyUsageTableHeader), Return(NO_ERROR)));
   EXPECT_CALL(*device_files_, DeleteAllLicenses()).WillOnce(Return(true));
   EXPECT_CALL(*device_files_, DeleteAllUsageInfo()).WillOnce(Return(true));
-  EXPECT_CALL(*device_files_, DeleteUsageTableInfo()).WillOnce(Return(true));
   EXPECT_CALL(*device_files_, StoreUsageTableInfo(kEmptyUsageTableHeader,
                                                   kEmptyUsageEntryInfoVector))
       .WillOnce(Return(true));
